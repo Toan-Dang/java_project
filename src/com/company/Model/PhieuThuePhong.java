@@ -26,7 +26,21 @@ public class PhieuThuePhong {
         NgayThanhToan = _NgayThanhToan;
 
     }
+    public PhieuThuePhong( String _TenKh, String _TenNV, Date _NgayPapPTP) {
+        TenKh = _TenKh;
+        TenNV = _TenNV;
+        NgayPapPTP = _NgayPapPTP;
 
+    }
+    public PhieuThuePhong( String _TenKh, Date _NgayPapPTP) {
+        TenKh = _TenKh;
+        NgayPapPTP = _NgayPapPTP;
+
+    }
+    public PhieuThuePhong(  Date _NgayPapPTP) {
+        NgayPapPTP = _NgayPapPTP;
+
+    }
     public int getMaPTP() {
         return MaPTP;
     }

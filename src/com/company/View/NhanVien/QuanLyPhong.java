@@ -31,7 +31,7 @@ public class QuanLyPhong extends QuanLiHomeView {
     public QuanLyPhong() {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(100, 100, 1010, 730);
+        frame.setBounds(100, 100, 1200, 730);
 
         frame.setLocationRelativeTo(null);
         frame.setTitle("Phong");
@@ -120,14 +120,14 @@ public class QuanLyPhong extends QuanLiHomeView {
 
         panel_2 = new JPanel();
         panel_2.setBackground(SystemColor.textHighlightText);
-        panel_2.setBounds(174, 10, 822, 673);
+        panel_2.setBounds(174, 10, 1000, 673);
         contentPane.add(panel_2);
         panel_2.setLayout(null);
 
         JPanel panel_4 = new JPanel();
         // panel_4.setBackground(new Color(224, 255, 255));
         panel_4.setBackground(new Color(252, 255, 224));
-        panel_4.setBounds(0, 0, 822, 57);
+        panel_4.setBounds(0, 0, 1000, 57);
         panel_2.add(panel_4);
         panel_4.setLayout(null);
 
@@ -161,7 +161,7 @@ public class QuanLyPhong extends QuanLiHomeView {
 
         JPanel panel_5 = new JPanel();
         panel_5.setBackground(new Color(255, 224, 224));
-        panel_5.setBounds(0, 57, 822, 150);
+        panel_5.setBounds(0, 57, 1000, 150);
         panel_2.add(panel_5);
         panel_5.setLayout(null);
 
@@ -179,7 +179,7 @@ public class QuanLyPhong extends QuanLiHomeView {
         panel_5.add(addbtn);
 
         searchfield = new JTextField();
-        searchfield.setBounds(345, 110, 490, 30);
+        searchfield.setBounds(345, 110, 450, 30);
         panel_5.add(searchfield);
         searchfield.getDocument().addDocumentListener(new DocumentListener(){
             @Override
@@ -275,9 +275,7 @@ public class QuanLyPhong extends QuanLiHomeView {
     public ArrayList<PhieuThuePhong> listphieuthuephong() {
         ArrayList<PhieuThuePhong> listptp = new ArrayList<>();
         Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT MAPTP, B.HOTENNV, C.TENKH, NGAYLAPPTP, TONGTIENTHANHTOAN, TINHTRANGTHANHTOAN, NGAYTHANHTOAN FROM PHIEU_THUE_PHONG A, NHANVIEN B, KHACHHANG C \n" +
-                "WHERE A.MANV = B.MANV \n" +
-                "AND A.MAKH = C.MAKH ;";
+        String query = "SELECT A.MAPTP, B.CMND, A.NGAYLAPPTP, B.NGAYNHANPHONG, B.NGAYTRAPHONG, A.TINHTRANGTHANHTOAN, A.TONGTIENTHANHTOAN FROM PHIEU_THUE_PHONG A INNER JOIN CHITIET_PHIEUTHUEPHONG B ON A.MAPTP = B.MAPTP";
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -377,7 +375,7 @@ public class QuanLyPhong extends QuanLiHomeView {
                     scrollpanez.setViewportView(table2);
 
                     tabbebpane = new JTabbedPane();
-                    tabbebpane.setBounds(0, 207, 840, 600);
+                    tabbebpane.setBounds(0, 207, 1000, 600);
 
                     tabbebpane.addTab("Danh sach phong", scrollpane);
                     tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);

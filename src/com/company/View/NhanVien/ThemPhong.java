@@ -13,6 +13,7 @@ import java.util.Objects;
 public class ThemPhong extends JFrame {
     JFrame frame = new JFrame();
    private  JComboBox<String> list;
+
     public ThemPhong(){
         frame.setVisible(true);
        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,18 +63,7 @@ public class ThemPhong extends JFrame {
         list.setOpaque(false);
         list.setBounds(100, 40 ,200,30);
         panel2.add(list);
-        /*
-        JLabel label3 = new JLabel("Ghi Chu");
-        label3.setBounds(0,150,100,100);
-        label3.setHorizontalAlignment(SwingConstants.CENTER);
-        label3.setVerticalAlignment(SwingConstants.CENTER);
-        label3.setBackground(new Color(189, 44, 44));
-        panel2.add(label3);
 
-        JTextField ghichu = new JTextField("ghi chu");
-        ghichu.setBounds(100,180,200,30);
-        panel2.add(ghichu);
-*/
         JLabel label4 = new JLabel("Ghi Chu");
         label4.setBounds(0,80,100,100);
         label4.setHorizontalAlignment(SwingConstants.CENTER);
