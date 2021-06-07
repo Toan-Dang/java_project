@@ -1,9 +1,12 @@
-package com.company.View.NhanVien;
+package com.company;
 
 
 import com.company.Data.ConnectionOracle;
 import com.company.Model.PhieuThuePhong;
 import com.company.Model.Phong;
+import com.company.View.NhanVien.QuanLiHomeView;
+import com.company.View.NhanVien.ThemPTP;
+import com.company.View.NhanVien.ThemPhong;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,15 +23,16 @@ import java.util.Date;
 import java.util.EventObject;
 import java.util.List;
 
-public class QuanLyPhong extends QuanLiHomeView {
+public class test extends QuanLiHomeView {
     JFrame frame = new JFrame();
     JPanel panel_2;
     JTabbedPane tabbebpane;
     JTextField searchfield;
+    MultiButtonTable tablez;
+    ArrayList<Phong> list;
     JTable table;
     TableRowSorter<TableModel> rowSorter;
-    TableRowSorter<TableModel> rowSorter2;
-    public QuanLyPhong() {
+    public test() {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(100, 100, 1010, 730);
@@ -179,44 +183,30 @@ public class QuanLyPhong extends QuanLiHomeView {
         panel_5.add(addbtn);
 
         searchfield = new JTextField();
-        searchfield.setBounds(345, 110, 490, 30);
+        searchfield.setBounds(345, 110, 400, 30);
         panel_5.add(searchfield);
+
         searchfield.getDocument().addDocumentListener(new DocumentListener(){
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = searchfield.getText();
 
-                if (tabbebpane.getSelectedIndex() == 0)
-                    if (text.trim().length() == 0) {
-                        rowSorter.setRowFilter(null);
-                    } else {
-                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                    }
-                else
                 if (text.trim().length() == 0) {
-                    rowSorter2.setRowFilter(null);
+                    rowSorter.setRowFilter(null);
                 } else {
-                    rowSorter2.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
                 }
-
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = searchfield.getText();
-                if (tabbebpane.getSelectedIndex() == 0)
-                    if (text.trim().length() == 0) {
-                        rowSorter.setRowFilter(null);
-                    } else {
-                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                    }
-                else
-                if (text.trim().length() == 0) {
-                    rowSorter2.setRowFilter(null);
-                } else {
-                    rowSorter2.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                }
 
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
             }
 
             @Override
@@ -225,8 +215,23 @@ public class QuanLyPhong extends QuanLiHomeView {
             }
 
         });
+        JButton searchbtn = new JButton("OK");
+        searchbtn.setHorizontalAlignment(SwingConstants.CENTER);
+        searchbtn.setVerticalAlignment(SwingConstants.CENTER);
+        searchbtn.setFont(new Font("Arial", Font.BOLD, 10));
+        searchbtn.setBounds(744, 110, 50, 29);
+        searchbtn.setBackground(new Color(167, 167, 167));
+        searchbtn.setOpaque(true);
+        panel_5.add(searchbtn);
 
-        MultiButtonTable tablez = new MultiButtonTable();
+        searchbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+            }
+        });
+        tablez = new MultiButtonTable();
 
         addbtn.addActionListener(new ActionListener() {
             @Override
@@ -328,7 +333,7 @@ public class QuanLyPhong extends QuanLiHomeView {
                         model.add(new Phong(row[0], row1[0], row[1], row1[1]));
                     }
 
-                    table = new JTable(model);
+                     table = new JTable(model);
                     AcceptRejectRenderer renderer = new AcceptRejectRenderer();
                     table.getColumnModel().getColumn(4).setCellRenderer(renderer);
                     table.getColumnModel().getColumn(4).setCellEditor(new AcceptRejectEditor());
@@ -336,45 +341,13 @@ public class QuanLyPhong extends QuanLiHomeView {
                     table.setFillsViewportHeight(true);
                     table.setOpaque(true);
                     table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-                    rowSorter  = new TableRowSorter<>(table.getModel());
+
+                   rowSorter  = new TableRowSorter<>(table.getModel());
                     table.setRowSorter(rowSorter);
+
+
                     JScrollPane scrollpane = new JScrollPane(table);
                     scrollpane.setViewportView(table);
-
-                    //phieu thue phong
-
-                    ArrayList<PhieuThuePhong> listptp = listphieuthuephong();
-                    MyTablePTPModel modelptp = new MyTablePTPModel();
-                    int[] rowint = new int[2];
-                    String[] rowStr = new String[2];
-                    Date[] rowdate = new Date[2];
-                    double rowdb;
-                    for (PhieuThuePhong ptp : listptp) {
-                        rowint[0] = ptp.getMaPTP();
-                        rowint[1] = ptp.getTinhTrangThanhToan();
-                        rowStr[0] = ptp.getTenKh();
-                        rowStr[1] = ptp.getTenNV();
-                        rowdate[0] = ptp.getNgayPapPTP();
-                        rowdate[1] = ptp.getNgayThanhToan();
-                        rowdb = ptp.getTongTienThanhToan();
-
-                        modelptp.add(new PhieuThuePhong(rowint[0], rowStr[0], rowStr[1], rowdate[0], rowint[1], rowdb, rowdate[1]));
-                    }
-
-                    JTable table2 = new JTable(modelptp);
-                    AcceptRejectRendererPTP renderer2 = new AcceptRejectRendererPTP();
-                    table2.getColumnModel().getColumn(7).setCellRenderer(renderer2);
-                    table2.getColumnModel().getColumn(7).setCellEditor(new AcceptRejectEditorPTP());
-                    table2.setRowHeight(renderer2.getTableCellRendererComponent(table2, null, true, true, 0, 0).getPreferredSize().height);
-                    table2.setFillsViewportHeight(true);
-                    table2.setOpaque(true);
-                    table2.setPreferredScrollableViewportSize(new Dimension(500, 70));
-
-                    rowSorter2  = new TableRowSorter<>(table2.getModel());
-                    table2.setRowSorter(rowSorter2);
-
-                    JScrollPane scrollpanez = new JScrollPane(table2);
-                    scrollpanez.setViewportView(table2);
 
                     tabbebpane = new JTabbedPane();
                     tabbebpane.setBounds(0, 207, 840, 600);
@@ -382,13 +355,13 @@ public class QuanLyPhong extends QuanLiHomeView {
                     tabbebpane.addTab("Danh sach phong", scrollpane);
                     tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);
 
-                    tabbebpane.addTab("Phieu thue phong", scrollpanez);
-                    tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
-
                     panel_2.add(tabbebpane);
                 }
+
+
             });
         }
+
 
         //phong
         public class MyTableModel extends AbstractTableModel {
@@ -590,7 +563,7 @@ public class QuanLyPhong extends QuanLiHomeView {
                                             con.close();
                                             frame.dispose();
                                             JOptionPane.showMessageDialog(null, "Delete Success!!");
-                                            QuanLyPhong pz = new QuanLyPhong();
+                                            test pz = new test();
 
                                         } catch (SQLException throwables) {
                                             throwables.printStackTrace();
@@ -604,7 +577,7 @@ public class QuanLyPhong extends QuanLiHomeView {
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Chua co chuc nang nay" + r);
                                     frame.dispose();
-                                    QuanLyPhong p = new QuanLyPhong();
+                                    test p = new test();
                                 }
 
                             }
@@ -856,7 +829,7 @@ public class QuanLyPhong extends QuanLiHomeView {
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Chua co chuc nang nay" + r);
                                     frame.dispose();
-                                    QuanLyPhong p = new QuanLyPhong();
+                                    test p = new test();
                                 }
 
                             }
@@ -890,7 +863,6 @@ public class QuanLyPhong extends QuanLiHomeView {
 
 
         }
-
 
     }
 

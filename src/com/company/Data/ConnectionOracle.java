@@ -12,7 +12,8 @@ public class ConnectionOracle {
     private static final String Connect = "jdbc";
     private static final String url = "jdbc:oracle:thin:@localhost:" + Port + ":" + dbxe;
     private static Connection con;
-
+    //////////////////
+    private String searchfieldtemp;
     public static Connection getConnection() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -24,5 +25,13 @@ public class ConnectionOracle {
             e.printStackTrace();
         }
         return con;
+    }
+
+    public void setSearchfieldtemp(String searchfieldtemp) {
+        this.searchfieldtemp = searchfieldtemp;
+    }
+
+    public String getSearchfieldtemp() {
+        return searchfieldtemp;
     }
 }
