@@ -1,8 +1,6 @@
 package com.company.Controller;
 
-import com.company.View.NhanVien.QuanLyPhong;
-import com.company.View.NhanVien.ThemPTP;
-import com.company.View.NhanVien.ThemPhong;
+import com.company.View.NhanVien.DSPHONG.ThemPTP;
 
 public class Main {
 

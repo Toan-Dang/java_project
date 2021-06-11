@@ -1,5 +1,10 @@
 package com.company.View.NhanVien;
 
+
+
+import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
+import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -171,6 +176,12 @@ public class QuanLiHomeView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 QuanLyPhong p = new QuanLyPhong();
 
+            }
+        });
+        btnQuanLiNhanVien.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                QuanLyNhanVien nv = new QuanLyNhanVien();
             }
         });
     }

@@ -13,6 +13,11 @@ public class PhieuThuePhong {
     private String TenKh;
     private String TenNV;
 
+    private String CMND;
+    private int MaPhong;
+    private Date NgayNhanPhong;
+    private Date NgayTraPhong;
+
     public PhieuThuePhong() {
     }
 
@@ -26,21 +31,29 @@ public class PhieuThuePhong {
         NgayThanhToan = _NgayThanhToan;
 
     }
-    public PhieuThuePhong( String _TenKh, String _TenNV, Date _NgayPapPTP) {
+
+    public PhieuThuePhong( int _MaPTP, int maphong,String cmnd,Date nlp, Date nnp,Date ntp,double tien) {
+        MaPTP = _MaPTP;
+        MaPhong = maphong;
+        CMND = cmnd;
+        NgayPapPTP = nlp;
+        NgayNhanPhong = nnp;
+        NgayTraPhong = ntp;
+        TongTienThanhToan = tien;
+
+    }
+
+    public PhieuThuePhong(String _TenKh, Date _NgayPapPTP) {
         TenKh = _TenKh;
-        TenNV = _TenNV;
         NgayPapPTP = _NgayPapPTP;
 
     }
-    public PhieuThuePhong( String _TenKh, Date _NgayPapPTP) {
-        TenKh = _TenKh;
+
+    public PhieuThuePhong(Date _NgayPapPTP) {
         NgayPapPTP = _NgayPapPTP;
 
     }
-    public PhieuThuePhong(  Date _NgayPapPTP) {
-        NgayPapPTP = _NgayPapPTP;
 
-    }
     public int getMaPTP() {
         return MaPTP;
     }
@@ -111,5 +124,37 @@ public class PhieuThuePhong {
 
     public void setTenKh(String tenKh) {
         TenKh = tenKh;
+    }
+
+    public String getCMND() {
+        return CMND;
+    }
+
+    public void setCMND(String CMND) {
+        this.CMND = CMND;
+    }
+
+    public int getMaPhong() {
+        return MaPhong;
+    }
+
+    public void setMaPhong(int maPhong) {
+        MaPhong = maPhong;
+    }
+
+    public Date getNgayNhanPhong() {
+        return NgayNhanPhong;
+    }
+
+    public void setNgayNhanPhong(Date ngayNhanPhong) {
+        NgayNhanPhong = ngayNhanPhong;
+    }
+
+    public Date getNgayTraPhong() {
+        return NgayTraPhong;
+    }
+
+    public void setNgayTraPhong(Date ngayTraPhong) {
+        NgayTraPhong = ngayTraPhong;
     }
 }
