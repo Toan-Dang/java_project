@@ -10,18 +10,18 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Objects;
 import java.util.Properties;
 
-public class ThemNhanVien extends JFrame {
+public class ThongTinNhanVien extends JFrame {
 
     JFrame frame = new JFrame();
-
-    public ThemNhanVien() {
+    ThongTinNhanVien(){}
+    public ThongTinNhanVien(String usernamenv ) {
         frame.setVisible(true);
         frame.setBounds(100, 100, 1050, 730);
 
@@ -43,12 +43,25 @@ public class ThemNhanVien extends JFrame {
         contentPane.add(panel1);
 
         JLabel name = new JLabel("Thêm Nhan Vien");
-        name.setBounds(0, 0, 1000, 100);
+        name.setBounds(0, 0, 1000, 50);
         name.setHorizontalAlignment(SwingConstants.CENTER);
         name.setVerticalAlignment(SwingConstants.CENTER);
         name.setFont(new Font("Tahoma", Font.BOLD, 30));
         name.setBackground(new Color(189, 44, 44));
         panel1.add(name);
+
+        JLabel username = new JLabel("USERNAME");
+        name.setBounds(0, 55, 100, 50);
+        name.setHorizontalAlignment(SwingConstants.CENTER);
+        name.setVerticalAlignment(SwingConstants.CENTER);
+        name.setFont(new Font("Tahoma", Font.BOLD, 30));
+        name.setBackground(new Color(189, 44, 44));
+        panel1.add(name);
+
+        JTextField txtusername = new JTextField();
+        txtusername.setEditable(false);
+        txtusername.setBounds(100, 55, 200, 30);
+        panel1.add(txtusername);
 
         JPanel panel2 = new JPanel();
         panel2.setBounds(0, 100, 1010, 630);
@@ -80,23 +93,24 @@ public class ThemNhanVien extends JFrame {
         lbcmnd.setBackground(new Color(220, 68, 68));
         panel2.add(lbcmnd);
 
-        JLabel username = new JLabel("Username");
-        username.setBounds(0, 305, 150, 100);
-        username.setHorizontalAlignment(SwingConstants.CENTER);
-        username.setVerticalAlignment(SwingConstants.CENTER);
-        username.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        username.setBackground(new Color(220, 68, 68));
-        panel2.add(username);
+        JLabel diachi = new JLabel("Dia chi");
+        diachi.setBounds(0, 305, 150, 100);
+        diachi.setHorizontalAlignment(SwingConstants.CENTER);
+        diachi.setVerticalAlignment(SwingConstants.CENTER);
+        diachi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        diachi.setBackground(new Color(220, 68, 68));
+        panel2.add(diachi);
 
-        JLabel Password = new JLabel("Password");
-        Password.setBounds(0, 405, 150, 100);
-        Password.setHorizontalAlignment(SwingConstants.CENTER);
-        Password.setVerticalAlignment(SwingConstants.CENTER);
-        Password.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        Password.setBackground(new Color(220, 68, 68));
-        panel2.add(Password);
+        JLabel chucvu = new JLabel("Chucvu");
+        chucvu.setBounds(0, 405, 150, 100);
+        chucvu.setHorizontalAlignment(SwingConstants.CENTER);
+        chucvu.setVerticalAlignment(SwingConstants.CENTER);
+        chucvu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        chucvu.setBackground(new Color(220, 68, 68));
+        panel2.add(chucvu);
 
-  ///right label
+
+        ///right label
         JLabel NgaySinh = new JLabel("Ngày Sinh");
         NgaySinh.setBounds(500, 0, 200, 100);
         NgaySinh.setHorizontalAlignment(SwingConstants.CENTER);
@@ -129,34 +143,39 @@ public class ThemNhanVien extends JFrame {
         ngayvaolam.setBackground(new Color(220, 68, 68));
         panel2.add(ngayvaolam);
 
-        JLabel passwordz = new JLabel("Rewite password");
-        passwordz.setBounds(500, 405, 200, 100);
-        passwordz.setHorizontalAlignment(SwingConstants.CENTER);
-        passwordz.setVerticalAlignment(SwingConstants.CENTER);
-        passwordz.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        passwordz.setBackground(new Color(220, 68, 68));
-        panel2.add(passwordz);
+
+        JLabel nql = new JLabel("ngqly");
+        nql.setBounds(500, 405, 150, 100);
+        nql.setHorizontalAlignment(SwingConstants.CENTER);
+        nql.setVerticalAlignment(SwingConstants.CENTER);
+        nql.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        nql.setBackground(new Color(220, 68, 68));
+        panel2.add(nql);
+
 
 //left text
+
         JTextField txttennv = new JTextField();
         txttennv.setBounds(170, 40, 300, 30);
         panel2.add(txttennv);
 
         JTextField txtcmnd = new JTextField();
-        txtcmnd.setBounds(170,140,300,30);
+        txtcmnd.setBounds(170, 140, 300, 30);
         panel2.add(txtcmnd);
 
         JTextField txtsdt = new JTextField();
         txtsdt.setBounds(170, 240, 300, 30);
         panel2.add(txtsdt);
 
-        JTextField txtusername = new JTextField();
-        txtusername.setBounds(170, 340, 300, 30);
-        panel2.add(txtusername);
+        JTextField txtdiachi = new JTextField();
+        txtdiachi.setBounds(170, 340, 300, 30);
+        panel2.add(txtdiachi);
 
-        JPasswordField txtpass1 = new JPasswordField();
-        txtpass1.setBounds(170, 440, 300, 30);
-        panel2.add(txtpass1);
+        JTextField txtchucvu = new JTextField();
+        txtchucvu.setBounds(170, 440, 300, 30);
+        txtchucvu.setEditable(false);
+        panel2.add(txtchucvu);
+
 //right text
 
         UtilDateModel modelngaysinh = new UtilDateModel();
@@ -165,14 +184,14 @@ public class ThemNhanVien extends JFrame {
         pz.put("text.month", "Month");
         pz.put("text.year", "Year");
         modelngaysinh.setSelected(true);
-        JDatePanelImpl datePanelz = new JDatePanelImpl(modelngaysinh, pz);
-        JDatePickerImpl pickngaysinh = new JDatePickerImpl(datePanelz, new DateLabelFormatter());
+       JDatePanelImpl datePanelz = new JDatePanelImpl(modelngaysinh, pz);
+        JDatePickerImpl pickngaysinh = new JDatePickerImpl(datePanelz, new ThemNhanVien.DateLabelFormatter());
         pickngaysinh.setBounds(705, 40, 300, 30);
         panel2.add(pickngaysinh);
 
         JRadioButton rb1 = new JRadioButton("Male");
         rb1.setBounds(705, 140, 100, 30);
-        JRadioButton  rb2 = new JRadioButton("Female");
+        JRadioButton rb2 = new JRadioButton("Female");
         rb2.setBounds(805, 140, 100, 30);
 
         ButtonGroup bg = new ButtonGroup();
@@ -192,13 +211,56 @@ public class ThemNhanVien extends JFrame {
         p.put("text.year", "Year");
         modelngayvaolam.setSelected(true);
         JDatePanelImpl datePanel = new JDatePanelImpl(modelngayvaolam, p);
-        JDatePickerImpl pickngayvaolam = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+        JDatePickerImpl pickngayvaolam = new JDatePickerImpl(datePanel, new ThemNhanVien.DateLabelFormatter());
         pickngayvaolam.setBounds(705, 340, 300, 30);
         panel2.add(pickngayvaolam);
 
-        JPasswordField txtpass2 = new JPasswordField();
-        txtpass2.setBounds(705, 440, 300, 30);
-        panel2.add(txtpass2);
+        JTextField txtngql = new JTextField();
+        txtngql.setBounds(705, 440, 300, 30);
+        txtngql.setEditable(false);
+        panel2.add(txtngql);
+        try{
+            Connection con = ConnectionOracle.getConnection();
+            String query = "SELECT USERNAME,HOTENNV,SDT,CMND,EMAIL,GIOITINH ,NGAYSINH,CHUCVU,NGUOIQUANLY,NGAYVAOLAM FROM NHANVIEN WHERE USERNAME = " + "'"+usernamenv+"'";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()){
+                txtusername.setText(rs.getString(1));
+                txttennv.setText(rs.getString(2));
+                txtsdt.setText(rs.getString(3));
+                txtcmnd.setText(rs.getString(4));
+                txtemail.setText(rs.getString(5));
+                String gender = rs.getString(6);
+                if(gender.equals("NAM")){
+                    rb1.setSelected(true);
+                    rb2.setSelected(false);
+                }
+                else{
+                    rb2.setSelected(true);
+                    rb1.setSelected(false);
+                }
+
+                var dt = rs.getDate(7);
+                modelngaysinh.setValue(dt);
+                 datePanelz = new JDatePanelImpl(modelngaysinh, pz);
+                 pickngaysinh = new JDatePickerImpl(datePanelz, new ThemNhanVien.DateLabelFormatter());
+
+                txtchucvu.setText(rs.getString(8));
+                txtngql.setText(rs.getString(9));
+
+                var dt2 = rs.getDate(10);
+                modelngayvaolam.setValue(dt2);
+                 datePanel = new JDatePanelImpl(modelngayvaolam, p);
+                 pickngayvaolam = new JDatePickerImpl(datePanel, new ThemNhanVien.DateLabelFormatter());
+
+            }
+
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 ///
 
         JButton save = new JButton("save");
@@ -206,6 +268,7 @@ public class ThemNhanVien extends JFrame {
         save.setBackground(new Color(0, 219, 255));
         save.setForeground(new Color(0, 0, 0));
         save.setOpaque(true);
+
         panel2.add(save);
 
         JButton cancel = new JButton("cancel");
@@ -223,60 +286,51 @@ public class ThemNhanVien extends JFrame {
             }
         });
 
+        JDatePickerImpl finalPickngaysinh = pickngaysinh;
+        JDatePickerImpl finalPickngayvaolam = pickngayvaolam;
         save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String query = "INSERT INTO NGUOIDUNG (USERNAME, PASSWORD) VALUES( ? , ? )";
-                String query2 = "INSERT INTO NHANVIEN (USERNAME,HOTENNV, GIOITINH, NGAYSINH, SDT, CMND, EMAIL, NGAYVAOLAM) VALUES( ? , ? , ? , ? , ? , ? , ? , ? )";
 
-                java.util.Date datengaysinh= (java.util.Date) pickngaysinh.getModel().getValue();
+                String query2 = "UPDATE NHANVIEN SET (USERNAME,HOTENNV, GIOITINH, NGAYSINH, SDT, CMND, EMAIL, NGAYVAOLAM) VALUES( ? , ? , ? , ? , ? , ? , ? , ? )";
+
+                java.util.Date datengaysinh = (java.util.Date) finalPickngaysinh.getModel().getValue();
                 java.sql.Date sqldatengaysinh = new java.sql.Date(datengaysinh.getTime());
-                java.util.Date datengayvaolam = (java.util.Date) pickngayvaolam.getModel().getValue();
+                java.util.Date datengayvaolam = (java.util.Date) finalPickngayvaolam.getModel().getValue();
                 java.sql.Date sqldatengayvaolam = new java.sql.Date(datengayvaolam.getTime());
 
-                String passText = new String(txtpass1.getPassword());
-                String passText2 = new String(txtpass2.getPassword());
-                if(passText.equals(passText2)) {
-                    try {
-                        Connection con = ConnectionOracle.getConnection();
-                        PreparedStatement pt = con.prepareStatement(query);
 
-                        pt.setString(1,txtusername.getText());
-                        pt.setString(2,passText);
+                try {
+                    Connection con = ConnectionOracle.getConnection();
+                    PreparedStatement pt = con.prepareStatement(query2);
 
-                        pt.execute();
+                    PreparedStatement pt2 = con.prepareStatement(query2);
+                    pt2.setString(1, txtusername.getText());
+                    pt2.setString(2, txttennv.getText());
+                    pt2.setString(3, bg.getSelection().getActionCommand());
+                    pt2.setDate(4, sqldatengaysinh);
+                    pt2.setString(5, txtsdt.getText());
+                    pt2.setString(6, txtcmnd.getText());
+                    pt2.setString(7, txtemail.getText());
+                    pt2.setDate(8, sqldatengayvaolam);
 
-                        PreparedStatement pt2 = con.prepareStatement(query2);
-                        pt2.setString(1,txtusername.getText());
-                        pt2.setString(2,txttennv.getText());
-                        pt2.setString(3,bg.getSelection().getActionCommand());
-                        pt2.setDate(4,sqldatengaysinh);
-                        pt2.setString(5,txtsdt.getText());
-                        pt2.setString(6,txtcmnd.getText());
-                        pt2.setString(7,txtemail.getText());
-                        pt2.setDate(8,sqldatengayvaolam);
+                    pt2.execute();
 
-                        pt2.execute();
+                    con.close();
+                    JOptionPane.showMessageDialog(null, "Success Insert");
+                    frame.dispose();
+                    QuanLyNhanVien q = new QuanLyNhanVien();
 
-                        con.close();
-                        JOptionPane.showMessageDialog(null, "Success Insert");
-                        frame.dispose();
-                        QuanLyNhanVien q = new QuanLyNhanVien();
-
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
-               else {
-                    JOptionPane.showMessageDialog(null, "Password Incorrect");
-                    txtpass2.setText("");
-                }
+
             }
         });
     }
 
 
-    public static class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
+    public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
         private String datePattern = "dd--MM--yyyy";
         private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
@@ -295,6 +349,28 @@ public class ThemNhanVien extends JFrame {
 
             return "";
         }
+
+    }
+
+
+    public class DrawCircle extends JFrame {
+
+        public DrawCircle() {
+            setTitle("Drawing a Circle");
+            setSize(250, 250);
+            setVisible(true);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        }
+
+        @Override
+        public void paint(Graphics g) {
+            Graphics2D g2d = (Graphics2D) g;
+            Shape circleShape = new Ellipse2D.Double(100, 100, 100, 100);
+
+            g2d.draw(circleShape);
+        }
+
 
     }
 }
