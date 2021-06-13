@@ -1,8 +1,6 @@
 package com.company.View.NhanVien.DSPHONG;
 
-
-import com.company.Data.ConnectionOracle;
-//import com.company.Model.PhieuThuePhong;
+import com.company.Data.*;
 import com.company.Model.Phong;
 import com.company.View.NhanVien.QuanLiHomeView;
 import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
@@ -16,9 +14,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.sql.*;
 import java.util.ArrayList;
-//import java.util.Date;
 import java.util.EventObject;
 import java.util.List;
 
@@ -30,7 +26,7 @@ public class QuanLyPhong extends QuanLiHomeView {
     JTable table;
     TableRowSorter<TableModel> rowSorter;
     TableRowSorter<TableModel> rowSorter2;
-
+    JButton addbtn;
 
     public QuanLyPhong() {
         frame.setVisible(true);
@@ -38,8 +34,7 @@ public class QuanLyPhong extends QuanLiHomeView {
         frame.setBounds(100, 100, 1200, 730);
 
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Phong");
-
+        frame.setTitle("Danh sách Phòng");
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -55,37 +50,37 @@ public class QuanLyPhong extends QuanLiHomeView {
         contentPane.add(panel);
         panel.setLayout(null);
 
-        btnTongQuan = new JButton("T\u1ED5ng Quan");
+        btnTongQuan = new JButton("Tổng Quan");
         btnTongQuan.setBackground(SystemColor.scrollbar);
         btnTongQuan.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnTongQuan.setBounds(0, 83, 167, 36);
         panel.add(btnTongQuan);
 
-        btnLichHen = new JButton("L\u1ECBch h\u1EB9n");
+        btnLichHen = new JButton("Lịch hẹn");
         btnLichHen.setBackground(SystemColor.scrollbar);
         btnLichHen.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnLichHen.setBounds(0, 129, 167, 36);
         panel.add(btnLichHen);
 
-        btnHoaDon = new JButton("Hoa \u0110\u01A1n");
+        btnHoaDon = new JButton("Phiếu thuê phòng");
         btnHoaDon.setBackground(SystemColor.scrollbar);
         btnHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnHoaDon.setBounds(0, 175, 167, 36);
         panel.add(btnHoaDon);
 
-        btnKhachHang = new JButton("Kh\u00E1ch h\u00E0ng ");
+        btnKhachHang = new JButton("Khách hàng ");
         btnKhachHang.setBackground(SystemColor.scrollbar);
         btnKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnKhachHang.setBounds(0, 221, 167, 36);
         panel.add(btnKhachHang);
 
-        btnBaoCao = new JButton("B\u00E1o C\u00E1o");
+        btnBaoCao = new JButton("Báo cáo");
         btnBaoCao.setBackground(SystemColor.scrollbar);
         btnBaoCao.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnBaoCao.setBounds(0, 267, 167, 36);
         panel.add(btnBaoCao);
 
-        btnCaiDat = new JButton("C\u00E0i \u0111\u1EB7t");
+        btnCaiDat = new JButton("Cài đặt");
         btnCaiDat.setBackground(SystemColor.text);
         btnCaiDat.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btnCaiDat.setBounds(0, 313, 167, 36);
@@ -102,7 +97,7 @@ public class QuanLyPhong extends QuanLiHomeView {
         lblNewLabel_1.setBounds(61, 10, 96, 27);
         panel.add(lblNewLabel_1);
 
-        JLabel lblNewLabel_2 = new JLabel("Ho\u1EA1t \u0111\u1ED9ng");
+        JLabel lblNewLabel_2 = new JLabel("Hoạt Động");
         lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 10));
         lblNewLabel_2.setForeground(new Color(50, 205, 50));
         lblNewLabel_2.setBounds(61, 37, 59, 13);
@@ -135,7 +130,7 @@ public class QuanLyPhong extends QuanLiHomeView {
         panel_2.add(panel_4);
         panel_4.setLayout(null);
 
-        btnQuanLiDichVu = new JButton("Qu\u1EA3n l\u00FD d\u1ECBch v\u1EE5");
+        btnQuanLiDichVu = new JButton("Quản lý dịch vụ");
         btnQuanLiDichVu.setFont(new Font("Times New Roman", Font.BOLD, 15));
         btnQuanLiDichVu.setBounds(204, 0, 147, 57);
         panel_4.add(btnQuanLiDichVu);
@@ -145,7 +140,7 @@ public class QuanLyPhong extends QuanLiHomeView {
             new Quanlydichvu();
             frame.dispose();
         });
-        btnQuanLiPhong = new JButton("Qu\u1EA3n l\u00FD ph\u00F2ng ");
+        btnQuanLiPhong = new JButton("Quản lý phòng ");
         btnQuanLiPhong.setFont(new Font("Times New Roman", Font.BOLD, 15));
         btnQuanLiPhong.setBounds(350, 0, 147, 57);
         panel_4.add(btnQuanLiPhong);
@@ -156,7 +151,7 @@ public class QuanLyPhong extends QuanLiHomeView {
             frame.dispose();
         });
 
-        btnQuanLiNhanVien = new JButton("Qu\u1EA3n l\u00FD nh\u00E2n vi\u00EAn");
+        btnQuanLiNhanVien = new JButton("Quản lý nhân viên");
         btnQuanLiNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 15));
         btnQuanLiNhanVien.setBounds(495, 0, 168, 57);
         panel_4.add(btnQuanLiNhanVien);
@@ -168,7 +163,7 @@ public class QuanLyPhong extends QuanLiHomeView {
         });
 
 
-        JLabel lblCaiDat = new JLabel("C\u00E0i \u0111\u1EB7t");
+        JLabel lblCaiDat = new JLabel("Cài đặt");
         lblCaiDat.setHorizontalAlignment(SwingConstants.CENTER);
         lblCaiDat.setFont(new Font("Times New Roman", Font.BOLD, 15));
         lblCaiDat.setBounds(10, 5, 117, 47);
@@ -181,13 +176,13 @@ public class QuanLyPhong extends QuanLiHomeView {
         panel_2.add(panel_5);
         panel_5.setLayout(null);
 
-        JLabel name = new JLabel("Quan Ly Phong");
+        JLabel name = new JLabel("Danh sách phòng");
         name.setHorizontalAlignment(SwingConstants.CENTER);
         name.setFont(new Font("Arial", Font.BOLD, 30));
         name.setBounds(150, 0, 600, 100);
         panel_5.add(name);
 
-        JButton addbtn = new JButton("Them +");
+        addbtn = new JButton("Them +");
         addbtn.setFont(new Font("Arial", Font.BOLD, 15));
         addbtn.setBounds(5, 110, 100, 30);
         addbtn.setBackground(new Color(201, 246, 3));
@@ -214,7 +209,6 @@ public class QuanLyPhong extends QuanLiHomeView {
                 } else {
                     rowSorter2.setRowFilter(RowFilter.regexFilter("(?i)" + text));
                 }
-
             }
 
             @Override
@@ -242,7 +236,7 @@ public class QuanLyPhong extends QuanLiHomeView {
 
         });
 
-         new MultiButtonTable();
+         new MultiButtonTablePhong();
 
         addbtn.addActionListener(e -> {
             if (tabbebpane.getSelectedIndex() == 0)
@@ -254,73 +248,17 @@ public class QuanLyPhong extends QuanLiHomeView {
 
     }
 
-    public ArrayList<Phong> listphong() {
-        ArrayList<Phong> listphong = new ArrayList<>();
-        Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT MAPHONG,TENLOAIPHONG,SOLUONGNGUOIHIENTAI,TINHTRANG FROM PHONG P inner join LOAIPHONG L on P.MALOAIPHONG = L.MALOAIPHONG ORDER BY MAPHONG";
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
+    public class MultiButtonTablePhong {
 
-            while (rs.next()) {
-                int maphong = rs.getInt(1);
-                String maloaiphong = rs.getString(2);
-                String tinh_trang = rs.getString(3);
-                int soluong = rs.getInt(4);
-
-                if (tinh_trang != null) {
-                    if (tinh_trang.equals("0")) tinh_trang = "trống";
-                    if (tinh_trang.equals("1")) tinh_trang = "đã có ngừoi";
-                    if (tinh_trang.equals("2")) tinh_trang = "đã được đặt";
-                } else tinh_trang = "trống";
-                listphong.add(new Phong(maphong, maloaiphong, soluong, tinh_trang));
-            }
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return listphong;
-    }
-/*
-    public ArrayList<PhieuThuePhong> listphieuthuephong() {
-        ArrayList<PhieuThuePhong> listptp = new ArrayList<>();
-        Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT A.MAPTP, B.CMND, A.NGAYLAPPTP, B.NGAYNHANPHONG, B.NGAYTRAPHONG, A.TINHTRANGTHANHTOAN, A.TONGTIENTHANHTOAN FROM PHIEU_THUE_PHONG A INNER JOIN CHITIET_PHIEUTHUEPHONG B ON A.MAPTP = B.MAPTP";
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                int MaPTP = rs.getInt(1);
-                String TenKh = rs.getString(2);
-                String TenNV = rs.getString(3);
-                Date NgayPapPTP = rs.getDate(4);
-                int TinhTrangThanhToan = rs.getInt(5);
-                double TongTienThanhToan = rs.getDouble(6);
-                Date NgayThanhToan = rs.getDate(7);
-
-                listptp.add(new PhieuThuePhong(MaPTP, TenKh, TenNV, NgayPapPTP, TinhTrangThanhToan, TongTienThanhToan, NgayThanhToan));
-            }
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return listptp;
-
-    }
-*/
-    public class MultiButtonTable {
-
-        public MultiButtonTable() {
+        public MultiButtonTablePhong() {
             EventQueue.invokeLater(() -> {
-
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
                 ////ds phong
-                ArrayList<Phong> list = listphong();
+                ArrayList<Phong> list = getListPhongData.listphong();
 
                 MyTableModel model = new MyTableModel();
                 int[] row = new int[2];
@@ -388,8 +326,8 @@ public class QuanLyPhong extends QuanLiHomeView {
                 tabbebpane.addTab("Danh sach phong", scrollpane);
                 tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);
 
-             //   tabbebpane.addTab("Phieu thue phong", scrollpanez);
-              //  tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
+               // tabbebpane.addTab("Phieu thue phong", scrollpanez);
+               // tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
 
                 panel_2.add(tabbebpane);
             });
@@ -577,22 +515,9 @@ public class QuanLyPhong extends QuanLiHomeView {
                         if (acceptRejectPane.getState().equals("reject")) {
                             reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
                             if (reply == JOptionPane.YES_OPTION) {
-                                try {
-                                    Connection con = ConnectionOracle.getConnection();
-                                    String query = "DELETE FROM PHONG WHERE MAPHONG = (SELECT MAPHONG FROM PHONG WHERE ROWNUM <=" + r + " MINUS SELECT MAPHONG FROM PHONG WHERE ROWNUM <" + r + " )";
-                                    PreparedStatement pt = con.prepareStatement(query);
-                                    pt.execute();
-                                    con.close();
-                                    frame.dispose();
-                                    JOptionPane.showMessageDialog(null, "Delete Success!!");
-                                 new QuanLyPhong();
-
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                    JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
-
-                                }
-
+                                new XoaPhongData(r);
+                                frame.dispose();
+                                new QuanLyPhong();
                             } else {
                                 JOptionPane.showMessageDialog(null, "Canecled Delete ");
                             }
@@ -878,7 +803,5 @@ public class QuanLyPhong extends QuanLiHomeView {
 
 */
     }
-
-
 
 }

@@ -8,8 +8,6 @@ import org.jdatepicker.impl.UtilDateModel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.sql.*;
 import java.text.ParseException;
@@ -20,8 +18,7 @@ import java.util.Properties;
 public class ThongTinNhanVien extends JFrame {
 
     JFrame frame = new JFrame();
-    ThongTinNhanVien(){}
-    public ThongTinNhanVien(String usernamenv ) {
+    public ThongTinNhanVien(int manv ) {
         frame.setVisible(true);
         frame.setBounds(100, 100, 1050, 730);
 
@@ -219,9 +216,10 @@ public class ThongTinNhanVien extends JFrame {
         txtngql.setBounds(705, 440, 300, 30);
         txtngql.setEditable(false);
         panel2.add(txtngql);
+
         try{
             Connection con = ConnectionOracle.getConnection();
-            String query = "SELECT USERNAME,HOTENNV,SDT,CMND,EMAIL,GIOITINH ,NGAYSINH,CHUCVU,NGUOIQUANLY,NGAYVAOLAM FROM NHANVIEN WHERE USERNAME = " + "'"+usernamenv+"'";
+            String query = "SELECT USERNAME,HOTENNV,SDT,CMND,EMAIL,GIOITINH ,NGAYSINH,CHUCVU,NGUOIQUANLY,NGAYVAOLAM FROM NHANVIEN WHERE MANV = " + "'"+manv+"'";
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
 
@@ -255,8 +253,6 @@ public class ThongTinNhanVien extends JFrame {
                  pickngayvaolam = new JDatePickerImpl(datePanel, new ThemNhanVien.DateLabelFormatter());
 
             }
-
-
             con.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -278,62 +274,53 @@ public class ThongTinNhanVien extends JFrame {
         cancel.setOpaque(false);
         panel2.add(cancel);
 
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                QuanLyNhanVien q = new QuanLyNhanVien();
-            }
+        cancel.addActionListener(e -> {
+            frame.dispose();
+             new QuanLyNhanVien();
         });
 
         JDatePickerImpl finalPickngaysinh = pickngaysinh;
         JDatePickerImpl finalPickngayvaolam = pickngayvaolam;
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        save.addActionListener(e -> {
 
-                String query2 = "UPDATE NHANVIEN SET (USERNAME,HOTENNV, GIOITINH, NGAYSINH, SDT, CMND, EMAIL, NGAYVAOLAM) VALUES( ? , ? , ? , ? , ? , ? , ? , ? )";
+            java.util.Date datengaysinh = (java.util.Date) finalPickngaysinh.getModel().getValue();
+            Date sqldatengaysinh = new Date(datengaysinh.getTime());
+            java.util.Date datengayvaolam = (java.util.Date) finalPickngayvaolam.getModel().getValue();
+            Date sqldatengayvaolam = new Date(datengayvaolam.getTime());
 
-                java.util.Date datengaysinh = (java.util.Date) finalPickngaysinh.getModel().getValue();
-                java.sql.Date sqldatengaysinh = new java.sql.Date(datengaysinh.getTime());
-                java.util.Date datengayvaolam = (java.util.Date) finalPickngayvaolam.getModel().getValue();
-                java.sql.Date sqldatengayvaolam = new java.sql.Date(datengayvaolam.getTime());
+            try {
+                String query2 = "BEGIN UPDATE_EMPLOYEE_INFO( ? , ? , ? , ? , ? , ? , ? , ? ); END;";
+                Connection con = ConnectionOracle.getConnection();
 
+                PreparedStatement pt2 = con.prepareStatement(query2);
+                pt2.setInt(1, manv);
+                pt2.setString(2, txttennv.getText());
+                pt2.setString(4, bg.getSelection().getActionCommand());
+                pt2.setDate(3, sqldatengaysinh);
+                pt2.setString(5, txtdiachi.getText());
+                pt2.setString(6, txtsdt.getText());
+                pt2.setString(7, txtcmnd.getText());
+                pt2.setDate(8, sqldatengayvaolam);
 
-                try {
-                    Connection con = ConnectionOracle.getConnection();
-                    PreparedStatement pt = con.prepareStatement(query2);
+                pt2.execute();
 
-                    PreparedStatement pt2 = con.prepareStatement(query2);
-                    pt2.setString(1, txtusername.getText());
-                    pt2.setString(2, txttennv.getText());
-                    pt2.setString(3, bg.getSelection().getActionCommand());
-                    pt2.setDate(4, sqldatengaysinh);
-                    pt2.setString(5, txtsdt.getText());
-                    pt2.setString(6, txtcmnd.getText());
-                    pt2.setString(7, txtemail.getText());
-                    pt2.setDate(8, sqldatengayvaolam);
+                con.close();
+                JOptionPane.showMessageDialog(null, "Success update");
+                frame.dispose();
+              new QuanLyNhanVien();
 
-                    pt2.execute();
-
-                    con.close();
-                    JOptionPane.showMessageDialog(null, "Success Insert");
-                    frame.dispose();
-                    QuanLyNhanVien q = new QuanLyNhanVien();
-
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
+
         });
     }
 
 
-    public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
+    public static class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
-        private String datePattern = "dd--MM--yyyy";
-        private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+        private final String datePattern = "dd--MM--yyyy";
+        private final SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
         @Override
         public Object stringToValue(String text) throws ParseException {
@@ -341,7 +328,7 @@ public class ThongTinNhanVien extends JFrame {
         }
 
         @Override
-        public String valueToString(Object value) throws ParseException {
+        public String valueToString(Object value) {
             if (value != null) {
                 Calendar cal = (Calendar) value;
                 return dateFormatter.format(cal.getTime());
@@ -353,7 +340,7 @@ public class ThongTinNhanVien extends JFrame {
     }
 
 
-    public class DrawCircle extends JFrame {
+    public static class DrawCircle extends JFrame {
 
         public DrawCircle() {
             setTitle("Drawing a Circle");

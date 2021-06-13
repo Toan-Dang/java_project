@@ -1,6 +1,6 @@
 package com.company.View.NhanVien.QuanLyNhanVien;
 
-import com.company.Data.ConnectionOracle;
+import com.company.Data.InsertNhanVien;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -8,13 +8,10 @@ import org.jdatepicker.impl.UtilDateModel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Objects;
 import java.util.Properties;
 
 public class ThemNhanVien extends JFrame {
@@ -215,62 +212,29 @@ public class ThemNhanVien extends JFrame {
         cancel.setOpaque(false);
         panel2.add(cancel);
 
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                QuanLyNhanVien q = new QuanLyNhanVien();
-            }
+        cancel.addActionListener(e -> {
+            frame.dispose();
+           new QuanLyNhanVien();
         });
 
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String query = "INSERT INTO NGUOIDUNG (USERNAME, PASSWORD) VALUES( ? , ? )";
-                String query2 = "INSERT INTO NHANVIEN (USERNAME,HOTENNV, GIOITINH, NGAYSINH, SDT, CMND, EMAIL, NGAYVAOLAM) VALUES( ? , ? , ? , ? , ? , ? , ? , ? )";
-
+        save.addActionListener(e -> {
+            String passText = new String(txtpass1.getPassword());
+            String passText2 = new String(txtpass2.getPassword());
+            if(passText.equals(passText2)) {
                 java.util.Date datengaysinh= (java.util.Date) pickngaysinh.getModel().getValue();
-                java.sql.Date sqldatengaysinh = new java.sql.Date(datengaysinh.getTime());
+                Date sqldatengaysinh = new Date(datengaysinh.getTime());
                 java.util.Date datengayvaolam = (java.util.Date) pickngayvaolam.getModel().getValue();
-                java.sql.Date sqldatengayvaolam = new java.sql.Date(datengayvaolam.getTime());
+                Date sqldatengayvaolam = new Date(datengayvaolam.getTime());
+            var gt=  bg.getSelection().getActionCommand();
 
-                String passText = new String(txtpass1.getPassword());
-                String passText2 = new String(txtpass2.getPassword());
-                if(passText.equals(passText2)) {
-                    try {
-                        Connection con = ConnectionOracle.getConnection();
-                        PreparedStatement pt = con.prepareStatement(query);
-
-                        pt.setString(1,txtusername.getText());
-                        pt.setString(2,passText);
-
-                        pt.execute();
-
-                        PreparedStatement pt2 = con.prepareStatement(query2);
-                        pt2.setString(1,txtusername.getText());
-                        pt2.setString(2,txttennv.getText());
-                        pt2.setString(3,bg.getSelection().getActionCommand());
-                        pt2.setDate(4,sqldatengaysinh);
-                        pt2.setString(5,txtsdt.getText());
-                        pt2.setString(6,txtcmnd.getText());
-                        pt2.setString(7,txtemail.getText());
-                        pt2.setDate(8,sqldatengayvaolam);
-
-                        pt2.execute();
-
-                        con.close();
-                        JOptionPane.showMessageDialog(null, "Success Insert");
-                        frame.dispose();
-                        QuanLyNhanVien q = new QuanLyNhanVien();
-
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                }
-               else {
-                    JOptionPane.showMessageDialog(null, "Password Incorrect");
-                    txtpass2.setText("");
-                }
+                new InsertNhanVien(txtusername.getText(),passText,txttennv.getText(),gt,
+                        sqldatengaysinh,txtsdt.getText(),txtcmnd.getText(),txtemail.getText(),sqldatengayvaolam);
+                frame.dispose();
+               new QuanLyNhanVien();
+            }
+           else {
+                JOptionPane.showMessageDialog(null, "Password Incorrect");
+                txtpass2.setText("");
             }
         });
     }
@@ -278,8 +242,8 @@ public class ThemNhanVien extends JFrame {
 
     public static class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
-        private String datePattern = "dd--MM--yyyy";
-        private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+        private final String datePattern = "dd--MM--yyyy";
+        private final SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
         @Override
         public Object stringToValue(String text) throws ParseException {
@@ -287,7 +251,7 @@ public class ThemNhanVien extends JFrame {
         }
 
         @Override
-        public String valueToString(Object value) throws ParseException {
+        public String valueToString(Object value) {
             if (value != null) {
                 Calendar cal = (Calendar) value;
                 return dateFormatter.format(cal.getTime());

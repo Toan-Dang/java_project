@@ -1,14 +1,12 @@
 package com.company.View.NhanVien.QuanLyDichVu;
-import com.company.Data.ConnectionOracle;
-import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
+
+import com.company.Data.InsertDichVu;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class ThemDichVu extends JFrame {
     JFrame frame = new JFrame();
@@ -16,7 +14,6 @@ public class ThemDichVu extends JFrame {
     public ThemDichVu() {
         frame.setVisible(true);
         frame.setBounds(100, 100, 500, 550);
-
         frame.setLocationRelativeTo(null);
         frame.setTitle("Them Dich Vu");
 
@@ -95,7 +92,6 @@ public class ThemDichVu extends JFrame {
         scrollPane.setBounds(100, 210, 300, 100);
         panel2.add(scrollPane);
 
-
         JButton save = new JButton("save");
         save.setBounds(180, 350, 70, 30);
         save.setBackground(new Color(0, 219, 255));
@@ -110,33 +106,13 @@ public class ThemDichVu extends JFrame {
 
         cancel.addActionListener(e -> {
             frame.dispose();
-            new QuanLyPhong();
+            new Quanlydichvu();
         });
         save.addActionListener(e -> {
-
-        });
-        save.addActionListener(e -> {
-            String query = "INSERT INTO DICHVU(TENDICHVU, CHITIET, GIA) VALUES ( ? , ? , ? )";
-            try  {
-                Connection con = ConnectionOracle.getConnection();
-                PreparedStatement pt = con.prepareStatement(query);
-
-                pt.setString(1,txttendv.getText());
-                pt.setString(2,ghichu.getText());
-                double gia = Double.parseDouble(txtgia.getText());
-                pt.setDouble(3,gia);
-
-                pt.execute();
-                con.close();
-                JOptionPane.showMessageDialog(null,"Success Insert");
-                new Quanlydichvu();
-                frame.dispose();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
+           new InsertDichVu(txttendv.getText(),ghichu.getText(),txtgia.getText());
+            new Quanlydichvu();
+            frame.dispose();
 
         });
     }
-
 }

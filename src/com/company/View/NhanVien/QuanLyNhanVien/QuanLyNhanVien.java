@@ -1,7 +1,7 @@
 package com.company.View.NhanVien.QuanLyNhanVien;
 
 
-import com.company.Data.ConnectionOracle;
+import com.company.Data.*;
 import com.company.Model.NhanVien;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
 import com.company.View.NhanVien.DSPHONG.ThemPTP;
@@ -16,7 +16,6 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
@@ -34,10 +33,8 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(100, 100, 1200, 730);
-
         frame.setLocationRelativeTo(null);
-        frame.setTitle("QuanLyNhanVien");
-
+        frame.setTitle("Quản lý nhân viên");
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -48,7 +45,6 @@ public class QuanLyNhanVien extends QuanLiHomeView {
 
         JPanel panel = new JPanel();
         panel.setBackground(SystemColor.controlDkShadow);
-        // panel.setBackground(SystemColor.black);
         panel.setBounds(10, 78, 167, 605);
         contentPane.add(panel);
         panel.setLayout(null);
@@ -169,7 +165,6 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         lblCaiDat.setBounds(10, 5, 117, 47);
         panel_4.add(lblCaiDat);
 
-
         JPanel panel_5 = new JPanel();
         panel_5.setBackground(new Color(255, 224, 224));
         panel_5.setBounds(0, 57, 1000, 150);
@@ -192,6 +187,19 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         searchfield = new JTextField();
         searchfield.setBounds(530, 110, 450, 30);
         panel_5.add(searchfield);
+
+
+         new MultiButtonTable();
+
+        addbtn.addActionListener(e -> {
+
+            if (tabbebpane.getSelectedIndex() == 0)
+                new ThemNhanVien();
+            else
+                new ThemPTP();
+
+            frame.dispose();
+        });
         searchfield.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -234,67 +242,10 @@ public class QuanLyNhanVien extends QuanLiHomeView {
             }
 
         });
-
-         new MultiButtonTable();
-
-        addbtn.addActionListener(e -> {
-
-            if (tabbebpane.getSelectedIndex() == 0)
-                new ThemNhanVien();
-            else
-                new ThemPTP();
-
-            frame.dispose();
-        });
-
     }
 
-    public ArrayList<NhanVien> listnhanvien() {
-        ArrayList<NhanVien> listnhanvien = new ArrayList<>();
-        Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT MANV,HOTENNV,USERNAME,CHUCVU FROM NHANVIEN";
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
 
-            while (rs.next()) {
-                int manv = rs.getInt(1);
-                String hotennv = rs.getString(2);
-                String username = rs.getString(3);
-                String chucvu = rs.getString(4);
 
-                listnhanvien.add(new NhanVien(manv, hotennv, username, chucvu));
-            }
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return listnhanvien;
-    }
-
-    public ArrayList<NhanVien> listquanly() {
-        ArrayList<NhanVien> listquanly = new ArrayList<>();
-        Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT MANV,HOTENNV,USERNAME,CHUCVU FROM NHANVIEN WHERE CHUCVU LIKE 'QUAN LI'";
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                int manv = rs.getInt(1);
-                String hotennv = rs.getString(2);
-                String username = rs.getString(3);
-                String chucvu = rs.getString(4);
-
-                listquanly.add(new NhanVien(manv, hotennv, username, chucvu));
-            }
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return listquanly;
-
-    }
 
     public class MultiButtonTable {
 
@@ -307,8 +258,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                     ex.printStackTrace();
                 }
                 ////ds nhan vien
-                ArrayList<NhanVien> list = listnhanvien();
-
+                ArrayList<NhanVien> list = getListNhanVien.listnhanvien();
                 MyTableModel model = new MyTableModel();
                 int manv;
                 String[] row = new String[3];
@@ -342,7 +292,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                 tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);
                 //quanly
 
-                ArrayList<NhanVien> listql = listquanly();
+                ArrayList<NhanVien> listql = getListQuanLyData.listquanly();
                 MyTableModelQL modelql = new MyTableModelQL();
                 int maql;
                 String[] rowz = new String[3];
@@ -560,54 +510,21 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                 acceptRejectPane.addActionListener(e -> SwingUtilities.invokeLater(() -> {
                     int reply;
                     int r = acceptRejectPane.getRow();
-
                     ++r;
-
                     if (acceptRejectPane.getState().equals("reject")) {
                         reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
                         if (reply == JOptionPane.YES_OPTION) {
-                            try {
-                                Connection con = ConnectionOracle.getConnection();
-                                String query = "DELETE FROM NHANVIEN WHERE MANV = (SELECT MANV FROM NHANVIEN WHERE ROWNUM <=" + r + " MINUS SELECT MANV FROM NHANVIEN WHERE ROWNUM <" + r + " )";
-                                PreparedStatement pt = con.prepareStatement(query);
-                                pt.execute();
-                                con.close();
-                                frame.dispose();
-                                JOptionPane.showMessageDialog(null, "Delete Success!!");
-                               new QuanLyNhanVien();
-
-                            } catch (SQLException throwables) {
-                                throwables.printStackTrace();
-                                JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
-
-                            }
-
+                            new XoaNhanVienData(r);
+                            frame.dispose();
+                            new QuanLyNhanVien();
                         } else {
                             JOptionPane.showMessageDialog(null, "Canecled Delete ");
                         }
                     } else {
-
-                        try {
-                            Connection con = ConnectionOracle.getConnection();
-                            String query = "SELECT USERNAME FROM NHANVIEN WHERE rownum <=" + r + " MINUS SELECT USERNAME FROM NHANVIEN WHERE rownum <"+ r ;
-                            Statement st = con.createStatement();
-                            ResultSet rs = st.executeQuery(query);
-                            String getusernamenv = "";
-                            while (rs.next()) {
-                                getusernamenv = rs.getString("USERNAME");
-                            }
-                            con.close();
-                            frame.dispose();
-                           new ThongTinNhanVien(getusernamenv);
-
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                            JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
-
-                        }
-
+                        int getusernamenv = searchNhanVienData.searchNhanVien(r);
+                        frame.dispose();
+                        new ThongTinNhanVien(getusernamenv);
                     }
-
                 }));
             }
 
@@ -633,10 +550,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                 acceptRejectPane.setRow(row);
                 return acceptRejectPane;
             }
-
-
         }
-
         //quanly
         public class MyTableModelQL extends AbstractTableModel {
 
@@ -815,7 +729,6 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                     public void run() {
                         int r = acceptRejectPane.getRow();
                         ++r;
-
                         JOptionPane.showMessageDialog(null, "Chua co chuc nang nay" + r);
                         frame.dispose();
                      new QuanLyNhanVien();
@@ -845,12 +758,6 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                 acceptRejectPane.setRow(row);
                 return acceptRejectPane;
             }
-
-
         }
-
-
     }
-
-
 }

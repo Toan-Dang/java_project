@@ -1,6 +1,8 @@
 package com.company.View.NhanVien.QuanLyDichVu;
 
-import com.company.Data.ConnectionOracle;
+import com.company.Data.XoaDichVuData;
+import com.company.Data.getListDichVuData;
+import com.company.Data.searchDichVuData;
 import com.company.Model.DichVu;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
 import com.company.View.NhanVien.QuanLiHomeView;
@@ -13,7 +15,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
@@ -32,7 +33,6 @@ public class Quanlydichvu extends QuanLiHomeView {
 
         frame.setLocationRelativeTo(null);
         frame.setTitle("Dịch Vụ");
-
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -122,7 +122,6 @@ public class Quanlydichvu extends QuanLiHomeView {
         panel_2.setLayout(null);
 
         JPanel panel_4 = new JPanel();
-        // panel_4.setBackground(new Color(224, 255, 255));
         panel_4.setBackground(new Color(252, 255, 224));
         panel_4.setBounds(0, 0, 1000, 57);
         panel_2.add(panel_4);
@@ -160,13 +159,11 @@ public class Quanlydichvu extends QuanLiHomeView {
             frame.dispose();
         });
 
-
         JLabel lblCaiDat = new JLabel("C\u00E0i \u0111\u1EB7t");
         lblCaiDat.setHorizontalAlignment(SwingConstants.CENTER);
         lblCaiDat.setFont(new Font("Times New Roman", Font.BOLD, 15));
         lblCaiDat.setBounds(10, 5, 117, 47);
         panel_4.add(lblCaiDat);
-
 
         JPanel panel_5 = new JPanel();
         panel_5.setBackground(new Color(255, 224, 224));
@@ -190,6 +187,13 @@ public class Quanlydichvu extends QuanLiHomeView {
         searchfield = new JTextField();
         searchfield.setBounds(530, 110, 450, 30);
         panel_5.add(searchfield);
+
+        new MultiButtonTable();
+
+        addbtn.addActionListener(e -> {
+            new ThemDichVu();
+            frame.dispose();
+        });
         searchfield.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -218,36 +222,6 @@ public class Quanlydichvu extends QuanLiHomeView {
             }
 
         });
-
-       new MultiButtonTable();
-        addbtn.addActionListener(e -> {
-            new ThemDichVu();
-            frame.dispose();
-        });
-
-    }
-
-    public ArrayList<DichVu> listdv() {
-        ArrayList<DichVu> listdv = new ArrayList<>();
-        Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT MADV,TENDICHVU, CHITIET ,GIA FROM DICHVU";
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                int madv = rs.getInt(1);
-                String tendv = rs.getString(2);
-                String chitiet = rs.getString(3);
-                double gia = rs.getDouble(4);
-
-                listdv.add(new DichVu(madv, tendv, chitiet, gia));
-            }
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return listdv;
     }
 
     public class MultiButtonTable {
@@ -261,8 +235,7 @@ public class Quanlydichvu extends QuanLiHomeView {
                     ex.printStackTrace();
                 }
                 ////ds phong
-                ArrayList<DichVu> list = listdv();
-
+                ArrayList<DichVu> list = getListDichVuData.listdv();
                 MyTableModel model = new MyTableModel();
                 int rowint;
                 String[] rowstr = new String[2];
@@ -272,10 +245,8 @@ public class Quanlydichvu extends QuanLiHomeView {
                     rowstr[0] = dv.getTenDV();
                     rowstr[1] = dv.getGhiChu();
                     rowdb = dv.getGia();
-
                     model.add(new DichVu(rowint, rowstr[0], rowstr[1], rowdb));
                 }
-
                 table = new JTable(model);
                 AcceptRejectRenderer renderer = new AcceptRejectRenderer();
                 table.getColumnModel().getColumn(4).setCellRenderer(renderer);
@@ -473,49 +444,21 @@ public class Quanlydichvu extends QuanLiHomeView {
                         int reply;
                         int r = acceptRejectPane.getRow();
                         ++r;
-
                         if (acceptRejectPane.getState().equals("reject")) {
                             reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfir", JOptionPane.YES_NO_OPTION);
                             if (reply == JOptionPane.YES_OPTION) {
-                                try {
-                                    Connection con = ConnectionOracle.getConnection();
-                                    String query = "DELETE FROM PHONG WHERE MADV = (SELECT MADV FROM DICHVU WHERE ROWNUM <=" + r + " MINUS SELECT MADV FROM DICHVU WHERE ROWNUM <" + r + " )";
-                                    PreparedStatement pt = con.prepareStatement(query);
-                                    pt.execute();
-                                    con.close();
-                                    frame.dispose();
-                                    JOptionPane.showMessageDialog(null, "Delete Success!!");
-                                    new Quanlydichvu();
+                                new XoaDichVuData(r);
+                                frame.dispose();
 
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                    JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
-
-                                }
-
+                                new Quanlydichvu();
                             } else {
                                 JOptionPane.showMessageDialog(null, "Canecled Delete ");
                             }
                         } else {
-                            try{
-                                Connection con = ConnectionOracle.getConnection();
-                                String query = "SELECT MADV FROM DICHVU WHERE rownum <=" + r + " MINUS SELECT MADV FROM DICHVU WHERE rownum <"+ r ;
-                                Statement st = con.createStatement();
-                                ResultSet rs = st.executeQuery(query);
-                                int getdv = 0;
-                                while (rs.next()) {
-                                    getdv = rs.getInt("MADV");
-                                }
-                                con.close();
-                                frame.dispose();
-                                new SuaDichVu(getdv);
-
-                            } catch (SQLException throwables) {
-                                throwables.printStackTrace();
-                            }
-
+                            int getdv = searchDichVuData.searchDichVu(r);
+                            frame.dispose();
+                            new SuaDichVu(getdv);
                         }
-
                     }
                 }));
             }
@@ -542,12 +485,6 @@ public class Quanlydichvu extends QuanLiHomeView {
                 acceptRejectPane.setRow(row);
                 return acceptRejectPane;
             }
-
-
         }
-
-
     }
-
-
 }
