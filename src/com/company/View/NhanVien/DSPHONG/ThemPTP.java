@@ -8,8 +8,6 @@ import org.jdatepicker.impl.UtilDateModel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +18,7 @@ import java.util.Properties;
 public class ThemPTP extends JFrame {
 
     JFrame frame = new JFrame();
-    private JComboBox<String> list;
+    private final JComboBox<String> list;
 
     public ThemPTP() {
         frame.setVisible(true);
@@ -186,65 +184,59 @@ public class ThemPTP extends JFrame {
         cancel.setForeground(new Color(0, 0, 0));
         panel2.add(cancel);
 
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                QuanLyPhong q = new QuanLyPhong();
-            }
+        cancel.addActionListener(e -> {
+            frame.dispose();
+         new QuanLyPhong();
         });
 
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String queryz = "SELECT COUNT(*) MAPTP FROM PHIEU_THUE_PHONG";
-                    String query = "INSERT INTO PHIEU_THUE_PHONG (MAPTP,NGAYLAPPTP) VALUES( ? , ? )";
+        save.addActionListener(e -> {
+            try {
+                String queryz = "SELECT COUNT(*) MAPTP FROM PHIEU_THUE_PHONG";
+                String query = "INSERT INTO PHIEU_THUE_PHONG (MAPTP,NGAYLAPPTP) VALUES( ? , ? )";
 
-                    java.util.Date dateez = (java.util.Date) datePickerz.getModel().getValue();
-                    java.sql.Date sqlDatez = new java.sql.Date(dateez.getTime());
-                    java.util.Date datee = (java.util.Date) datePicker.getModel().getValue();
-                    java.sql.Date sqlDate = new java.sql.Date(datee.getTime());
+                java.util.Date dateez = (java.util.Date) datePickerz.getModel().getValue();
+                Date sqlDatez = new Date(dateez.getTime());
+                java.util.Date datee = (java.util.Date) datePicker.getModel().getValue();
+                Date sqlDate = new Date(datee.getTime());
 
-                    Connection con = ConnectionOracle.getConnection();
-                    Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery(queryz);
-                    PreparedStatement pt = con.prepareStatement(query);
-                    String getc = "99999999";
-                    while (rs.next()) {
-                         getc = rs.getString("MAPTP");
-                    }
-                    int count = Integer.parseInt(getc);
-                    ++count;
-                    String maphongs = Objects.requireNonNull(list.getSelectedItem()).toString();
-                    int maphong =  Integer.parseInt(maphongs);
-                    pt.setInt(1, count);
-                    pt.setDate(2, sqlDatez);
-                    pt.execute();
-                    con.close();
-
-                    con = ConnectionOracle.getConnection();
-                    String query2 = "INSERT INTO CHITIET_PHIEUTHUEPHONG(MAPTP,MAPHONG,CMND,NGAYNHANPHONG,NGAYTRAPHONG) VALUES ( ? , ? , ? , ? , ? )";
-                    java.util.Date datee2 = (java.util.Date) datePicker2.getModel().getValue();
-                    java.sql.Date sqlDate2 = new java.sql.Date(datee2.getTime());
-                    PreparedStatement pt2 = con.prepareStatement(query2);
-
-                    pt2.setInt(1,count);
-                    pt2.setInt(2,maphong);
-                    pt2.setString(3,txtcmnd.getText());
-                    pt2.setDate(4, sqlDate);
-                    pt2.setDate(5, sqlDate2);
-
-                    pt2.execute();
-                    con.close();
-                    JOptionPane.showMessageDialog(null, "Success Insert");
-                    frame.dispose();
-                    QuanLyPhong q = new QuanLyPhong();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                Connection con = ConnectionOracle.getConnection();
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(queryz);
+                PreparedStatement pt = con.prepareStatement(query);
+                String getc = "99999999";
+                while (rs.next()) {
+                     getc = rs.getString("MAPTP");
                 }
+                int count = Integer.parseInt(getc);
+                ++count;
+                String maphongs = Objects.requireNonNull(list.getSelectedItem()).toString();
+                int maphong =  Integer.parseInt(maphongs);
+                pt.setInt(1, count);
+                pt.setDate(2, sqlDatez);
+                pt.execute();
+                con.close();
 
+                con = ConnectionOracle.getConnection();
+                String query2 = "INSERT INTO CHITIET_PHIEUTHUEPHONG(MAPTP,MAPHONG,CMND,NGAYNHANPHONG,NGAYTRAPHONG) VALUES ( ? , ? , ? , ? , ? )";
+                java.util.Date datee2 = (java.util.Date) datePicker2.getModel().getValue();
+                Date sqlDate2 = new Date(datee2.getTime());
+                PreparedStatement pt2 = con.prepareStatement(query2);
+
+                pt2.setInt(1,count);
+                pt2.setInt(2,maphong);
+                pt2.setString(3,txtcmnd.getText());
+                pt2.setDate(4, sqlDate);
+                pt2.setDate(5, sqlDate2);
+
+                pt2.execute();
+                con.close();
+                JOptionPane.showMessageDialog(null, "Success Insert");
+                frame.dispose();
+               new QuanLyPhong();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
+
         });
     }
 
@@ -267,10 +259,10 @@ public class ThemPTP extends JFrame {
         }
     }
 
-    public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
+    public static class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
-        private String datePattern = "dd--MM--yyyy";
-        private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+        private final String datePattern = "dd--MM--yyyy";
+        private final SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
         @Override
         public Object stringToValue(String text) throws ParseException {
@@ -278,7 +270,7 @@ public class ThemPTP extends JFrame {
         }
 
         @Override
-        public String valueToString(Object value) throws ParseException {
+        public String valueToString(Object value) {
             if (value != null) {
                 Calendar cal = (Calendar) value;
                 return dateFormatter.format(cal.getTime());

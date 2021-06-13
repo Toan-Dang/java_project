@@ -5,14 +5,12 @@ import com.company.Data.ConnectionOracle;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.Objects;
 
 public class ThemPhong extends JFrame {
     JFrame frame = new JFrame();
-   private  JComboBox<String> list;
+   private final JComboBox<String> list;
 
     public ThemPhong(){
         frame.setVisible(true);
@@ -87,39 +85,33 @@ public class ThemPhong extends JFrame {
         cancel.setForeground(new Color(0,0,0));
         panel2.add(cancel);
 
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                QuanLyPhong q = new QuanLyPhong();
-            }
+        cancel.addActionListener(e -> {
+            frame.dispose();
+             new QuanLyPhong();
         });
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               try{
-                    String query = "INSERT INTO PHONG(MALOAIPHONG,GHICHU) VALUES(?,?)";
+        save.addActionListener(e -> {
+           try{
+                String query = "INSERT INTO PHONG(MALOAIPHONG,GHICHU) VALUES(?,?)";
 
-                   Connection con = ConnectionOracle.getConnection();
-                   PreparedStatement pt = con.prepareStatement(query);
-                    int MaLoaiPhong  = 1;
-                   String loaiphong = Objects.requireNonNull(list.getSelectedItem()).toString();
-                    if(loaiphong.equals("Loại2")) MaLoaiPhong = 2;
-                    if(loaiphong.equals("Loại1")) MaLoaiPhong = 3;
-                   pt.setInt(1,MaLoaiPhong);
-                   pt.setString(2,ghichu.getText());
+               Connection con = ConnectionOracle.getConnection();
+               PreparedStatement pt = con.prepareStatement(query);
+                int MaLoaiPhong  = 1;
+               String loaiphong = Objects.requireNonNull(list.getSelectedItem()).toString();
+                if(loaiphong.equals("Loại2")) MaLoaiPhong = 2;
+                if(loaiphong.equals("Loại1")) MaLoaiPhong = 3;
+               pt.setInt(1,MaLoaiPhong);
+               pt.setString(2,ghichu.getText());
 
-                   pt.execute();
+               pt.execute();
 
-                   con.close();
-                   JOptionPane.showMessageDialog(null,"Success Insert");
-                   frame.dispose();
-                   QuanLyPhong q = new QuanLyPhong();
-               } catch (SQLException throwables) {
-                   throwables.printStackTrace();
-               }
+               con.close();
+               JOptionPane.showMessageDialog(null,"Success Insert");
+               frame.dispose();
+               new QuanLyPhong();
+           } catch (SQLException throwables) {
+               throwables.printStackTrace();
+           }
 
-            }
         });
     }
 

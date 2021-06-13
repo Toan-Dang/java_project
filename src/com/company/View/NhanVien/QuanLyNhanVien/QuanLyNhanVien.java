@@ -6,6 +6,7 @@ import com.company.Model.NhanVien;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
 import com.company.View.NhanVien.DSPHONG.ThemPTP;
 import com.company.View.NhanVien.QuanLiHomeView;
+import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,7 +14,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.*;
@@ -139,19 +139,19 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         panel_4.add(btnQuanLiDichVu);
         btnQuanLiDichVu.setBorderPainted(false);
         btnQuanLiDichVu.setContentAreaFilled(false);
-
+        btnQuanLiDichVu.addActionListener(e -> {
+         new Quanlydichvu();
+            frame.dispose();
+        });
         btnQuanLiPhong = new JButton("Qu\u1EA3n l\u00FD ph\u00F2ng ");
         btnQuanLiPhong.setFont(new Font("Times New Roman", Font.BOLD, 15));
         btnQuanLiPhong.setBounds(350, 0, 147, 57);
         panel_4.add(btnQuanLiPhong);
         btnQuanLiPhong.setBorderPainted(false);
         btnQuanLiPhong.setContentAreaFilled(false);
-        btnQuanLiPhong.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QuanLyPhong p = new QuanLyPhong();
-                frame.dispose();
-            }
+        btnQuanLiPhong.addActionListener(e -> {
+             new QuanLyPhong();
+            frame.dispose();
         });
         btnQuanLiNhanVien = new JButton("Qu\u1EA3n l\u00FD nh\u00E2n vi\u00EAn");
         btnQuanLiNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -159,12 +159,9 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         panel_4.add(btnQuanLiNhanVien);
         btnQuanLiNhanVien.setBorderPainted(false);
         btnQuanLiNhanVien.setContentAreaFilled(false);
-        btnQuanLiNhanVien.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QuanLyNhanVien nv = new QuanLyNhanVien();
-                frame.dispose();
-            }
+        btnQuanLiNhanVien.addActionListener(e -> {
+             new QuanLyNhanVien();
+            frame.dispose();
         });
         JLabel lblCaiDat = new JLabel("C\u00E0i \u0111\u1EB7t");
         lblCaiDat.setHorizontalAlignment(SwingConstants.CENTER);
@@ -238,20 +235,16 @@ public class QuanLyNhanVien extends QuanLiHomeView {
 
         });
 
-        MultiButtonTable tablez = new MultiButtonTable();
+         new MultiButtonTable();
 
-        addbtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ThemNhanVien p;
-                ThemPTP ptp;
-                if (tabbebpane.getSelectedIndex() == 0)
-                    p = new ThemNhanVien();
-                else
-                    ptp = new ThemPTP();
+        addbtn.addActionListener(e -> {
 
-                frame.dispose();
-            }
+            if (tabbebpane.getSelectedIndex() == 0)
+                new ThemNhanVien();
+            else
+                new ThemPTP();
+
+            frame.dispose();
         });
 
     }
@@ -306,89 +299,86 @@ public class QuanLyNhanVien extends QuanLiHomeView {
     public class MultiButtonTable {
 
         public MultiButtonTable() {
-            EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
+            EventQueue.invokeLater(() -> {
 
-                    try {
-                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-                        ex.printStackTrace();
-                    }
-                    ////ds nhan vien
-                    ArrayList<NhanVien> list = listnhanvien();
-
-                    MyTableModel model = new MyTableModel();
-                    int manv;
-                    String[] row = new String[3];
-                    for (NhanVien nv : list) {
-                        manv = nv.getMaNV();
-                        row[0] = nv.getTenNV();
-                        row[1] = nv.getUserName();
-                        row[2] = nv.getChucVu();
-
-                        model.add(new NhanVien(manv, row[0], row[1], row[2]));
-                    }
-
-                    table = new JTable(model);
-                    AcceptRejectRenderer renderer = new AcceptRejectRenderer();
-                    table.getColumnModel().getColumn(4).setCellRenderer(renderer);
-                    table.getColumnModel().getColumn(4).setCellEditor(new AcceptRejectEditor());
-                    table.setRowHeight(renderer.getTableCellRendererComponent(table, null, true, true, 0, 0).getPreferredSize().height);
-                    table.setFillsViewportHeight(true);
-                    table.setOpaque(true);
-                    table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-                    rowSorter = new TableRowSorter<>(table.getModel());
-                    table.setRowSorter(rowSorter);
-
-                    JScrollPane scrollpane = new JScrollPane(table);
-                    scrollpane.setViewportView(table);
-
-                    tabbebpane = new JTabbedPane();
-                    tabbebpane.setBounds(0, 207, 1000, 600);
-
-                    tabbebpane.addTab("Danh sach nhan vien", scrollpane);
-                    tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);
-                    //quanly
-
-                    ArrayList<NhanVien> listql = listquanly();
-                    MyTableModelQL modelql = new MyTableModelQL();
-                    int maql;
-                    String[] rowz = new String[3];
-                    for (NhanVien nv : listql) {
-                        maql = nv.getMaNV();
-                        rowz[0] = nv.getTenNV();
-                        rowz[1] = nv.getUserName();
-                        rowz[2] = nv.getChucVu();
-
-                        modelql.add(new NhanVien(maql, rowz[0], rowz[1], rowz[2]));
-                    }
-                    JTable table2 = new JTable(modelql);
-                    AcceptRejectRendererQL renderer2 = new AcceptRejectRendererQL();
-                    table2.getColumnModel().getColumn(4).setCellRenderer(renderer2);
-                    table2.getColumnModel().getColumn(4).setCellEditor(new AcceptRejectEditorQL());
-                    table2.setRowHeight(renderer2.getTableCellRendererComponent(table2, null, true, true, 0, 0).getPreferredSize().height);
-                    table2.setFillsViewportHeight(true);
-                    table2.setOpaque(true);
-                    table2.setPreferredScrollableViewportSize(new Dimension(500, 70));
-                    rowSorter2 = new TableRowSorter<>(table2.getModel());
-                    table2.setRowSorter(rowSorter2);
-
-                    JScrollPane scrollpanez = new JScrollPane(table2);
-                    scrollpanez.setViewportView(table2);
-
-                    tabbebpane.addTab("Danh sach quan ly", scrollpanez);
-                    tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
-
-                    panel_2.add(tabbebpane);
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                    ex.printStackTrace();
                 }
+                ////ds nhan vien
+                ArrayList<NhanVien> list = listnhanvien();
+
+                MyTableModel model = new MyTableModel();
+                int manv;
+                String[] row = new String[3];
+                for (NhanVien nv : list) {
+                    manv = nv.getMaNV();
+                    row[0] = nv.getTenNV();
+                    row[1] = nv.getUserName();
+                    row[2] = nv.getChucVu();
+
+                    model.add(new NhanVien(manv, row[0], row[1], row[2]));
+                }
+
+                table = new JTable(model);
+                AcceptRejectRenderer renderer = new AcceptRejectRenderer();
+                table.getColumnModel().getColumn(4).setCellRenderer(renderer);
+                table.getColumnModel().getColumn(4).setCellEditor(new AcceptRejectEditor());
+                table.setRowHeight(renderer.getTableCellRendererComponent(table, null, true, true, 0, 0).getPreferredSize().height);
+                table.setFillsViewportHeight(true);
+                table.setOpaque(true);
+                table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+                rowSorter = new TableRowSorter<>(table.getModel());
+                table.setRowSorter(rowSorter);
+
+                JScrollPane scrollpane = new JScrollPane(table);
+                scrollpane.setViewportView(table);
+
+                tabbebpane = new JTabbedPane();
+                tabbebpane.setBounds(0, 207, 1000, 600);
+
+                tabbebpane.addTab("Danh sach nhan vien", scrollpane);
+                tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);
+                //quanly
+
+                ArrayList<NhanVien> listql = listquanly();
+                MyTableModelQL modelql = new MyTableModelQL();
+                int maql;
+                String[] rowz = new String[3];
+                for (NhanVien nv : listql) {
+                    maql = nv.getMaNV();
+                    rowz[0] = nv.getTenNV();
+                    rowz[1] = nv.getUserName();
+                    rowz[2] = nv.getChucVu();
+
+                    modelql.add(new NhanVien(maql, rowz[0], rowz[1], rowz[2]));
+                }
+                JTable table2 = new JTable(modelql);
+                AcceptRejectRendererQL renderer2 = new AcceptRejectRendererQL();
+                table2.getColumnModel().getColumn(4).setCellRenderer(renderer2);
+                table2.getColumnModel().getColumn(4).setCellEditor(new AcceptRejectEditorQL());
+                table2.setRowHeight(renderer2.getTableCellRendererComponent(table2, null, true, true, 0, 0).getPreferredSize().height);
+                table2.setFillsViewportHeight(true);
+                table2.setOpaque(true);
+                table2.setPreferredScrollableViewportSize(new Dimension(500, 70));
+                rowSorter2 = new TableRowSorter<>(table2.getModel());
+                table2.setRowSorter(rowSorter2);
+
+                JScrollPane scrollpanez = new JScrollPane(table2);
+                scrollpanez.setViewportView(table2);
+
+                tabbebpane.addTab("Danh sach quan ly", scrollpanez);
+                tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
+
+                panel_2.add(tabbebpane);
             });
         }
 
         //nhan vien
         public class MyTableModel extends AbstractTableModel {
 
-            private List<NhanVien> data;
+            private final List<NhanVien> data;
 
             public MyTableModel() {
                 data = new ArrayList<>();
@@ -487,8 +477,8 @@ public class QuanLyNhanVien extends QuanLiHomeView {
 
         public class AcceptRejectPane extends JPanel {
 
-            private JButton chitiet;
-            private JButton reject;
+            private final JButton chitiet;
+            private final JButton reject;
             private int row;
             private int col;
             private String state;
@@ -504,12 +494,9 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                 add(chitiet);
                 add(reject);
 
-                ActionListener listener = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        state = e.getActionCommand();
-                        System.out.println("State = " + state);
-                    }
+                ActionListener listener = e -> {
+                    state = e.getActionCommand();
+                    System.out.println("State = " + state);
                 };
 
                 chitiet.addActionListener(listener);
@@ -565,72 +552,63 @@ public class QuanLyNhanVien extends QuanLiHomeView {
 
         public class AcceptRejectEditor extends AbstractCellEditor implements TableCellEditor {
 
-            private AcceptRejectPane acceptRejectPane;
+            private final AcceptRejectPane acceptRejectPane;
 
 
             public AcceptRejectEditor() {
                 acceptRejectPane = new AcceptRejectPane();
-                acceptRejectPane.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        SwingUtilities.invokeLater(new Runnable() {
+                acceptRejectPane.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+                    int reply;
+                    int r = acceptRejectPane.getRow();
 
-                            @Override
-                            public void run() {
-                                int reply;
-                                int r = acceptRejectPane.getRow();
+                    ++r;
 
-                                ++r;
+                    if (acceptRejectPane.getState().equals("reject")) {
+                        reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
+                        if (reply == JOptionPane.YES_OPTION) {
+                            try {
+                                Connection con = ConnectionOracle.getConnection();
+                                String query = "DELETE FROM NHANVIEN WHERE MANV = (SELECT MANV FROM NHANVIEN WHERE ROWNUM <=" + r + " MINUS SELECT MANV FROM NHANVIEN WHERE ROWNUM <" + r + " )";
+                                PreparedStatement pt = con.prepareStatement(query);
+                                pt.execute();
+                                con.close();
+                                frame.dispose();
+                                JOptionPane.showMessageDialog(null, "Delete Success!!");
+                               new QuanLyNhanVien();
 
-                                if (acceptRejectPane.getState().equals("reject")) {
-                                    reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
-                                    if (reply == JOptionPane.YES_OPTION) {
-                                        try {
-                                            Connection con = ConnectionOracle.getConnection();
-                                            String query = "DELETE FROM NHANVIEN WHERE MANV = (SELECT MANV FROM NHANVIEN WHERE ROWNUM <=" + r + " MINUS SELECT MANV FROM NHANVIEN WHERE ROWNUM <" + r + " )";
-                                            PreparedStatement pt = con.prepareStatement(query);
-                                            pt.execute();
-                                            con.close();
-                                            frame.dispose();
-                                            JOptionPane.showMessageDialog(null, "Delete Success!!");
-                                            QuanLyNhanVien pz = new QuanLyNhanVien();
-
-                                        } catch (SQLException throwables) {
-                                            throwables.printStackTrace();
-                                            JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
-
-                                        }
-
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Canecled Delete ");
-                                    }
-                                } else {
-
-                                    try {
-                                        Connection con = ConnectionOracle.getConnection();
-                                        String query = "SELECT USERNAME FROM NHANVIEN WHERE rownum <=" + r + " MINUS SELECT USERNAME FROM NHANVIEN WHERE rownum <"+ r ;
-                                        Statement st = con.createStatement();
-                                        ResultSet rs = st.executeQuery(query);
-                                        String getusernamenv = "";
-                                        while (rs.next()) {
-                                            getusernamenv = rs.getString("USERNAME");
-                                        }
-                                        con.close();
-                                        frame.dispose();
-                                        ThongTinNhanVien t = new ThongTinNhanVien(getusernamenv);
-
-                                    } catch (SQLException throwables) {
-                                        throwables.printStackTrace();
-                                        JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
-
-                                    }
-
-                                }
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                                JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
 
                             }
-                        });
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Canecled Delete ");
+                        }
+                    } else {
+
+                        try {
+                            Connection con = ConnectionOracle.getConnection();
+                            String query = "SELECT USERNAME FROM NHANVIEN WHERE rownum <=" + r + " MINUS SELECT USERNAME FROM NHANVIEN WHERE rownum <"+ r ;
+                            Statement st = con.createStatement();
+                            ResultSet rs = st.executeQuery(query);
+                            String getusernamenv = "";
+                            while (rs.next()) {
+                                getusernamenv = rs.getString("USERNAME");
+                            }
+                            con.close();
+                            frame.dispose();
+                           new ThongTinNhanVien(getusernamenv);
+
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                            JOptionPane.showMessageDialog(null, "Delete NOT Success!!");
+
+                        }
+
                     }
-                });
+
+                }));
             }
 
             @Override
@@ -662,7 +640,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         //quanly
         public class MyTableModelQL extends AbstractTableModel {
 
-            private List<NhanVien> data;
+            private final List<NhanVien> data;
 
             public MyTableModelQL() {
                 data = new ArrayList<>();
@@ -761,8 +739,8 @@ public class QuanLyNhanVien extends QuanLiHomeView {
 
         public class AcceptRejectPaneQL extends JPanel {
 
-            private JButton accept;
-            private JButton reject;
+            private final JButton accept;
+            private final JButton reject;
             private int row;
             private String state;
 
@@ -777,12 +755,9 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                 add(accept);
                 add(reject);
 
-                ActionListener listener = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        state = e.getActionCommand();
-                        System.out.println("State = " + state);
-                    }
+                ActionListener listener = e -> {
+                    state = e.getActionCommand();
+                    System.out.println("State = " + state);
                 };
 
                 accept.addActionListener(listener);
@@ -830,30 +805,22 @@ public class QuanLyNhanVien extends QuanLiHomeView {
 
         public class AcceptRejectEditorQL extends AbstractCellEditor implements TableCellEditor {
 
-            private AcceptRejectPaneQL acceptRejectPane;
+            private final AcceptRejectPaneQL acceptRejectPane;
 
 
             public AcceptRejectEditorQL() {
                 acceptRejectPane = new AcceptRejectPaneQL();
-                acceptRejectPane.addActionListener(new ActionListener() {
+                acceptRejectPane.addActionListener(e -> SwingUtilities.invokeLater(new Runnable() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        int r = acceptRejectPane.getRow();
+                        ++r;
 
-
-                            @Override
-                            public void run() {
-                                int reply;
-                                int r = acceptRejectPane.getRow();
-                                ++r;
-
-                                JOptionPane.showMessageDialog(null, "Chua co chuc nang nay" + r);
-                                frame.dispose();
-                                QuanLyNhanVien p = new QuanLyNhanVien();
-                            }
-                        });
+                        JOptionPane.showMessageDialog(null, "Chua co chuc nang nay" + r);
+                        frame.dispose();
+                     new QuanLyNhanVien();
                     }
-                });
+                }));
             }
 
             @Override

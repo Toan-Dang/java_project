@@ -3,6 +3,7 @@ package com.company.View.NhanVien;
 
 
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
+import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
 import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
 
 import java.awt.EventQueue;
@@ -14,8 +15,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
@@ -37,14 +37,12 @@ public class QuanLiHomeView extends JFrame {
      * Launch the application.
      */
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    QuanLiHomeView frame = new QuanLiHomeView();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                QuanLiHomeView frame = new QuanLiHomeView();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -171,18 +169,8 @@ public class QuanLiHomeView extends JFrame {
         lblCaiDat.setBounds(10, 5, 117, 47);
         panel_4.add(lblCaiDat);
 
-        btnQuanLiPhong.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QuanLyPhong p = new QuanLyPhong();
-
-            }
-        });
-        btnQuanLiNhanVien.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                QuanLyNhanVien nv = new QuanLyNhanVien();
-            }
-        });
+        btnQuanLiPhong.addActionListener(e -> new QuanLyPhong());
+        btnQuanLiNhanVien.addActionListener(e -> new QuanLyNhanVien());
+        btnQuanLiDichVu.addActionListener(e -> new Quanlydichvu());
     }
 }

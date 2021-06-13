@@ -1,11 +1,9 @@
-package com.company.View.NhanVien.DSPHONG;
-
+package com.company.View.NhanVien.QuanLyDichVu;
 
 import com.company.Data.ConnectionOracle;
-//import com.company.Model.PhieuThuePhong;
-import com.company.Model.Phong;
+import com.company.Model.DichVu;
+import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
 import com.company.View.NhanVien.QuanLiHomeView;
-import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
 import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
 
 import javax.swing.*;
@@ -15,30 +13,25 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.ArrayList;
-//import java.util.Date;
 import java.util.EventObject;
 import java.util.List;
 
-public class QuanLyPhong extends QuanLiHomeView {
+public class Quanlydichvu extends QuanLiHomeView {
     JFrame frame = new JFrame();
     JPanel panel_2;
-    JTabbedPane tabbebpane;
     JTextField searchfield;
     JTable table;
     TableRowSorter<TableModel> rowSorter;
-    TableRowSorter<TableModel> rowSorter2;
 
-
-    public QuanLyPhong() {
+    public Quanlydichvu() {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(100, 100, 1200, 730);
 
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Phong");
+        frame.setTitle("Dịch Vụ");
 
 
         contentPane = new JPanel();
@@ -152,7 +145,7 @@ public class QuanLyPhong extends QuanLiHomeView {
         btnQuanLiPhong.setBorderPainted(false);
         btnQuanLiPhong.setContentAreaFilled(false);
         btnQuanLiPhong.addActionListener(e -> {
-             new QuanLyPhong();
+            new QuanLyPhong();
             frame.dispose();
         });
 
@@ -197,22 +190,14 @@ public class QuanLyPhong extends QuanLiHomeView {
         searchfield = new JTextField();
         searchfield.setBounds(530, 110, 450, 30);
         panel_5.add(searchfield);
-        searchfield.getDocument().addDocumentListener(new DocumentListener(){
+        searchfield.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String text = searchfield.getText();
-
-                if (tabbebpane.getSelectedIndex() == 0)
-                    if (text.trim().length() == 0) {
-                        rowSorter.setRowFilter(null);
-                    } else {
-                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                    }
-                else
                 if (text.trim().length() == 0) {
-                    rowSorter2.setRowFilter(null);
+                    rowSorter.setRowFilter(null);
                 } else {
-                    rowSorter2.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
                 }
 
             }
@@ -220,19 +205,11 @@ public class QuanLyPhong extends QuanLiHomeView {
             @Override
             public void removeUpdate(DocumentEvent e) {
                 String text = searchfield.getText();
-                if (tabbebpane.getSelectedIndex() == 0)
-                    if (text.trim().length() == 0) {
-                        rowSorter.setRowFilter(null);
-                    } else {
-                        rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                    }
-                else
                 if (text.trim().length() == 0) {
-                    rowSorter2.setRowFilter(null);
+                    rowSorter.setRowFilter(null);
                 } else {
-                    rowSorter2.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
                 }
-
             }
 
             @Override
@@ -242,73 +219,37 @@ public class QuanLyPhong extends QuanLiHomeView {
 
         });
 
-         new MultiButtonTable();
-
+       new MultiButtonTable();
         addbtn.addActionListener(e -> {
-            if (tabbebpane.getSelectedIndex() == 0)
-               new ThemPhong();
-            else
-                 new ThemPTP();
+            new ThemDichVu();
             frame.dispose();
         });
 
     }
 
-    public ArrayList<Phong> listphong() {
-        ArrayList<Phong> listphong = new ArrayList<>();
+    public ArrayList<DichVu> listdv() {
+        ArrayList<DichVu> listdv = new ArrayList<>();
         Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT MAPHONG,TENLOAIPHONG,SOLUONGNGUOIHIENTAI,TINHTRANG FROM PHONG P inner join LOAIPHONG L on P.MALOAIPHONG = L.MALOAIPHONG ORDER BY MAPHONG";
+        String query = "SELECT MADV,TENDICHVU, CHITIET ,GIA FROM DICHVU";
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
-                int maphong = rs.getInt(1);
-                String maloaiphong = rs.getString(2);
-                String tinh_trang = rs.getString(3);
-                int soluong = rs.getInt(4);
+                int madv = rs.getInt(1);
+                String tendv = rs.getString(2);
+                String chitiet = rs.getString(3);
+                double gia = rs.getDouble(4);
 
-                if (tinh_trang != null) {
-                    if (tinh_trang.equals("0")) tinh_trang = "trống";
-                    if (tinh_trang.equals("1")) tinh_trang = "đã có ngừoi";
-                    if (tinh_trang.equals("2")) tinh_trang = "đã được đặt";
-                } else tinh_trang = "trống";
-                listphong.add(new Phong(maphong, maloaiphong, soluong, tinh_trang));
+                listdv.add(new DichVu(madv, tendv, chitiet, gia));
             }
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return listphong;
+        return listdv;
     }
-/*
-    public ArrayList<PhieuThuePhong> listphieuthuephong() {
-        ArrayList<PhieuThuePhong> listptp = new ArrayList<>();
-        Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT A.MAPTP, B.CMND, A.NGAYLAPPTP, B.NGAYNHANPHONG, B.NGAYTRAPHONG, A.TINHTRANGTHANHTOAN, A.TONGTIENTHANHTOAN FROM PHIEU_THUE_PHONG A INNER JOIN CHITIET_PHIEUTHUEPHONG B ON A.MAPTP = B.MAPTP";
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
 
-            while (rs.next()) {
-                int MaPTP = rs.getInt(1);
-                String TenKh = rs.getString(2);
-                String TenNV = rs.getString(3);
-                Date NgayPapPTP = rs.getDate(4);
-                int TinhTrangThanhToan = rs.getInt(5);
-                double TongTienThanhToan = rs.getDouble(6);
-                Date NgayThanhToan = rs.getDate(7);
-
-                listptp.add(new PhieuThuePhong(MaPTP, TenKh, TenNV, NgayPapPTP, TinhTrangThanhToan, TongTienThanhToan, NgayThanhToan));
-            }
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return listptp;
-
-    }
-*/
     public class MultiButtonTable {
 
         public MultiButtonTable() {
@@ -320,18 +261,19 @@ public class QuanLyPhong extends QuanLiHomeView {
                     ex.printStackTrace();
                 }
                 ////ds phong
-                ArrayList<Phong> list = listphong();
+                ArrayList<DichVu> list = listdv();
 
                 MyTableModel model = new MyTableModel();
-                int[] row = new int[2];
-                String[] row1 = new String[2];
-                for (Phong phong : list) {
-                    row[0] = phong.getMaPhong();
-                    row1[0] = phong.getMaLoaiPhong();
-                    row[1] = phong.getSoLuongNguoiHienTai();
-                    row1[1] = phong.getTinhTrang();
+                int rowint;
+                String[] rowstr = new String[2];
+                double rowdb;
+                for (DichVu dv : list) {
+                    rowint = dv.getMaDv();
+                    rowstr[0] = dv.getTenDV();
+                    rowstr[1] = dv.getGhiChu();
+                    rowdb = dv.getGia();
 
-                    model.add(new Phong(row[0], row1[0], row[1], row1[1]));
+                    model.add(new DichVu(rowint, rowstr[0], rowstr[1], rowdb));
                 }
 
                 table = new JTable(model);
@@ -342,63 +284,18 @@ public class QuanLyPhong extends QuanLiHomeView {
                 table.setFillsViewportHeight(true);
                 table.setOpaque(true);
                 table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-                rowSorter  = new TableRowSorter<>(table.getModel());
+                rowSorter = new TableRowSorter<>(table.getModel());
                 table.setRowSorter(rowSorter);
                 JScrollPane scrollpane = new JScrollPane(table);
                 scrollpane.setViewportView(table);
-
-                //phieu thue phong
-/*
-                ArrayList<PhieuThuePhong> listptp = listphieuthuephong();
-                MyTablePTPModel modelptp = new MyTablePTPModel();
-                int[] rowint = new int[2];
-                String[] rowStr = new String[2];
-                Date[] rowdate = new Date[2];
-                double rowdb;
-                for (PhieuThuePhong ptp : listptp) {
-                    rowint[0] = ptp.getMaPTP();
-                    rowint[1] = ptp.getTinhTrangThanhToan();
-                    rowStr[0] = ptp.getTenKh();
-                    rowStr[1] = ptp.getTenNV();
-                    rowdate[0] = ptp.getNgayPapPTP();
-                    rowdate[1] = ptp.getNgayThanhToan();
-                    rowdb = ptp.getTongTienThanhToan();
-
-                    modelptp.add(new PhieuThuePhong(rowint[0], rowStr[0], rowStr[1], rowdate[0], rowint[1], rowdb, rowdate[1]));
-                }
-
-                JTable table2 = new JTable(modelptp);
-                AcceptRejectRendererPTP renderer2 = new AcceptRejectRendererPTP();
-                table2.getColumnModel().getColumn(7).setCellRenderer(renderer2);
-                table2.getColumnModel().getColumn(7).setCellEditor(new AcceptRejectEditorPTP());
-                table2.setRowHeight(renderer2.getTableCellRendererComponent(table2, null, true, true, 0, 0).getPreferredSize().height);
-                table2.setFillsViewportHeight(true);
-                table2.setOpaque(true);
-                table2.setPreferredScrollableViewportSize(new Dimension(500, 70));
-
-                rowSorter2  = new TableRowSorter<>(table2.getModel());
-                table2.setRowSorter(rowSorter2);
-
-                JScrollPane scrollpanez = new JScrollPane(table2);
-                scrollpanez.setViewportView(table2);
-*/
-                tabbebpane = new JTabbedPane();
-                tabbebpane.setBounds(0, 207, 1000, 600);
-
-                tabbebpane.addTab("Danh sach phong", scrollpane);
-                tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);
-
-             //   tabbebpane.addTab("Phieu thue phong", scrollpanez);
-              //  tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
-
-                panel_2.add(tabbebpane);
+                scrollpane.setBounds(0, 207, 1000, 600);
+                panel_2.add(scrollpane);
             });
         }
 
-        //phong
         public class MyTableModel extends AbstractTableModel {
 
-            private final List<Phong> data;
+            private final List<DichVu> data;
 
             public MyTableModel() {
                 data = new ArrayList<>();
@@ -409,8 +306,8 @@ public class QuanLyPhong extends QuanLiHomeView {
                 return switch (column) {
                     case 0 -> "ID";
                     case 1 -> "Name";
-                    case 2 -> "So luong";
-                    case 3 -> "tinh trang";
+                    case 2 -> "Chitiet";
+                    case 3 -> "Gia";
                     case 4 -> "";
                     default -> null;
                 };
@@ -419,8 +316,9 @@ public class QuanLyPhong extends QuanLiHomeView {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
-                    case 0, 2 -> Integer.class;
-                    case 1, 3 -> String.class;
+                    case 0 -> Integer.class;
+                    case 1, 2 -> String.class;
+                    case 3 -> Double.class;
                     default -> Object.class;
                 };
             }
@@ -437,20 +335,20 @@ public class QuanLyPhong extends QuanLiHomeView {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                Phong obj = data.get(rowIndex);
+                DichVu obj = data.get(rowIndex);
                 Object value = null;
                 switch (columnIndex) {
                     case 0:
-                        value = obj.getMaPhong();
+                        value = obj.getMaDv();
                         break;
                     case 1:
-                        value = obj.getMaLoaiPhong();
+                        value = obj.getTenDV();
                         break;
                     case 2:
-                        value = obj.getSoLuongNguoiHienTai();
+                        value = obj.getGhiChu();
                         break;
                     case 3:
-                        value = obj.getTinhTrang();
+                        value = obj.getGia();
                         break;
                     case 4:
                         break;
@@ -464,7 +362,7 @@ public class QuanLyPhong extends QuanLiHomeView {
 
                     System.out.println(aValue);
 
-                    Phong value = data.get(rowIndex);
+                    DichVu value = data.get(rowIndex);
                     if ("accept".equals(aValue)) {
                         System.out.println("Accepted");
                     } else {
@@ -476,13 +374,13 @@ public class QuanLyPhong extends QuanLiHomeView {
                 }
             }
 
-            public void add(Phong value) {
+            public void add(DichVu value) {
                 int startIndex = getRowCount();
                 data.add(value);
                 fireTableRowsInserted(startIndex, getRowCount() - 1);
             }
 
-            public void remove(Phong value) {
+            public void remove(DichVu value) {
                 int startIndex = data.indexOf(value);
                 System.out.println("startIndex = " + startIndex);
                 data.remove(value);
@@ -505,7 +403,7 @@ public class QuanLyPhong extends QuanLiHomeView {
 
             public AcceptRejectPane() {
                 setLayout(new GridBagLayout());
-                accept = new JButton("Đặt");
+                accept = new JButton("Chỉnh sửa");
                 accept.setActionCommand("accept");
                 reject = new JButton("Xóa");
                 reject.setActionCommand("reject");
@@ -569,23 +467,25 @@ public class QuanLyPhong extends QuanLiHomeView {
             public AcceptRejectEditor() {
                 acceptRejectPane = new AcceptRejectPane();
                 acceptRejectPane.addActionListener(e -> SwingUtilities.invokeLater(new Runnable() {
+
                     @Override
                     public void run() {
                         int reply;
                         int r = acceptRejectPane.getRow();
                         ++r;
+
                         if (acceptRejectPane.getState().equals("reject")) {
-                            reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
+                            reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfir", JOptionPane.YES_NO_OPTION);
                             if (reply == JOptionPane.YES_OPTION) {
                                 try {
                                     Connection con = ConnectionOracle.getConnection();
-                                    String query = "DELETE FROM PHONG WHERE MAPHONG = (SELECT MAPHONG FROM PHONG WHERE ROWNUM <=" + r + " MINUS SELECT MAPHONG FROM PHONG WHERE ROWNUM <" + r + " )";
+                                    String query = "DELETE FROM PHONG WHERE MADV = (SELECT MADV FROM DICHVU WHERE ROWNUM <=" + r + " MINUS SELECT MADV FROM DICHVU WHERE ROWNUM <" + r + " )";
                                     PreparedStatement pt = con.prepareStatement(query);
                                     pt.execute();
                                     con.close();
                                     frame.dispose();
                                     JOptionPane.showMessageDialog(null, "Delete Success!!");
-                                 new QuanLyPhong();
+                                    new Quanlydichvu();
 
                                 } catch (SQLException throwables) {
                                     throwables.printStackTrace();
@@ -597,253 +497,23 @@ public class QuanLyPhong extends QuanLiHomeView {
                                 JOptionPane.showMessageDialog(null, "Canecled Delete ");
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Chua co chuc nang nay" + r);
-                            frame.dispose();
-                           new QuanLyPhong();
-                        }
+                            try{
+                                Connection con = ConnectionOracle.getConnection();
+                                String query = "SELECT MADV FROM DICHVU WHERE rownum <=" + r + " MINUS SELECT MADV FROM DICHVU WHERE rownum <"+ r ;
+                                Statement st = con.createStatement();
+                                ResultSet rs = st.executeQuery(query);
+                                int getdv = 0;
+                                while (rs.next()) {
+                                    getdv = rs.getInt("MADV");
+                                }
+                                con.close();
+                                frame.dispose();
+                                new SuaDichVu(getdv);
 
-                    }
-                }));
-            }
-
-            @Override
-            public Object getCellEditorValue() {
-                return acceptRejectPane.getState();
-            }
-
-
-            @Override
-            public boolean isCellEditable(EventObject e) {
-                return true;
-            }
-
-
-            @Override
-            public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-                if (isSelected) {
-                    acceptRejectPane.setBackground(table.getSelectionBackground());
-                } else {
-                    acceptRejectPane.setBackground(table.getBackground());
-                }
-                acceptRejectPane.setRow(row);
-                return acceptRejectPane;
-            }
-
-
-        }
-
-        //phieuthuephong
-/*
-        public class MyTablePTPModel extends AbstractTableModel {
-
-            private final List<PhieuThuePhong> data;
-
-            public MyTablePTPModel() {
-                data = new ArrayList<>();
-            }
-
-            @Override
-            public String getColumnName(int column) {
-                return switch (column) {
-                    case 0 -> "ID";
-                    case 1 -> "Tên Nhân viên";
-                    case 2 -> "Tên khách hàng";
-                    case 3 -> "Ngay lap phieu";
-                    case 4 -> "Tinh trang";
-                    case 5 -> "Tong tien";
-                    case 6 -> "Ngay thanh toan ";
-                    case 7 -> "";
-                    default -> null;
-                };
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return switch (columnIndex) {
-                    case 0 -> Integer.class;
-                    case 1 -> String.class;
-                    case 2 -> String.class;
-                    case 3 -> Date.class;
-                    case 4 -> Integer.class;
-                    case 5 -> Double.class;
-                    case 6 -> Date.class;
-                    default -> Object.class;
-                };
-            }
-
-            @Override
-            public int getRowCount() {
-                return data.size();
-            }
-
-            @Override
-            public int getColumnCount() {
-                return 8;
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                PhieuThuePhong obj = data.get(rowIndex);
-                Object value = null;
-                switch (columnIndex) {
-                    case 0:
-                        value = obj.getMaPTP();
-                        break;
-                    case 1:
-                        value = obj.getTenKh();
-                        break;
-                    case 2:
-                        value = obj.getTenNV();
-                        break;
-                    case 3:
-                        value = obj.getNgayPapPTP();
-                        break;
-                    case 4:
-                        value = obj.getTinhTrangThanhToan();
-                        break;
-                    case 5:
-                        value = obj.getTongTienThanhToan();
-                        break;
-                    case 6:
-                        value = obj.getNgayThanhToan();
-                        break;
-                    case 7:
-                        break;
-                }
-                return value;
-            }
-
-            @Override
-            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 7) {
-
-                    System.out.println(aValue);
-
-                    PhieuThuePhong value = data.get(rowIndex);
-                    if ("accept".equals(aValue)) {
-                        System.out.println("Accepted");
-                    } else {
-                        System.out.println("Rejected");
-                    }
-                    fireTableCellUpdated(rowIndex, columnIndex);
-                    remove(value);
-
-                }
-            }
-
-            public void add(PhieuThuePhong value) {
-                int startIndex = getRowCount();
-                data.add(value);
-                fireTableRowsInserted(startIndex, getRowCount() - 1);
-            }
-
-            public void remove(PhieuThuePhong value) {
-                int startIndex = data.indexOf(value);
-                System.out.println("startIndex = " + startIndex);
-                data.remove(value);
-                fireTableRowsInserted(startIndex, startIndex);
-            }
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 7;
-            }
-        }
-
-        public class AcceptRejectPanePTP extends JPanel {
-
-            private final JButton accept;
-            private final JButton reject;
-            private int row;
-            private String state;
-
-
-            public AcceptRejectPanePTP() {
-                setLayout(new GridBagLayout());
-                accept = new JButton("Update");
-                accept.setActionCommand("accept");
-                reject = new JButton("Kiểm tra");
-                reject.setActionCommand("reject");
-
-                add(accept);
-                add(reject);
-
-                ActionListener listener = e -> {
-                    state = e.getActionCommand();
-                    System.out.println("State = " + state);
-                };
-
-                accept.addActionListener(listener);
-                reject.addActionListener(listener);
-            }
-
-            public void addActionListener(ActionListener listener) {
-                accept.addActionListener(listener);
-                reject.addActionListener(listener);
-            }
-
-            public String getState() {
-                return state;
-            }
-
-            public int getRow() {
-                return row;
-            }
-
-            public void setRow(int row) {
-                this.row = row;
-            }
-        }
-
-        public class AcceptRejectRendererPTP extends DefaultTableCellRenderer {
-
-            private final AcceptRejectPanePTP acceptRejectPane;
-
-
-            public AcceptRejectRendererPTP() {
-                acceptRejectPane = new AcceptRejectPanePTP();
-            }
-
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                if (isSelected) {
-                    acceptRejectPane.setBackground(table.getSelectionBackground());
-                } else {
-                    acceptRejectPane.setBackground(table.getBackground());
-                }
-                return acceptRejectPane;
-            }
-        }
-
-        public class AcceptRejectEditorPTP extends AbstractCellEditor implements TableCellEditor {
-
-            private final AcceptRejectPanePTP acceptRejectPane;
-
-
-            public AcceptRejectEditorPTP() {
-                acceptRejectPane = new AcceptRejectPanePTP();
-                acceptRejectPane.addActionListener(e -> SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        int reply;
-                        int r = acceptRejectPane.getRow();
-                        ++r;
-
-                        if (acceptRejectPane.getState().equals("reject")) {
-                            reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfir", JOptionPane.YES_NO_OPTION);
-
-                            if (reply == JOptionPane.YES_OPTION) {
-
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Canecled Delete ");
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
                             }
 
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Chua co chuc nang nay" + r);
-                            frame.dispose();
-                             new QuanLyPhong();
                         }
 
                     }
@@ -876,9 +546,8 @@ public class QuanLyPhong extends QuanLiHomeView {
 
         }
 
-*/
-    }
 
+    }
 
 
 }
