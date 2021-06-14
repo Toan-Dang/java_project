@@ -12,7 +12,7 @@ public class getListNhanVien {
     public static ArrayList<NhanVien> listnhanvien() {
         ArrayList<NhanVien> listnhanvien = new ArrayList<>();
         Connection connection = ConnectionOracle.getConnection();
-        String query = "SELECT MANV,HOTENNV,USERNAME,CHUCVU FROM NHANVIEN";
+        String query = "SELECT MANV,HOTENNV,USERNAME,CHUCVU FROM NHANVIEN ORDER BY MANV";
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);

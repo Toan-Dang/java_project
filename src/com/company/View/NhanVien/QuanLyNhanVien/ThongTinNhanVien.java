@@ -47,7 +47,6 @@ public class ThongTinNhanVien extends JFrame {
         name.setBackground(new Color(189, 44, 44));
         panel1.add(name);
 
-        JLabel username = new JLabel("USERNAME");
         name.setBounds(0, 55, 100, 50);
         name.setHorizontalAlignment(SwingConstants.CENTER);
         name.setVerticalAlignment(SwingConstants.CENTER);
@@ -230,14 +229,6 @@ public class ThongTinNhanVien extends JFrame {
                 txtcmnd.setText(rs.getString(4));
                 txtemail.setText(rs.getString(5));
                 String gender = rs.getString(6);
-                if(gender.equals("NAM")){
-                    rb1.setSelected(true);
-                    rb2.setSelected(false);
-                }
-                else{
-                    rb2.setSelected(true);
-                    rb1.setSelected(false);
-                }
 
                 var dt = rs.getDate(7);
                 modelngaysinh.setValue(dt);
@@ -251,7 +242,14 @@ public class ThongTinNhanVien extends JFrame {
                 modelngayvaolam.setValue(dt2);
                  datePanel = new JDatePanelImpl(modelngayvaolam, p);
                  pickngayvaolam = new JDatePickerImpl(datePanel, new ThemNhanVien.DateLabelFormatter());
-
+                if(gender.equals("NAM")){
+                    rb1.setSelected(true);
+                    rb2.setSelected(false);
+                }
+                else{
+                    rb2.setSelected(true);
+                    rb1.setSelected(false);
+                }
             }
             con.close();
         } catch (Exception e) {

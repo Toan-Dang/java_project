@@ -8,6 +8,8 @@ import org.jdatepicker.impl.UtilDateModel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -169,6 +171,7 @@ public class ThemNhanVien extends JFrame {
 
         JRadioButton rb1 = new JRadioButton("Male");
         rb1.setBounds(705, 140, 100, 30);
+
         JRadioButton  rb2 = new JRadioButton("Female");
         rb2.setBounds(805, 140, 100, 30);
 
@@ -211,6 +214,20 @@ public class ThemNhanVien extends JFrame {
         cancel.setForeground(new Color(0, 0, 0));
         cancel.setOpaque(false);
         panel2.add(cancel);
+        final String[] gt = new String[1];
+        rb1.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                gt[0] = "NAM";
+            }
+        });
+        rb2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                gt[0] = "NU";
+            }
+        });
+
 
         cancel.addActionListener(e -> {
             frame.dispose();
@@ -225,9 +242,8 @@ public class ThemNhanVien extends JFrame {
                 Date sqldatengaysinh = new Date(datengaysinh.getTime());
                 java.util.Date datengayvaolam = (java.util.Date) pickngayvaolam.getModel().getValue();
                 Date sqldatengayvaolam = new Date(datengayvaolam.getTime());
-            var gt=  bg.getSelection().getActionCommand();
 
-                new InsertNhanVien(txtusername.getText(),passText,txttennv.getText(),gt,
+                new InsertNhanVien(txtusername.getText(),passText,txttennv.getText(), gt[0],
                         sqldatengaysinh,txtsdt.getText(),txtcmnd.getText(),txtemail.getText(),sqldatengayvaolam);
                 frame.dispose();
                new QuanLyNhanVien();
