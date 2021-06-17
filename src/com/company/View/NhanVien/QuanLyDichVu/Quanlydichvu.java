@@ -122,8 +122,9 @@ public class Quanlydichvu extends QuanLiHomeView {
         panel_2.setLayout(null);
 
         JPanel panel_4 = new JPanel();
-        panel_4.setBackground(new Color(252, 255, 224));
+      //  panel_4.setBackground(new Color(252, 255, 224));
         panel_4.setBounds(0, 0, 1000, 57);
+        panel_4.setBackground(new Color(224, 255, 255));
         panel_2.add(panel_4);
         panel_4.setLayout(null);
 

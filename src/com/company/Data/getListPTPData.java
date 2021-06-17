@@ -28,7 +28,7 @@ public class getListPTPData {
                 double TongTienThanhToan = rs.getDouble(6);
                 Date NgayThanhToan = rs.getDate(7);
 
-                listptp.add(new PhieuThuePhong(MaPTP, TenKh, TenNV, NgayPapPTP, TinhTrangThanhToan, TongTienThanhToan, NgayThanhToan));
+               // listptp.add(new PhieuThuePhong(MaPTP, TenKh, TenNV, NgayPapPTP, TinhTrangThanhToan, TongTienThanhToan, NgayThanhToan));
             }
             connection.close();
         } catch (SQLException throwables) {

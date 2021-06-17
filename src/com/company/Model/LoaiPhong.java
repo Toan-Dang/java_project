@@ -1,5 +1,7 @@
 package com.company.Model;
 
+import java.util.List;
+
 public class LoaiPhong {
     private int MALOAIPHONG;
     private String TENLOAIPHONG;

@@ -40,7 +40,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        contentPane.setBackground(SystemColor.blue);
+        contentPane.setBackground(SystemColor.controlDkShadow);
         frame.add(contentPane);
 
         JPanel panel = new JPanel();
@@ -87,7 +87,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
 
         JPanel panel_3 = new JPanel();
         panel_3.setBounds(0, 10, 51, 52);
-        btnCaiDat.setBackground(SystemColor.red);
+        btnCaiDat.setBackground(SystemColor.scrollbar);
         panel.add(panel_3);
 
 
@@ -123,8 +123,8 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         panel_2.setLayout(null);
 
         JPanel panel_4 = new JPanel();
-        // panel_4.setBackground(new Color(224, 255, 255));
-        panel_4.setBackground(new Color(252, 255, 224));
+         panel_4.setBackground(new Color(224, 255, 255));
+    //    panel_4.setBackground(new Color(252, 255, 224));
         panel_4.setBounds(0, 0, 1000, 57);
         panel_2.add(panel_4);
         panel_4.setLayout(null);
@@ -166,7 +166,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
         panel_4.add(lblCaiDat);
 
         JPanel panel_5 = new JPanel();
-        panel_5.setBackground(new Color(255, 224, 224));
+        panel_5.setBackground(new Color(132, 161, 239));
         panel_5.setBounds(0, 57, 1000, 150);
         panel_2.add(panel_5);
         panel_5.setLayout(null);

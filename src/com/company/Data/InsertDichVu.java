@@ -16,8 +16,8 @@ public class InsertDichVu {
 
             pt.setString(1,tendv);
             pt.setString(2,chitiet);
-            double gia = Double.parseDouble(giaz);
-            pt.setDouble(3,gia);
+            int gia = Integer.parseInt(giaz);
+            pt.setInt(3,gia);
 
             pt.execute();
             con.close();

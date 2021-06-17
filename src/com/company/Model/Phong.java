@@ -1,5 +1,7 @@
 package com.company.Model;
 
+import java.util.List;
+
 public class Phong {
     private int MaPhong;
     private String MaLoaiPhong;
@@ -7,6 +9,7 @@ public class Phong {
     private String GhiChu;
     private int SoLuongNguoiHienTai;
 
+    List<LoaiPhong> loaiPhongs;
     public Phong(){
 
     }

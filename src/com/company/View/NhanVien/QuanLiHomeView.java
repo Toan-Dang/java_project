@@ -1,23 +1,19 @@
 package com.company.View.NhanVien;
 
-
-
+import com.company.Data.getListPhongData;
+import com.company.Model.Phong;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
 import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
 import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
 
-import java.awt.EventQueue;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import java.awt.Font;
-
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
+import javax.swing.border.TitledBorder;
 
 public class QuanLiHomeView extends JFrame {
 
@@ -33,30 +29,20 @@ public class QuanLiHomeView extends JFrame {
     protected JButton btnQuanLiNhanVien;
 
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                QuanLiHomeView frame = new QuanLiHomeView();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    /**
-     * Create the frame.
-     */
+    JFrame frame = new JFrame();
+    JPanel panel_5;
     public QuanLiHomeView() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1010, 730);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(100, 100, 1200, 730);
+        frame.setLocationRelativeTo(null);
+        frame.setTitle("Quản lý home view ");
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        frame.add(contentPane);
 
         JPanel panel = new JPanel();
         panel.setBackground(SystemColor.controlDkShadow);
@@ -131,37 +117,44 @@ public class QuanLiHomeView extends JFrame {
         panel_1.add(lblNewLabel);
 
         JPanel panel_2 = new JPanel();
-        panel_2.setBackground(SystemColor.textHighlightText);
-        panel_2.setBounds(174, 10, 822, 673);
+       panel_2.setBackground(SystemColor.textHighlightText);
+        //panel_2.setBackground(new Color(255, 0, 28));
+        panel_2.setBounds(174, 10, 1000, 673);
         contentPane.add(panel_2);
         panel_2.setLayout(null);
 
         JPanel panel_4 = new JPanel();
         panel_4.setBackground(new Color(224, 255, 255));
-        panel_4.setBounds(0, 0, 822, 57);
+        panel_4.setBounds(0, 0, 1000, 57);
         panel_2.add(panel_4);
         panel_4.setLayout(null);
+
+         panel_5 = new JPanel();
+        panel_5.setBackground(new Color(185, 243, 243));
+        panel_5.setBounds(0, 70, 1000, 600);
+        panel_2.add(panel_5);
+       // panel_5.setLayout(null);
 
         btnQuanLiDichVu = new JButton("Qu\u1EA3n l\u00FD d\u1ECBch v\u1EE5");
         btnQuanLiDichVu.setFont(new Font("Times New Roman", Font.BOLD, 15));
         btnQuanLiDichVu.setBounds(204, 0, 147, 57);
         panel_4.add(btnQuanLiDichVu);
-        btnQuanLiDichVu.setBorderPainted (false);
-        btnQuanLiDichVu.setContentAreaFilled (false);
+        btnQuanLiDichVu.setBorderPainted(false);
+        btnQuanLiDichVu.setContentAreaFilled(false);
 
         btnQuanLiPhong = new JButton("Qu\u1EA3n l\u00FD ph\u00F2ng ");
         btnQuanLiPhong.setFont(new Font("Times New Roman", Font.BOLD, 15));
         btnQuanLiPhong.setBounds(350, 0, 147, 57);
         panel_4.add(btnQuanLiPhong);
-        btnQuanLiPhong.setBorderPainted (false);
-        btnQuanLiPhong.setContentAreaFilled (false);
+        btnQuanLiPhong.setBorderPainted(false);
+        btnQuanLiPhong.setContentAreaFilled(false);
 
         btnQuanLiNhanVien = new JButton("Qu\u1EA3n l\u00FD nh\u00E2n vi\u00EAn");
         btnQuanLiNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 15));
         btnQuanLiNhanVien.setBounds(495, 0, 168, 57);
         panel_4.add(btnQuanLiNhanVien);
-        btnQuanLiNhanVien.setBorderPainted (false);
-        btnQuanLiNhanVien.setContentAreaFilled (false);
+        btnQuanLiNhanVien.setBorderPainted(false);
+        btnQuanLiNhanVien.setContentAreaFilled(false);
 
         JLabel lblCaiDat = new JLabel("C\u00E0i \u0111\u1EB7t");
         lblCaiDat.setHorizontalAlignment(SwingConstants.CENTER);
@@ -169,8 +162,119 @@ public class QuanLiHomeView extends JFrame {
         lblCaiDat.setBounds(10, 5, 117, 47);
         panel_4.add(lblCaiDat);
 
-        btnQuanLiPhong.addActionListener(e -> new QuanLyPhong());
-        btnQuanLiNhanVien.addActionListener(e -> new QuanLyNhanVien());
-        btnQuanLiDichVu.addActionListener(e -> new Quanlydichvu());
+        btnQuanLiPhong.addActionListener(e -> {
+            new QuanLyPhong();
+            frame.dispose();
+        });
+        btnQuanLiNhanVien.addActionListener(e -> {
+            new QuanLyNhanVien();
+            frame.dispose();
+        });
+        btnQuanLiDichVu.addActionListener(e -> {
+            new Quanlydichvu();
+            frame.dispose();
+        });
+
+        new test();
     }
+    public static void main(String[] args) {
+        EventQueue.invokeLater(QuanLiHomeView::new);
+    }
+
+    public class test {
+
+        private final JPanel controls = new JPanel() {
+            @Override
+            public Dimension getMinimumSize() {
+                return new Dimension(1000, 600);
+            }
+
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(1000, 600);
+            }
+
+            @Override
+            public Dimension getMaximumSize() {
+                return new Dimension(1000, 600);
+            }
+        };
+
+        test() {
+            initUI();
+        }
+
+        public final void initUI() {
+
+            panel_5.add(controls);
+            controls.setBackground(new Color(185, 243, 243));
+            controls.setBorder(new TitledBorder("Danh sách phòng"));
+
+            panel_5.add(getCheckBoxPanel(), "South");
+
+        }
+
+        private void addLabel(String maphong,String tinhtrang) {
+            Color color = Color.gray;
+            if(tinhtrang.equals("đã có người")) color = Color.red;
+            if(tinhtrang.equals("đã được đặt")) color = Color.yellow;
+            JPanel controls1 = new JPanel();
+            controls1.setBackground(color);
+            controls1.setBorder(new EmptyBorder(75, 75, 75, 75));
+            controls1.setLayout(new BorderLayout() );
+
+            JLabel txtmaphong = new JLabel();
+            txtmaphong.setText(maphong);
+            txtmaphong.setHorizontalAlignment(SwingConstants.CENTER);
+            txtmaphong.setVerticalAlignment(SwingConstants.CENTER);
+            txtmaphong.setFont(new Font("Times New Roman", Font.BOLD, 15));
+            controls1.add(txtmaphong,BorderLayout.CENTER);
+
+            controls1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    JPanel p = (JPanel) e.getSource();
+                    JLabel label = (JLabel)p.getComponent(0);
+                    System.out.println(label.getText());
+                    new ThongtinPhong(Integer.parseInt(label.getText()));
+                }
+            });
+
+
+            controls.add(controls1);
+        }
+
+        private JPanel getCheckBoxPanel() {
+
+            ArrayList<Phong> listphong = getListPhongData.listphong() ;
+
+            for (Phong p : listphong) {
+                if (controls.getComponentCount() < 1) {
+                    controls.setLayout(new BorderLayout());
+                    addLabel(String.valueOf(p.getMaPhong()),p.getTinhTrang());
+                    makeChange();
+                } else if (controls.getComponentCount() == 1  ) {
+                    controls.setLayout(new GridLayout(0, 2, 10, 10));
+                    addLabel(String.valueOf(p.getMaPhong()),p.getTinhTrang());
+                    makeChange();
+                } else {
+                    controls.setLayout(new GridLayout(3, 0, 10, 10));
+                    addLabel(String.valueOf(p.getMaPhong()),p.getTinhTrang());
+                    makeChange();
+                }
+
+            }
+            return new JPanel();
+        }
+
+        private void makeChange() {
+            panel_5.revalidate();
+            panel_5.repaint();
+        }
+
+
+    }
+
+
+
 }

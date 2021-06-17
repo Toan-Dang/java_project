@@ -1,46 +1,32 @@
 package com.company.Model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class ChiTietPhieuThuePhong {
-   private int MaPTP;
-    private String CMND;
-    private int MaPhong;
+    private int MaPTP;
+    private int Maphong;
     private Date NgayNhanPhong;
     private Date NgayTraPhong;
 
-    ChiTietPhieuThuePhong(){}
+    List<Phong> p;
+    List<PhieuThuePhong> ptp;
+  ChiTietPhieuThuePhong(){
+  }
+  ChiTietPhieuThuePhong(int maptp,int mapphong, Date nnp, Date ntp){
+      MaPTP = maptp;
+      Maphong = mapphong;
+      NgayNhanPhong = nnp;
+      NgayTraPhong = ntp;
+  }
 
-    ChiTietPhieuThuePhong(String _CMND, int _Maphong, Date _ngaynhanphong, Date _ngaytraphong){
-        CMND = _CMND;
-        MaPhong = _Maphong;
-        NgayNhanPhong = _ngaynhanphong;
-        NgayTraPhong = _ngaytraphong;
+    public Date getNgayTraPhong() {
+        return NgayTraPhong;
     }
 
-    public int getMaPTP() {
-        return MaPTP;
-    }
-
-    public void setMaPTP(int maPTP) {
-        MaPTP = maPTP;
-    }
-
-    public String getCMND() {
-        return CMND;
-    }
-
-    public void setCMND(String CMND) {
-        this.CMND = CMND;
-    }
-
-    public int getMaPhong() {
-        return MaPhong;
-    }
-
-    public void setMaPhong(int maPhong) {
-        MaPhong = maPhong;
+    public void setNgayTraPhong(Date ngayTraPhong) {
+        NgayTraPhong = ngayTraPhong;
     }
 
     public Date getNgayNhanPhong() {
@@ -51,11 +37,20 @@ public class ChiTietPhieuThuePhong {
         NgayNhanPhong = ngayNhanPhong;
     }
 
-    public Date getNgayTraPhong() {
-        return NgayTraPhong;
+    public int getMaPTP() {
+        return MaPTP;
     }
 
-    public void setNgayTraPhong(Date ngayTraPhong) {
-        NgayTraPhong = ngayTraPhong;
+    public void setMaPTP(int maPTP) {
+        MaPTP = maPTP;
     }
+
+    public int getMaphong() {
+        return Maphong;
+    }
+
+    public void setMaphong(int maphong) {
+        Maphong = maphong;
+    }
+
 }

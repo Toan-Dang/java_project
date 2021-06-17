@@ -39,24 +39,21 @@ public class ThongTinNhanVien extends JFrame {
         panel1.setLayout(null);
         contentPane.add(panel1);
 
-        JLabel name = new JLabel("Thêm Nhan Vien");
-        name.setBounds(0, 0, 1000, 50);
+        JLabel name = new JLabel("Thông tin Nhân Viên");
+        name.setBounds(0, 0, 600, 50);
         name.setHorizontalAlignment(SwingConstants.CENTER);
         name.setVerticalAlignment(SwingConstants.CENTER);
         name.setFont(new Font("Tahoma", Font.BOLD, 30));
         name.setBackground(new Color(189, 44, 44));
         panel1.add(name);
 
-        name.setBounds(0, 55, 100, 50);
-        name.setHorizontalAlignment(SwingConstants.CENTER);
-        name.setVerticalAlignment(SwingConstants.CENTER);
-        name.setFont(new Font("Tahoma", Font.BOLD, 30));
-        name.setBackground(new Color(189, 44, 44));
-        panel1.add(name);
 
-        JTextField txtusername = new JTextField();
-        txtusername.setEditable(false);
-        txtusername.setBounds(100, 55, 200, 30);
+        JLabel txtusername = new JLabel();
+      //  txtusername.setEditable(false);
+        txtusername.setBounds(700, 0, 200, 50);
+        txtusername.setHorizontalAlignment(SwingConstants.CENTER);
+        txtusername.setVerticalAlignment(SwingConstants.CENTER);
+        txtusername.setFont(new Font("Tahoma", Font.BOLD, 30));
         panel1.add(txtusername);
 
         JPanel panel2 = new JPanel();
