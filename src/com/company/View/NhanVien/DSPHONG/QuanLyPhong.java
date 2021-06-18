@@ -3,7 +3,7 @@ package com.company.View.NhanVien.DSPHONG;
 import com.company.Data.*;
 import com.company.Model.LoaiPhong;
 import com.company.Model.Phong;
-import com.company.View.NhanVien.QuanLiHomeView;
+import com.company.View.NhanVien.TongQuan.QuanLiHomeView;
 import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
 import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
 

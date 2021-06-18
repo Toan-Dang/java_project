@@ -5,7 +5,7 @@ import com.company.Data.getListDichVuData;
 import com.company.Data.searchDichVuData;
 import com.company.Model.DichVu;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
-import com.company.View.NhanVien.QuanLiHomeView;
+import com.company.View.NhanVien.TongQuan.QuanLiHomeView;
 import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
 
 import javax.swing.*;

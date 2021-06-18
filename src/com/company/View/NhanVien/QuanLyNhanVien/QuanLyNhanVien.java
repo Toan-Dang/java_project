@@ -5,7 +5,7 @@ import com.company.Data.*;
 import com.company.Model.NhanVien;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
 import com.company.View.NhanVien.DSPHONG.ThemPTP;
-import com.company.View.NhanVien.QuanLiHomeView;
+import com.company.View.NhanVien.TongQuan.QuanLiHomeView;
 import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
 
 import javax.swing.*;

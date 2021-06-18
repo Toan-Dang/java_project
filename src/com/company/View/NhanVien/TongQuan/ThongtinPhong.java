@@ -1,4 +1,4 @@
-package com.company.View.NhanVien;
+package com.company.View.NhanVien.TongQuan;
 
 import com.company.Data.*;
 import com.company.Model.DanhSachDatTruoc;
