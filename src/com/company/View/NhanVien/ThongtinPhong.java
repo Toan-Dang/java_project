@@ -42,8 +42,6 @@ public class ThongtinPhong extends JFrame {
         lblMaPhong.setBounds(308, 29, 223, 51);
         contentPane.add(lblMaPhong);
 
-
-
         JPanel panel = new JPanel();
         panel.setBackground(Color.LIGHT_GRAY);
         panel.setBounds(38, 78, 556, 167);

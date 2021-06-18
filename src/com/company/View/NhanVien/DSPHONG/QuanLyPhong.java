@@ -1,6 +1,7 @@
 package com.company.View.NhanVien.DSPHONG;
 
 import com.company.Data.*;
+import com.company.Model.LoaiPhong;
 import com.company.Model.Phong;
 import com.company.View.NhanVien.QuanLiHomeView;
 import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
@@ -259,7 +260,6 @@ public class QuanLyPhong extends QuanLiHomeView {
                 }
                 ////ds phong
                 ArrayList<Phong> list = getListPhongData.listphong();
-
                 MyTableModel model = new MyTableModel();
                 int[] row = new int[2];
                 String[] row1 = new String[2];
@@ -285,30 +285,26 @@ public class QuanLyPhong extends QuanLiHomeView {
                 JScrollPane scrollpane = new JScrollPane(table);
                 scrollpane.setViewportView(table);
 
-                //phieu thue phong
-/*
-                ArrayList<PhieuThuePhong> listptp = listphieuthuephong();
-                MyTablePTPModel modelptp = new MyTablePTPModel();
-                int[] rowint = new int[2];
-                String[] rowStr = new String[2];
-                Date[] rowdate = new Date[2];
-                double rowdb;
-                for (PhieuThuePhong ptp : listptp) {
-                    rowint[0] = ptp.getMaPTP();
-                    rowint[1] = ptp.getTinhTrangThanhToan();
-                    rowStr[0] = ptp.getTenKh();
-                    rowStr[1] = ptp.getTenNV();
-                    rowdate[0] = ptp.getNgayPapPTP();
-                    rowdate[1] = ptp.getNgayThanhToan();
-                    rowdb = ptp.getTongTienThanhToan();
+                //loaipohong
 
-                    modelptp.add(new PhieuThuePhong(rowint[0], rowStr[0], rowStr[1], rowdate[0], rowint[1], rowdb, rowdate[1]));
+                ArrayList<LoaiPhong> listLP = getListLoaiPhong.listloaiphong();
+                MyTableLPModel modelLP = new MyTableLPModel();
+                int[] rowint = new int[2];
+                double rowdb;
+                String rowStr;
+                for (LoaiPhong lp : listLP) {
+                    rowint[0] = lp.getMALOAIPHONG();
+                    rowStr = lp.getTENLOAIPHONG();
+                    rowdb = lp.getGIA();
+                    rowint[1] = lp.getSOLUONG();
+
+                    modelLP.add(new LoaiPhong(rowint[0],rowStr,rowdb,rowint[1]));
                 }
 
-                JTable table2 = new JTable(modelptp);
-                AcceptRejectRendererPTP renderer2 = new AcceptRejectRendererPTP();
-                table2.getColumnModel().getColumn(7).setCellRenderer(renderer2);
-                table2.getColumnModel().getColumn(7).setCellEditor(new AcceptRejectEditorPTP());
+                JTable table2 = new JTable(modelLP);
+                AcceptRejectRendererLP renderer2 = new AcceptRejectRendererLP();
+                table2.getColumnModel().getColumn(4).setCellRenderer(renderer2);
+                table2.getColumnModel().getColumn(4).setCellEditor(new AcceptRejectEditorLP());
                 table2.setRowHeight(renderer2.getTableCellRendererComponent(table2, null, true, true, 0, 0).getPreferredSize().height);
                 table2.setFillsViewportHeight(true);
                 table2.setOpaque(true);
@@ -319,15 +315,15 @@ public class QuanLyPhong extends QuanLiHomeView {
 
                 JScrollPane scrollpanez = new JScrollPane(table2);
                 scrollpanez.setViewportView(table2);
-*/
+
                 tabbebpane = new JTabbedPane();
                 tabbebpane.setBounds(0, 207, 1000, 600);
 
-                tabbebpane.addTab("Danh sach phong", scrollpane);
+                tabbebpane.addTab("Danh sách phòng", scrollpane);
                 tabbebpane.setMnemonicAt(0, KeyEvent.VK_1);
 
-               // tabbebpane.addTab("Phieu thue phong", scrollpanez);
-               // tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
+                tabbebpane.addTab("Loại Phòng", scrollpanez);
+                tabbebpane.setMnemonicAt(1, KeyEvent.VK_2);
 
                 panel_2.add(tabbebpane);
             });
@@ -558,12 +554,12 @@ public class QuanLyPhong extends QuanLiHomeView {
         }
 
         //phieuthuephong
-/*
-        public class MyTablePTPModel extends AbstractTableModel {
 
-            private final List<PhieuThuePhong> data;
+        public class MyTableLPModel extends AbstractTableModel {
 
-            public MyTablePTPModel() {
+            private final List<LoaiPhong> data;
+
+            public MyTableLPModel() {
                 data = new ArrayList<>();
             }
 
@@ -571,13 +567,10 @@ public class QuanLyPhong extends QuanLiHomeView {
             public String getColumnName(int column) {
                 return switch (column) {
                     case 0 -> "ID";
-                    case 1 -> "Tên Nhân viên";
-                    case 2 -> "Tên khách hàng";
-                    case 3 -> "Ngay lap phieu";
-                    case 4 -> "Tinh trang";
-                    case 5 -> "Tong tien";
-                    case 6 -> "Ngay thanh toan ";
-                    case 7 -> "";
+                    case 1 -> "Tên Loại Phòng";
+                    case 2 -> "Giá";
+                    case 3 -> "Số lượng tối đa";
+                    case 4 -> "";
                     default -> null;
                 };
             }
@@ -585,13 +578,9 @@ public class QuanLyPhong extends QuanLiHomeView {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
-                    case 0 -> Integer.class;
+                    case 0, 3 -> Integer.class;
                     case 1 -> String.class;
-                    case 2 -> String.class;
-                    case 3 -> Date.class;
-                    case 4 -> Integer.class;
-                    case 5 -> Double.class;
-                    case 6 -> Date.class;
+                    case 2 -> Double.class;
                     default -> Object.class;
                 };
             }
@@ -603,36 +592,27 @@ public class QuanLyPhong extends QuanLiHomeView {
 
             @Override
             public int getColumnCount() {
-                return 8;
+                return 5;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                PhieuThuePhong obj = data.get(rowIndex);
+                LoaiPhong obj = data.get(rowIndex);
                 Object value = null;
                 switch (columnIndex) {
                     case 0:
-                        value = obj.getMaPTP();
+                        value = obj.getMALOAIPHONG();
                         break;
                     case 1:
-                        value = obj.getTenKh();
+                        value = obj.getTENLOAIPHONG();
                         break;
                     case 2:
-                        value = obj.getTenNV();
+                        value = obj.getGIA();
                         break;
                     case 3:
-                        value = obj.getNgayPapPTP();
+                        value = obj.getSOLUONG();
                         break;
                     case 4:
-                        value = obj.getTinhTrangThanhToan();
-                        break;
-                    case 5:
-                        value = obj.getTongTienThanhToan();
-                        break;
-                    case 6:
-                        value = obj.getNgayThanhToan();
-                        break;
-                    case 7:
                         break;
                 }
                 return value;
@@ -640,11 +620,11 @@ public class QuanLyPhong extends QuanLiHomeView {
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 7) {
+                if (columnIndex == 4) {
 
                     System.out.println(aValue);
 
-                    PhieuThuePhong value = data.get(rowIndex);
+                    LoaiPhong value = data.get(rowIndex);
                     if ("accept".equals(aValue)) {
                         System.out.println("Accepted");
                     } else {
@@ -656,13 +636,13 @@ public class QuanLyPhong extends QuanLiHomeView {
                 }
             }
 
-            public void add(PhieuThuePhong value) {
+            public void add(LoaiPhong value) {
                 int startIndex = getRowCount();
                 data.add(value);
                 fireTableRowsInserted(startIndex, getRowCount() - 1);
             }
 
-            public void remove(PhieuThuePhong value) {
+            public void remove(LoaiPhong value) {
                 int startIndex = data.indexOf(value);
                 System.out.println("startIndex = " + startIndex);
                 data.remove(value);
@@ -671,11 +651,11 @@ public class QuanLyPhong extends QuanLiHomeView {
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 7;
+                return columnIndex == 4;
             }
         }
 
-        public class AcceptRejectPanePTP extends JPanel {
+        public class AcceptRejectPaneLP extends JPanel {
 
             private final JButton accept;
             private final JButton reject;
@@ -683,11 +663,11 @@ public class QuanLyPhong extends QuanLiHomeView {
             private String state;
 
 
-            public AcceptRejectPanePTP() {
+            public AcceptRejectPaneLP() {
                 setLayout(new GridBagLayout());
-                accept = new JButton("Update");
+                accept = new JButton("Sửa");
                 accept.setActionCommand("accept");
-                reject = new JButton("Kiểm tra");
+                reject = new JButton("Xóa");
                 reject.setActionCommand("reject");
 
                 add(accept);
@@ -720,13 +700,13 @@ public class QuanLyPhong extends QuanLiHomeView {
             }
         }
 
-        public class AcceptRejectRendererPTP extends DefaultTableCellRenderer {
+        public class AcceptRejectRendererLP extends DefaultTableCellRenderer {
 
-            private final AcceptRejectPanePTP acceptRejectPane;
+            private final AcceptRejectPaneLP acceptRejectPane;
 
 
-            public AcceptRejectRendererPTP() {
-                acceptRejectPane = new AcceptRejectPanePTP();
+            public AcceptRejectRendererLP() {
+                acceptRejectPane = new AcceptRejectPaneLP();
             }
 
 
@@ -741,13 +721,13 @@ public class QuanLyPhong extends QuanLiHomeView {
             }
         }
 
-        public class AcceptRejectEditorPTP extends AbstractCellEditor implements TableCellEditor {
+        public class AcceptRejectEditorLP extends AbstractCellEditor implements TableCellEditor {
 
-            private final AcceptRejectPanePTP acceptRejectPane;
+            private final AcceptRejectPaneLP acceptRejectPane;
 
 
-            public AcceptRejectEditorPTP() {
-                acceptRejectPane = new AcceptRejectPanePTP();
+            public AcceptRejectEditorLP() {
+                acceptRejectPane = new AcceptRejectPaneLP();
                 acceptRejectPane.addActionListener(e -> SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
@@ -801,7 +781,7 @@ public class QuanLyPhong extends QuanLiHomeView {
 
         }
 
-*/
+
     }
 
 }

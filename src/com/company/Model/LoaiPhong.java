@@ -9,7 +9,8 @@ public class LoaiPhong {
     private int SOLUONG;
 
     LoaiPhong(){}
-    LoaiPhong(String tenlp, double gia, int soluong){
+    public LoaiPhong(int mlp, String tenlp, double gia, int soluong){
+        this.MALOAIPHONG = mlp;
         this.TENLOAIPHONG = tenlp;
         this.GIA = gia;
         this.SOLUONG = soluong;
