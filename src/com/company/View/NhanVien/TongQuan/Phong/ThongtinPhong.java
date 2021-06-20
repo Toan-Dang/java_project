@@ -1,5 +1,6 @@
-package com.company.View.NhanVien.TongQuan;
+package com.company.View.NhanVien.TongQuan.Phong;
 
+import com.company.Controller.PhongController;
 import com.company.Data.*;
 import com.company.Model.DanhSachDatTruoc;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class ThongtinPhong extends JFrame {
     JFrame frame = new JFrame();
-    TableRowSorter<javax.swing.table.TableModel> rowSorter;
+    TableRowSorter<TableModel> rowSorter;
     JPanel contentPane;
     private JTable tableModel;
 
@@ -149,7 +150,7 @@ public class ThongtinPhong extends JFrame {
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
-               ArrayList<DanhSachDatTruoc> list = getDSDatTruoc.listdattruoc(id);
+               ArrayList<DanhSachDatTruoc> list = PhongController.listdattruoc(id);
               MyTableModel model = new MyTableModel();
                     int rowint ;
                     Date[] rowdate = new Date[3];

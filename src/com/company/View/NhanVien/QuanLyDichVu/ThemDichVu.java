@@ -1,6 +1,7 @@
 package com.company.View.NhanVien.QuanLyDichVu;
 
-import com.company.Data.InsertDichVu;
+import com.company.Controller.DichVuController;
+import com.company.View.NhanVien.TongQuan.DichVu.CaiDat_QuanLyDichVu;
 
 
 import javax.swing.*;
@@ -83,8 +84,8 @@ public class ThemDichVu extends JFrame {
         ghichu.setLineWrap(true);
         ghichu.setWrapStyleWord(true);
 
-        DefaultCaret caret = (DefaultCaret) ghichu.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+       // DefaultCaret caret = (DefaultCaret) ghichu.getCaret();
+      //  caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.add(ghichu);
@@ -109,8 +110,8 @@ public class ThemDichVu extends JFrame {
             new Quanlydichvu();
         });
         save.addActionListener(e -> {
-           new InsertDichVu(txttendv.getText(),ghichu.getText(),txtgia.getText());
-            new Quanlydichvu();
+           DichVuController.InsertDichVu(txttendv.getText(),ghichu.getText(),txtgia.getText());
+            new CaiDat_QuanLyDichVu();
             frame.dispose();
 
         });

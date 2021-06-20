@@ -1,5 +1,6 @@
 package com.company.View.NhanVien.DSPHONG;
 
+import com.company.Controller.PhongController;
 import com.company.Data.*;
 import com.company.Model.LoaiPhong;
 import com.company.Model.Phong;
@@ -259,7 +260,7 @@ public class QuanLyPhong extends QuanLiHomeView {
                     ex.printStackTrace();
                 }
                 ////ds phong
-                ArrayList<Phong> list = getListPhongData.listphong();
+                ArrayList<Phong> list = PhongController.listphong();
                 MyTableModel model = new MyTableModel();
                 int[] row = new int[2];
                 String[] row1 = new String[2];
@@ -287,7 +288,7 @@ public class QuanLyPhong extends QuanLiHomeView {
 
                 //loaipohong
 
-                ArrayList<LoaiPhong> listLP = getListLoaiPhong.listloaiphong();
+                ArrayList<LoaiPhong> listLP = PhongController.listloaiphong();
                 MyTableLPModel modelLP = new MyTableLPModel();
                 int[] rowint = new int[2];
                 double rowdb;
@@ -511,7 +512,7 @@ public class QuanLyPhong extends QuanLiHomeView {
                         if (acceptRejectPane.getState().equals("reject")) {
                             reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
                             if (reply == JOptionPane.YES_OPTION) {
-                                new XoaPhongData(r);
+                                PhongController.XoaPhong(r);
                                 frame.dispose();
                                 new QuanLyPhong();
                             } else {

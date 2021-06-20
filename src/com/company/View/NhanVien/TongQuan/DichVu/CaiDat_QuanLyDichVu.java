@@ -1,198 +1,176 @@
-package com.company.View.NhanVien.QuanLyDichVu;
-
+package com.company.View.NhanVien.TongQuan.DichVu;
 import com.company.Controller.DichVuController;
 import com.company.Model.DichVu;
-import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
-import com.company.View.NhanVien.TongQuan.QuanLiHomeView;
-import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
+import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
+import com.company.View.NhanVien.QuanLyDichVu.SuaDichVu;
+import com.company.View.NhanVien.TongQuan.Phong.CaiDat;
+import com.company.View.NhanVien.TongQuan.TongQuan;
+
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
-import java.awt.*;
+
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
 
-public class Quanlydichvu extends QuanLiHomeView {
+public class CaiDat_QuanLyDichVu extends JFrame {
+
+    private JPanel contentPane;
+    private JButton btnTongQuan;
+
+    /**
+     * Launch the application.
+     */
+    JTable table = new JTable();
     JFrame frame = new JFrame();
-    JPanel panel_2;
-    JTextField searchfield;
-    JTable table;
     TableRowSorter<TableModel> rowSorter;
 
-    public Quanlydichvu() {
+
+    public CaiDat_QuanLyDichVu() {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(100, 100, 1200, 730);
-
+        frame.setBounds(100, 100, 1240, 730);
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Dịch Vụ");
+        frame.setTitle("Dịch vụ");
 
         contentPane = new JPanel();
+        contentPane.setForeground(new Color(255, 255, 255));
+        contentPane.setBackground(new Color(248, 248, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        contentPane.setBackground(SystemColor.blue);
         frame.add(contentPane);
 
         JPanel panel = new JPanel();
-        panel.setBackground(SystemColor.controlDkShadow);
-        panel.setBackground(SystemColor.black);
-        panel.setBounds(10, 78, 167, 605);
+        panel.setBounds(10, 10, 1206, 47);
+        panel.setBackground(new Color(178, 34, 34));
         contentPane.add(panel);
         panel.setLayout(null);
 
-        btnTongQuan = new JButton("T\u1ED5ng Quan");
-        btnTongQuan.setBackground(SystemColor.scrollbar);
-        btnTongQuan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnTongQuan.setBounds(0, 83, 167, 36);
-        panel.add(btnTongQuan);
+        JLabel lblNewLabel = new JLabel("4T HOTEL");
+        lblNewLabel.setFont(new Font("Wide Latin", Font.BOLD, 17));
+        lblNewLabel.setBounds(10, 0, 194, 47);
+        panel.add(lblNewLabel);
 
-        btnLichHen = new JButton("L\u1ECBch h\u1EB9n");
-        btnLichHen.setBackground(SystemColor.scrollbar);
-        btnLichHen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnLichHen.setBounds(0, 129, 167, 36);
-        panel.add(btnLichHen);
-
-        btnHoaDon = new JButton("Hoa \u0110\u01A1n");
-        btnHoaDon.setBackground(SystemColor.scrollbar);
-        btnHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnHoaDon.setBounds(0, 175, 167, 36);
-        panel.add(btnHoaDon);
-
-        btnKhachHang = new JButton("Kh\u00E1ch h\u00E0ng ");
-        btnKhachHang.setBackground(SystemColor.scrollbar);
-        btnKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnKhachHang.setBounds(0, 221, 167, 36);
-        panel.add(btnKhachHang);
-
-        btnBaoCao = new JButton("B\u00E1o C\u00E1o");
-        btnBaoCao.setBackground(SystemColor.scrollbar);
-        btnBaoCao.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnBaoCao.setBounds(0, 267, 167, 36);
-        panel.add(btnBaoCao);
-
-        btnCaiDat = new JButton("C\u00E0i \u0111\u1EB7t");
-        btnCaiDat.setBackground(SystemColor.text);
-        btnCaiDat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btnCaiDat.setBounds(0, 313, 167, 36);
-        panel.add(btnCaiDat);
-
-        JPanel panel_3 = new JPanel();
-        panel_3.setBounds(0, 10, 51, 52);
-        btnCaiDat.setBackground(SystemColor.red);
-        panel.add(panel_3);
-
-
-        JLabel lblNewLabel_1 = new JLabel("UserName");
-        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        lblNewLabel_1.setBounds(61, 10, 96, 27);
+        JLabel lblNewLabel_1 = new JLabel("T\u00EAn nh\u00E2n vi\u00EAn");
+        lblNewLabel_1.setForeground(new Color(255, 255, 255));
+        lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        lblNewLabel_1.setBounds(974, 10, 194, 27);
         panel.add(lblNewLabel_1);
 
-        JLabel lblNewLabel_2 = new JLabel("Ho\u1EA1t \u0111\u1ED9ng");
-        lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 10));
-        lblNewLabel_2.setForeground(new Color(50, 205, 50));
-        lblNewLabel_2.setBounds(61, 37, 59, 13);
-        panel.add(lblNewLabel_2);
-
         JPanel panel_1 = new JPanel();
-        panel_1.setBackground(SystemColor.red);
-        panel_1.setBounds(10, 10, 167, 68);
+        panel_1.setBounds(10, 58, 170, 595);
+        panel_1.setBackground(new Color(255, 255, 255));
         contentPane.add(panel_1);
         panel_1.setLayout(null);
 
-        JLabel lblNewLabel = new JLabel("4T Hotel");
-        lblNewLabel.setForeground(SystemColor.info);
-        lblNewLabel.setBackground(SystemColor.info);
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setFont(new Font("Tempus Sans ITC", Font.BOLD, 30));
-        lblNewLabel.setBounds(10, 10, 147, 48);
-        panel_1.add(lblNewLabel);
+        btnTongQuan = new JButton("T\u1ED5ng quan");
+        btnTongQuan.setBackground(new Color(192, 192, 192));
+        btnTongQuan.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnTongQuan.setBounds(0, 10, 170, 44);
+        panel_1.add(btnTongQuan);
 
-        panel_2 = new JPanel();
-        panel_2.setBackground(SystemColor.textHighlightText);
-        panel_2.setBounds(174, 10, 1000, 673);
+
+        JButton btnPhieuThuePhong = new JButton("Phi\u1EBFu thu\u00EA ph\u00F2ng");
+        btnPhieuThuePhong.setBackground(new Color(192, 192, 192));
+        btnPhieuThuePhong.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnPhieuThuePhong.setBounds(0, 53, 170, 44);
+        panel_1.add(btnPhieuThuePhong);
+
+        JButton btnNewButton = new JButton("New button");
+        btnNewButton.setBackground(new Color(192, 192, 192));
+        btnNewButton.setBounds(0, 96, 170, 44);
+        panel_1.add(btnNewButton);
+
+        JButton btnNewButton_2 = new JButton("New button");
+        btnNewButton_2.setBackground(new Color(192, 192, 192));
+        btnNewButton_2.setBounds(0, 139, 170, 44);
+        panel_1.add(btnNewButton_2);
+
+        JButton btnNewButton_1 = new JButton("New button");
+        btnNewButton_1.setBackground(new Color(192, 192, 192));
+        btnNewButton_1.setBounds(0, 182, 170, 44);
+        panel_1.add(btnNewButton_1);
+
+        JButton btnNewButton_3 = new JButton("Cài đặt");
+        btnNewButton_3.setBackground(new Color(255, 255, 255));
+        btnNewButton_3.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnNewButton_3.setBounds(0, 225, 170, 44);
+        panel_1.add(btnNewButton_3);
+
+        JPanel panel_2 = new JPanel();
+        panel_2.setBounds(190, 67, 1009, 36);
+        panel_2.setBackground(new Color(178, 34, 34));
         contentPane.add(panel_2);
         panel_2.setLayout(null);
 
+        JLabel lblNewLabel_2 = new JLabel("Cài Đặt");
+        lblNewLabel_2.setForeground(new Color(255, 255, 255));
+        lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        lblNewLabel_2.setBounds(39, 0, 134, 36);
+        panel_2.add(lblNewLabel_2);
+
+        JPanel panel_3 = new JPanel();
+        panel_3.setBounds(189, 101, 537, 36);
+        contentPane.add(panel_3);
+        panel_3.setLayout(null);
+
+        JButton btnNewButton_4 = new JButton("Cài đặt phòng");
+        btnNewButton_4.setForeground(new Color(0, 0, 0));
+        btnNewButton_4.setBackground(new Color(192, 192, 192));
+        btnNewButton_4.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        btnNewButton_4.setBounds(0, 0, 179, 36);
+        panel_3.add(btnNewButton_4);
+
+        JButton btnQuanLyDichVu = new JButton("Quản lý dịch vụ");
+        btnQuanLyDichVu.setForeground(new Color(0, 0, 0));
+        btnQuanLyDichVu.setBackground(new Color(255, 255, 255));
+        btnQuanLyDichVu.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        btnQuanLyDichVu.setBounds(178, 0, 179, 36);
+        panel_3.add(btnQuanLyDichVu);
+
+        JButton btnQuanLyNhanVien = new JButton("Quản lý nhân viên");
+        btnQuanLyNhanVien.setForeground(new Color(0, 0, 0));
+        btnQuanLyNhanVien.setBackground(new Color(192, 192, 192));
+        btnQuanLyNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        btnQuanLyNhanVien.setBounds(357, 0, 179, 36);
+        panel_3.add(btnQuanLyNhanVien);
+
+        JLabel lblNewLabel_3 = new JLabel("Danh sách dịch vụ");
+        lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        lblNewLabel_3.setBounds(190, 168, 163, 37);
+        contentPane.add(lblNewLabel_3);
+
+        JButton btnNewButton_7_1 = new JButton("Thêm +");
+        btnNewButton_7_1.setForeground(Color.WHITE);
+        btnNewButton_7_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        btnNewButton_7_1.setBackground(new Color(0, 139, 139));
+        btnNewButton_7_1.setBounds(646, 201, 99, 27);
+        contentPane.add(btnNewButton_7_1);
+
         JPanel panel_4 = new JPanel();
-      //  panel_4.setBackground(new Color(252, 255, 224));
-        panel_4.setBounds(0, 0, 1000, 57);
-        panel_4.setBackground(new Color(224, 255, 255));
-        panel_2.add(panel_4);
-        panel_4.setLayout(null);
+        panel_4.setBackground(new Color(178, 34, 34));
+        panel_4.setBounds(480, 625, 736, 3);
+        contentPane.add(panel_4);
 
-        btnQuanLiDichVu = new JButton("Qu\u1EA3n l\u00FD d\u1ECBch v\u1EE5");
-        btnQuanLiDichVu.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        btnQuanLiDichVu.setBounds(204, 0, 147, 57);
-        panel_4.add(btnQuanLiDichVu);
-        btnQuanLiDichVu.setBorderPainted(false);
-        btnQuanLiDichVu.setContentAreaFilled(false);
-        btnQuanLiDichVu.addActionListener(e -> {
-            new Quanlydichvu();
-            frame.dispose();
-        });
-        btnQuanLiPhong = new JButton("Qu\u1EA3n l\u00FD ph\u00F2ng ");
-        btnQuanLiPhong.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        btnQuanLiPhong.setBounds(350, 0, 147, 57);
-        panel_4.add(btnQuanLiPhong);
-        btnQuanLiPhong.setBorderPainted(false);
-        btnQuanLiPhong.setContentAreaFilled(false);
-        btnQuanLiPhong.addActionListener(e -> {
-            new QuanLyPhong();
-            frame.dispose();
-        });
+        JLabel lblNewLabel_4 = new JLabel("Khách hàng là thượng đế!");
+        lblNewLabel_4.setFont(new Font("Times New Roman", Font.ITALIC, 17));
+        lblNewLabel_4.setBounds(1011, 628, 243, 25);
+        contentPane.add(lblNewLabel_4);
 
-        btnQuanLiNhanVien = new JButton("Qu\u1EA3n l\u00FD nh\u00E2n vi\u00EAn");
-        btnQuanLiNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        btnQuanLiNhanVien.setBounds(495, 0, 168, 57);
-        panel_4.add(btnQuanLiNhanVien);
-        btnQuanLiNhanVien.setBorderPainted(false);
-        btnQuanLiNhanVien.setContentAreaFilled(false);
-        btnQuanLiNhanVien.addActionListener(e -> {
-            new QuanLyNhanVien();
-            frame.dispose();
-        });
-
-        JLabel lblCaiDat = new JLabel("C\u00E0i \u0111\u1EB7t");
-        lblCaiDat.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCaiDat.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        lblCaiDat.setBounds(10, 5, 117, 47);
-        panel_4.add(lblCaiDat);
-
-        JPanel panel_5 = new JPanel();
-        panel_5.setBackground(new Color(255, 224, 224));
-        panel_5.setBounds(0, 57, 1000, 150);
-        panel_2.add(panel_5);
-        panel_5.setLayout(null);
-
-        JLabel name = new JLabel("Quan Ly Phong");
-        name.setHorizontalAlignment(SwingConstants.CENTER);
-        name.setFont(new Font("Arial", Font.BOLD, 30));
-        name.setBounds(150, 0, 600, 100);
-        panel_5.add(name);
-
-        JButton addbtn = new JButton("Them +");
-        addbtn.setFont(new Font("Arial", Font.BOLD, 15));
-        addbtn.setBounds(5, 110, 100, 30);
-        addbtn.setBackground(new Color(201, 246, 3));
-        addbtn.setForeground(new Color(0, 0, 0));
-        panel_5.add(addbtn);
-
-        searchfield = new JTextField();
-        searchfield.setBounds(530, 110, 450, 30);
-        panel_5.add(searchfield);
-
-        new MultiButtonTable();
-
-        addbtn.addActionListener(e -> {
-            new ThemDichVu();
-            frame.dispose();
-        });
+        //thanh tìm kiếm
+        JTextField searchfield = new JTextField();
+        searchfield.setBounds(261, 202, 291, 27);
+        contentPane.add(searchfield);
         searchfield.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -202,7 +180,6 @@ public class Quanlydichvu extends QuanLiHomeView {
                 } else {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
                 }
-
             }
 
             @Override
@@ -219,7 +196,19 @@ public class Quanlydichvu extends QuanLiHomeView {
             public void changedUpdate(DocumentEvent e) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
+        });
 
+       new MultiButtonTable();
+
+        btnTongQuan.addActionListener(e -> new TongQuan());
+        btnNewButton_4.addActionListener(e -> new CaiDat());
+        btnQuanLyDichVu.addActionListener(e -> {
+            new CaiDat_QuanLyDichVu();
+        });
+
+        btnNewButton_7_1.addActionListener(e -> {
+            frame.dispose();
+           new CaiDat_QuanLyDichVu_ThemDichVu();
         });
     }
 
@@ -233,9 +222,8 @@ public class Quanlydichvu extends QuanLiHomeView {
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
-                ////ds phong
                 ArrayList<DichVu> list = DichVuController.listdv();
-                MyTableModel model = new MyTableModel();
+               MyTableModel model = new MyTableModel();
                 int rowint;
                 String[] rowstr = new String[2];
                 double rowdb;
@@ -256,10 +244,20 @@ public class Quanlydichvu extends QuanLiHomeView {
                 table.setPreferredScrollableViewportSize(new Dimension(500, 70));
                 rowSorter = new TableRowSorter<>(table.getModel());
                 table.setRowSorter(rowSorter);
+
+                table.setShowGrid(false);
+                table.setSurrendersFocusOnKeystroke(true);
+                table.setBackground(new Color(255, 255, 255));
+                table.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+                table.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD , 15));
+                table.getTableHeader().setOpaque(false);
+                table.getTableHeader().setBackground(new Color(178, 34, 34));
+                table.getTableHeader().setForeground(new Color(255, 255, 255));
+
                 JScrollPane scrollpane = new JScrollPane(table);
                 scrollpane.setViewportView(table);
-                scrollpane.setBounds(0, 207, 1000, 600);
-                panel_2.add(scrollpane);
+                scrollpane.setBounds(200, 238, 917, 262);
+                contentPane.add(scrollpane);
             });
         }
 
@@ -274,10 +272,10 @@ public class Quanlydichvu extends QuanLiHomeView {
             @Override
             public String getColumnName(int column) {
                 return switch (column) {
-                    case 0 -> "ID";
-                    case 1 -> "Name";
-                    case 2 -> "Chitiet";
-                    case 3 -> "Gia";
+                    case 0 -> "Mã dịch vụ";
+                    case 1 -> "Tên dịch vụ";
+                    case 2 -> "Mô tả";
+                    case 3 -> "Giá";
                     case 4 -> "";
                     default -> null;
                 };
@@ -339,7 +337,7 @@ public class Quanlydichvu extends QuanLiHomeView {
                         System.out.println("Rejected");
                     }
                     fireTableCellUpdated(rowIndex, columnIndex);
-                    remove(value);
+
 
                 }
             }
@@ -350,12 +348,7 @@ public class Quanlydichvu extends QuanLiHomeView {
                 fireTableRowsInserted(startIndex, getRowCount() - 1);
             }
 
-            public void remove(DichVu value) {
-                int startIndex = data.indexOf(value);
-                System.out.println("startIndex = " + startIndex);
-                data.remove(value);
-                fireTableRowsInserted(startIndex, startIndex);
-            }
+
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -446,17 +439,16 @@ public class Quanlydichvu extends QuanLiHomeView {
                         if (acceptRejectPane.getState().equals("reject")) {
                             reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfir", JOptionPane.YES_NO_OPTION);
                             if (reply == JOptionPane.YES_OPTION) {
-                               DichVuController.XoaDichVu(r);
+                                 DichVuController.XoaDichVu(r);
                                 frame.dispose();
-
-                                new Quanlydichvu();
+                                new CaiDat_QuanLyDichVu();
                             } else {
                                 JOptionPane.showMessageDialog(null, "Canecled Delete ");
                             }
                         } else {
                             int getdv = DichVuController.searchDichVu(r);
                             frame.dispose();
-                            new SuaDichVu(getdv);
+                            new CaiDat_QuanLyDichVu_SuaDichVu(getdv);
                         }
                     }
                 }));
@@ -486,4 +478,8 @@ public class Quanlydichvu extends QuanLiHomeView {
             }
         }
     }
+
+
 }
+
+

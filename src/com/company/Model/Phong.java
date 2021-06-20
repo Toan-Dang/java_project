@@ -8,6 +8,7 @@ public class Phong {
     private String TinhTrang;
     private String GhiChu;
     private int SoLuongNguoiHienTai;
+    private  double Gia;
 
     List<LoaiPhong> loaiPhongs;
     public Phong(){
@@ -21,16 +22,14 @@ public class Phong {
 
     }
 
-    public Phong(String MaLoaiPhong, String TinhTrang, String GhiChu){
-        this.MaLoaiPhong = MaLoaiPhong;
-        this.TinhTrang = TinhTrang;
-        this.GhiChu = GhiChu;
+    public Phong(int maphong, String maloaiphong, int soluong, String tinhtrang,double gia){
+        this.MaPhong = maphong;
+        this.MaLoaiPhong = maloaiphong;
+        this.TinhTrang = tinhtrang;
+        this.SoLuongNguoiHienTai = soluong;
+        this.Gia = gia;
     }
 
-    public Phong(String MaLoaiPhong, String GhiChu){
-        this.MaLoaiPhong = MaLoaiPhong;
-        this.GhiChu = GhiChu;
-    }
 
     public String getMaLoaiPhong() {
         return MaLoaiPhong;
@@ -54,6 +53,14 @@ public class Phong {
 
     public void setGhiChu(String ghiChu) {
         GhiChu = ghiChu;
+    }
+
+    public double getGia() {
+        return Gia;
+    }
+
+    public void setGia(double gia) {
+        Gia = gia;
     }
 
     public int getMaPhong() {

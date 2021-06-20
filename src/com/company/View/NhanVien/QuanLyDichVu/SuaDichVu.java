@@ -1,7 +1,7 @@
 package com.company.View.NhanVien.QuanLyDichVu;
 
+import com.company.Controller.DichVuController;
 import com.company.Data.ConnectionOracle;
-import com.company.Data.UpdateDichVuData;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,7 +12,7 @@ import java.sql.*;
 public class SuaDichVu extends JFrame {
     JFrame frame = new JFrame();
 
-    SuaDichVu(int ID) {
+    public SuaDichVu(int ID) {
         frame.setVisible(true);
         frame.setBounds(100, 100, 500, 550);
 
@@ -126,7 +126,7 @@ public class SuaDichVu extends JFrame {
             new Quanlydichvu();
         });
         save.addActionListener(e -> {
-           new UpdateDichVuData(ID, txttendv.getText(), ghichu.getText(),txtgia.getText());
+           DichVuController.UpdateDichVu(ID, txttendv.getText(), ghichu.getText(),txtgia.getText());
             new Quanlydichvu();
             frame.dispose();
         });

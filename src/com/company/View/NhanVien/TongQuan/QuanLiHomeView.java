@@ -1,10 +1,11 @@
 package com.company.View.NhanVien.TongQuan;
 
-import com.company.Data.getListPhongData;
+import com.company.Controller.PhongController;
 import com.company.Model.Phong;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
 import com.company.View.NhanVien.QuanLyDichVu.Quanlydichvu;
 import com.company.View.NhanVien.QuanLyNhanVien.QuanLyNhanVien;
+import com.company.View.NhanVien.TongQuan.Phong.ThongtinPhong;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -129,11 +130,7 @@ public class QuanLiHomeView extends JFrame {
         panel_2.add(panel_4);
         panel_4.setLayout(null);
 
-         panel_5 = new JPanel();
-        panel_5.setBackground(new Color(185, 243, 243));
-        panel_5.setBounds(0, 70, 1000, 600);
-        panel_2.add(panel_5);
-       // panel_5.setLayout(null);
+
 
         btnQuanLiDichVu = new JButton("Qu\u1EA3n l\u00FD d\u1ECBch v\u1EE5");
         btnQuanLiDichVu.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -161,6 +158,12 @@ public class QuanLiHomeView extends JFrame {
         lblCaiDat.setFont(new Font("Times New Roman", Font.BOLD, 15));
         lblCaiDat.setBounds(10, 5, 117, 47);
         panel_4.add(lblCaiDat);
+
+        panel_5 = new JPanel();
+        panel_5.setBackground(new Color(185, 243, 243));
+        panel_5.setBounds(0, 70, 1000, 600);
+        panel_2.add(panel_5);
+        // panel_5.setLayout(null);
 
         btnQuanLiPhong.addActionListener(e -> {
             new QuanLyPhong();
@@ -230,6 +233,7 @@ public class QuanLiHomeView extends JFrame {
             txtmaphong.setFont(new Font("Times New Roman", Font.BOLD, 15));
             controls1.add(txtmaphong,BorderLayout.CENTER);
 
+
             controls1.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -246,7 +250,7 @@ public class QuanLiHomeView extends JFrame {
 
         private JPanel getCheckBoxPanel() {
 
-            ArrayList<Phong> listphong = getListPhongData.listphong() ;
+            ArrayList<Phong> listphong = PhongController.listphong() ;
 
             for (Phong p : listphong) {
                 if (controls.getComponentCount() < 1) {
