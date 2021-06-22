@@ -1,38 +1,48 @@
-package com.company.View.NhanVien.TongQuan.Phong;
+package com.company.View.KhachHang;
 
-import com.company.Controller.PhongController;
-import com.company.Model.Phong;
-import com.company.View.NhanVien.TongQuan.DichVu.CaiDat_QuanLyDichVu;
-import com.company.View.NhanVien.TongQuan.TongQuan;
+import com.company.Controller.KhachHangController;
+import com.company.Model.KhachHang;
+import com.company.View.NhanVien.TongQuan.Phong.CaiDat;
+import com.company.View.NhanVien.TongQuan.Phong.CaiDat_QuanLyPhong_SuaPhong;
+
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.EventObject;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.List;
 
-public class CaiDat extends JFrame {
+public class QuanLyKhachHang extends JFrame {
 
-    JTable table;
+    private JPanel contentPane;
     TableRowSorter<TableModel> rowSorter;
+    JTable table;
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                new QuanLyKhachHang();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
     JFrame frame = new JFrame();
-    private final JPanel contentPane;
-
-    public CaiDat() {
+    public QuanLyKhachHang()  {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(100, 100, 1240, 730);
+        frame.setBounds(100, 100, 1240, 700);
         frame.setLocationRelativeTo(null);
-        frame.setTitle("DS Phòng");
+        frame.setTitle("Tong Quan");
 
         contentPane = new JPanel();
-        contentPane.setForeground(new Color(255, 255, 255));
         contentPane.setBackground(new Color(248, 248, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -69,32 +79,35 @@ public class CaiDat extends JFrame {
         btnTongQuan.setBounds(0, 10, 170, 44);
         panel_1.add(btnTongQuan);
 
-        JButton btnPhieuThuePhong = new JButton("Phi\u1EBFu thu\u00EA ph\u00F2ng");
+        JButton btnPhieuThuePhong = new JButton("Dịch vụ");
         btnPhieuThuePhong.setBackground(new Color(192, 192, 192));
         btnPhieuThuePhong.setFont(new Font("Times New Roman", Font.BOLD, 17));
-        btnPhieuThuePhong.setBounds(0, 53, 170, 44);
+        btnPhieuThuePhong.setBounds(0, 54, 170, 44);
         panel_1.add(btnPhieuThuePhong);
 
-        JButton btnNewButton = new JButton("New button");
-        btnNewButton.setBackground(new Color(192, 192, 192));
-        btnNewButton.setBounds(0, 96, 170, 44);
-        panel_1.add(btnNewButton);
+        JButton btnPhieuThuePhong_1 = new JButton("Khách hàng");
+        btnPhieuThuePhong_1.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnPhieuThuePhong_1.setBackground(new Color(255, 255, 255));
+        btnPhieuThuePhong_1.setBounds(0, 141, 170, 44);
+        panel_1.add(btnPhieuThuePhong_1);
 
-        JButton btnNewButton_2 = new JButton("New button");
-        btnNewButton_2.setBackground(new Color(192, 192, 192));
-        btnNewButton_2.setBounds(0, 139, 170, 44);
-        panel_1.add(btnNewButton_2);
+        JButton btnTongQuan_1 = new JButton("Thanh toán");
+        btnTongQuan_1.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnTongQuan_1.setBackground(new Color(192, 192, 192));
+        btnTongQuan_1.setBounds(0, 97, 170, 44);
+        panel_1.add(btnTongQuan_1);
 
-        JButton btnNewButton_1 = new JButton("New button");
-        btnNewButton_1.setBackground(new Color(192, 192, 192));
-        btnNewButton_1.setBounds(0, 182, 170, 44);
-        panel_1.add(btnNewButton_1);
+        JButton btnTongQuan_1_1 = new JButton("Báo cáo");
+        btnTongQuan_1_1.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnTongQuan_1_1.setBackground(Color.LIGHT_GRAY);
+        btnTongQuan_1_1.setBounds(0, 184, 170, 44);
+        panel_1.add(btnTongQuan_1_1);
 
-        JButton btnNewButton_3 = new JButton("Cài đặt");
-        btnNewButton_3.setBackground(new Color(255, 255, 255));
-        btnNewButton_3.setFont(new Font("Times New Roman", Font.BOLD, 17));
-        btnNewButton_3.setBounds(0, 225, 170, 44);
-        panel_1.add(btnNewButton_3);
+        JButton btnPhieuThuePhong_1_1 = new JButton("Cài đặt");
+        btnPhieuThuePhong_1_1.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnPhieuThuePhong_1_1.setBackground(Color.LIGHT_GRAY);
+        btnPhieuThuePhong_1_1.setBounds(0, 228, 170, 44);
+        panel_1.add(btnPhieuThuePhong_1_1);
 
         JPanel panel_2 = new JPanel();
         panel_2.setBounds(190, 67, 1009, 36);
@@ -102,64 +115,25 @@ public class CaiDat extends JFrame {
         contentPane.add(panel_2);
         panel_2.setLayout(null);
 
-        JLabel lblNewLabel_2 = new JLabel("Cài Đặt");
+        JLabel lblNewLabel_2 = new JLabel("Khách Hàng");
         lblNewLabel_2.setForeground(new Color(255, 255, 255));
         lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 16));
         lblNewLabel_2.setBounds(39, 0, 134, 36);
         panel_2.add(lblNewLabel_2);
 
-        JPanel panel_3 = new JPanel();
-        panel_3.setBounds(189, 101, 537, 36);
-        contentPane.add(panel_3);
-        panel_3.setLayout(null);
 
-        JButton btnNewButton_4 = new JButton("Cài đặt phòng");
-        btnNewButton_4.setForeground(new Color(0, 0, 0));
-        btnNewButton_4.setBackground(new Color(255, 255, 255));
-        btnNewButton_4.setFont(new Font("Times New Roman", Font.BOLD, 16));
-        btnNewButton_4.setBounds(0, 0, 179, 36);
-        panel_3.add(btnNewButton_4);
-
-        JButton btnQuanLyDichVu = new JButton("Quản lý dịch vụ");
-        btnQuanLyDichVu.setForeground(new Color(0, 0, 0));
-        btnQuanLyDichVu.setBackground(new Color(192, 192, 192));
-        btnQuanLyDichVu.setFont(new Font("Times New Roman", Font.BOLD, 16));
-        btnQuanLyDichVu.setBounds(178, 0, 179, 36);
-        panel_3.add(btnQuanLyDichVu);
-
-        JButton btnQuanLyNhanVien = new JButton("Quản lý nhân viên");
-        btnQuanLyNhanVien.setForeground(new Color(0, 0, 0));
-        btnQuanLyNhanVien.setBackground(new Color(192, 192, 192));
-        btnQuanLyNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 16));
-        btnQuanLyNhanVien.setBounds(357, 0, 179, 36);
-        panel_3.add(btnQuanLyNhanVien);
-
-        JLabel lblNewLabel_3 = new JLabel("Danh sách phòng");
-        lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        lblNewLabel_3.setBounds(190, 168, 163, 37);
+        JLabel lblNewLabel_3 = new JLabel("Danh sách khách hàng");
+        lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        lblNewLabel_3.setBounds(190, 113, 179, 36);
         contentPane.add(lblNewLabel_3);
 
-        JButton btnNewButton_7_1 = new JButton("Thêm +");
-        btnNewButton_7_1.setForeground(Color.WHITE);
-        btnNewButton_7_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        btnNewButton_7_1.setBackground(new Color(0, 139, 139));
-        btnNewButton_7_1.setBounds(646, 201, 99, 27);
-        contentPane.add(btnNewButton_7_1);
-        btnNewButton_7_1.addActionListener(e ->{new CaiDat_QuanLyPhong_ThemPhong(); frame.dispose();} );
+        JLabel lblTimKiem = new JLabel("Tìm kiếm");
+        lblTimKiem.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+        lblTimKiem.setBounds(190, 159, 99, 27);
+        contentPane.add(lblTimKiem);
 
-        JPanel panel_4 = new JPanel();
-        panel_4.setBackground(new Color(178, 34, 34));
-        panel_4.setBounds(480, 625, 736, 3);
-        contentPane.add(panel_4);
-
-        JLabel lblNewLabel_4 = new JLabel("Khách hàng là thượng đế!");
-        lblNewLabel_4.setFont(new Font("Times New Roman", Font.ITALIC, 17));
-        lblNewLabel_4.setBounds(1011, 628, 243, 25);
-        contentPane.add(lblNewLabel_4);
-
-        //thanh tìm kiếm
         JTextField searchfield = new JTextField();
-        searchfield.setBounds(261, 202, 291, 27);
+        searchfield.setBounds(261, 160, 291, 27);
         contentPane.add(searchfield);
         searchfield.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -188,51 +162,45 @@ public class CaiDat extends JFrame {
             }
         });
 
-        new MultiButtonTablePhong();
+        JButton btnNewButton_7_1 = new JButton("Thêm +");
+        btnNewButton_7_1.setForeground(Color.WHITE);
+        btnNewButton_7_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        btnNewButton_7_1.setBackground(new Color(0, 139, 139));
+        btnNewButton_7_1.setBounds(651, 159, 99, 27);
+        contentPane.add(btnNewButton_7_1);
 
-        btnTongQuan.addActionListener(e -> {
-                    new TongQuan();
-                    frame.dispose();
-                }
-        );
-        btnQuanLyDichVu.addActionListener(e -> {
-            frame.dispose();
-            new CaiDat_QuanLyDichVu();
-        });
-        btnNewButton_4.addActionListener(e -> {new CaiDat();frame.dispose();});
+
+        new TableKhachHang();
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(CaiDat::new);
-    }
+    public class TableKhachHang {
 
-    public class MultiButtonTablePhong {
-
-        public MultiButtonTablePhong() {
+        public TableKhachHang() {
             EventQueue.invokeLater(() -> {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                     ex.printStackTrace();
                 }
-                ////ds phong
-                ArrayList<Phong> list = PhongController.listphongfull();
+
+                ArrayList<KhachHang> list =  KhachHangController.listKhachHang();
                 MyTableModel model = new MyTableModel();
-                int[] row = new int[2];
-                String[] row1 = new String[2];
-                double gia;
-                for (Phong phong : list) {
-                    row[0] = phong.getMaPhong();
-                    row1[0] = phong.getMaLoaiPhong();
-                    row[1] = phong.getSoLuongNguoiHienTai();
-                    row1[1] = phong.getTinhTrang();
-                    gia = phong.getGia();
-                    model.add(new Phong(row[0], row1[0], row[1], row1[1], gia));
+                int makh;
+                String[] str = new String[5];
+                for (KhachHang kh : list) {
+                   // row[0] = kh.getMaPhong();
+                    makh = kh.getMaKH();
+                    str[0] = kh.getUserName();
+                    str[1] = kh.getTenKH();
+                    str[2]= kh.getMaLKH();
+                    str[3] = kh.getSDT();
+                    str[4] = kh.getCMND();
+                    model.add(new KhachHang(makh,str[0],str[1],str[2],str[3],str[4]));
                 }
                 table = new JTable(model);
                 AcceptRejectRenderer renderer = new AcceptRejectRenderer();
-                table.getColumnModel().getColumn(5).setCellRenderer(renderer);
-                table.getColumnModel().getColumn(5).setCellEditor(new AcceptRejectEditor());
+                table.getColumnModel().getColumn(6).setCellRenderer(renderer);
+                table.getColumnModel().getColumn(6).setCellEditor(new AcceptRejectEditor());
                 table.setRowHeight(renderer.getTableCellRendererComponent(table, null, true, true, 0, 0).getPreferredSize().height);
                 table.setFillsViewportHeight(true);
 
@@ -252,7 +220,7 @@ public class CaiDat extends JFrame {
 
                 JScrollPane scrollpane = new JScrollPane(table);
                 scrollpane.setViewportView(table);
-                scrollpane.setBounds(190, 238, 917, 300);
+                scrollpane.setBounds(190, 197, 1000, 406);
 
                 contentPane.add(scrollpane);
             });
@@ -261,7 +229,7 @@ public class CaiDat extends JFrame {
         //phong
         public class MyTableModel extends AbstractTableModel {
 
-            private final List<Phong> data;
+            private final List<KhachHang> data;
 
             public MyTableModel() {
                 data = new ArrayList<>();
@@ -270,12 +238,13 @@ public class CaiDat extends JFrame {
             @Override
             public String getColumnName(int column) {
                 return switch (column) {
-                    case 0 -> "ID";
-                    case 1 -> "Name";
-                    case 2 -> "So luong";
-                    case 3 -> "tinh trang";
-                    case 4 -> "Gia";
-                    case 5 -> "";
+                    case 0 -> "MaKH";
+                    case 1 -> "UserName";
+                    case 2 -> "Tên Khách Hàng";
+                    case 3 -> "Loại Khách Hàng";
+                    case 4 -> "SDT";
+                    case 5 -> "CMND/CCCD";
+                    case 6 -> "";
                     default -> null;
                 };
             }
@@ -283,9 +252,8 @@ public class CaiDat extends JFrame {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return switch (columnIndex) {
-                    case 0, 2 -> Integer.class;
-                    case 1, 3 -> String.class;
-                    case 4 -> Double.class;
+                    case 0 -> Integer.class;
+                    case 1, 2,3,4,5-> String.class;
                     default -> Object.class;
                 };
             }
@@ -297,30 +265,33 @@ public class CaiDat extends JFrame {
 
             @Override
             public int getColumnCount() {
-                return 6;
+                return 7;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                Phong obj = data.get(rowIndex);
+                KhachHang obj = data.get(rowIndex);
                 Object value = null;
                 switch (columnIndex) {
                     case 0:
-                        value = obj.getMaPhong();
+                        value = obj.getMaKH();
                         break;
                     case 1:
-                        value = obj.getMaLoaiPhong();
+                        value = obj.getUserName();
                         break;
                     case 2:
-                        value = obj.getSoLuongNguoiHienTai();
+                        value = obj.getTenKH();
                         break;
                     case 3:
-                        value = obj.getTinhTrang();
+                        value = obj.getMaLKH();
                         break;
                     case 4:
-                        value = obj.getGia();
+                        value = obj.getSDT();
                         break;
                     case 5:
+                        value = obj.getCMND();
+                        break;
+                    case 6:
                         break;
                 }
                 return value;
@@ -328,23 +299,22 @@ public class CaiDat extends JFrame {
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 5) {
+                if (columnIndex == 6) {
 
                     System.out.println(aValue);
 
-                    Phong value = data.get(rowIndex);
+                    KhachHang value = data.get(rowIndex);
                     if ("accept".equals(aValue)) {
                         System.out.println("Accepted");
                     } else {
                         System.out.println("Rejected");
                     }
                     fireTableCellUpdated(rowIndex, columnIndex);
-                  //  remove(value);
 
                 }
             }
 
-            public void add(Phong value) {
+            public void add(KhachHang value) {
                 int startIndex = getRowCount();
                 data.add(value);
                 fireTableRowsInserted(startIndex, getRowCount() - 1);
@@ -352,7 +322,7 @@ public class CaiDat extends JFrame {
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 5;
+                return columnIndex == 6;
             }
         }
 
@@ -366,11 +336,10 @@ public class CaiDat extends JFrame {
 
             public AcceptRejectPane() {
                 setLayout(new GridBagLayout());
-                accept = new JButton("Chỉnh sửa");
+                accept = new JButton("Update");
                 accept.setActionCommand("accept");
-                reject = new JButton("Xóa");
+                reject = new JButton("Detail");
                 reject.setActionCommand("reject");
-
                 add(accept);
                 add(reject);
 
@@ -433,29 +402,15 @@ public class CaiDat extends JFrame {
                     public void run() {
                         int reply;
                         int r = acceptRejectPane.getRow();
-                        r = PhongController.getMaPhongrow(++r);
-                        if(!PhongController.isDatPhong(r)){
+                        r = KhachHangController.getMaKHrow(++r);
                             if (acceptRejectPane.getState().equals("reject")) {
-                                reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
-                                if (reply == JOptionPane.YES_OPTION) {
-                                     PhongController.XoaPhong(r);
-                                    frame.dispose();
-                                    new CaiDat();
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Canecled Delete ");
-                                }
+                               frame.dispose();
+
                             } else {
-                                new CaiDat_QuanLyPhong_SuaPhong(r);
+
                                 frame.dispose();
 
                             }
-                        }
-                         else {
-                            JOptionPane.showMessageDialog(null, "Phòng số " + r + " đã đặt không thể thao tác");
-                            frame.dispose();
-                            new CaiDat();
-                        }
-
                     }
                 }));
             }
@@ -484,5 +439,3 @@ public class CaiDat extends JFrame {
         }
     }
 }
-
-

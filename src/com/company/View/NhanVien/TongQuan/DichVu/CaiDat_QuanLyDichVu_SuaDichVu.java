@@ -97,7 +97,7 @@ public class CaiDat_QuanLyDichVu_SuaDichVu extends  JFrame{
 
         btnQuayLai.addActionListener(e -> {
             frame.dispose();
-            new CaiDat_QuanLyDichVu();
+           new CaiDat_QuanLyDichVu();
         });
         btnThem.addActionListener(e -> {
             DichVuController.InsertDichVu(textTenDichVu.getText(),textChiTiet.getText(),textGia.getText());

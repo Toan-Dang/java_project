@@ -5,6 +5,8 @@ import com.company.Model.Phong;
 import com.company.View.NhanVien.TongQuan.Phong.ThongtinPhong;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -79,7 +81,12 @@ public class TongQuan extends JFrame {
         btnTongQuan.setFont(new Font("Times New Roman", Font.BOLD, 17));
         btnTongQuan.setBounds(0, 10, 170, 44);
         panel_1.add(btnTongQuan);
-
+        btnTongQuan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new TongQuan();
+            }
+        });
         JButton btnPhieuThuePhong = new JButton("Phi\u1EBFu thu\u00EA ph\u00F2ng");
         btnPhieuThuePhong.setBackground(new Color(192, 192, 192));
         btnPhieuThuePhong.setFont(new Font("Times New Roman", Font.BOLD, 17));

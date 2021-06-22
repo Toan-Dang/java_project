@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -137,6 +139,7 @@ public class ThongtinPhong extends JFrame {
         btnQuayLai.setBounds(640, 162, 129, 51);
         contentPane.add(btnQuayLai);
 
+        btnDatPhong.addActionListener(e -> new TongQuan_ThongTinPhong_DatPhong(id));
         btnQuayLai.addActionListener(e -> frame.dispose());
     }
 
