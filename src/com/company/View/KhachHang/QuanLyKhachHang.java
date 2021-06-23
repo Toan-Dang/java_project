@@ -2,8 +2,7 @@ package com.company.View.KhachHang;
 
 import com.company.Controller.KhachHangController;
 import com.company.Model.KhachHang;
-import com.company.View.NhanVien.TongQuan.Phong.CaiDat;
-import com.company.View.NhanVien.TongQuan.Phong.CaiDat_QuanLyPhong_SuaPhong;
+
 
 import java.awt.*;
 import java.awt.event.ActionListener;

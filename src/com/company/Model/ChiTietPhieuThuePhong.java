@@ -1,25 +1,33 @@
 package com.company.Model;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class ChiTietPhieuThuePhong {
     private int MaPTP;
     private int Maphong;
+    private  String LoaiPhong;
     private Date NgayNhanPhong;
     private Date NgayTraPhong;
+    private  double Tien;
+    private  double Gia;
 
-    List<Phong> p;
-    List<PhieuThuePhong> ptp;
-  ChiTietPhieuThuePhong(){
-  }
-  ChiTietPhieuThuePhong(int maptp,int mapphong, Date nnp, Date ntp){
-      MaPTP = maptp;
-      Maphong = mapphong;
-      NgayNhanPhong = nnp;
-      NgayTraPhong = ntp;
-  }
+    ChiTietPhieuThuePhong(){}
+    public ChiTietPhieuThuePhong(int maphong, String lp, Date nnp, Date ntp, double tien, double gia){
+        Maphong = maphong;
+        LoaiPhong = lp;
+        NgayNhanPhong = nnp;
+        NgayTraPhong = ntp;
+        Tien = tien;
+        Gia = gia;
+    }
+
+    public double getGia() {
+        return Gia;
+    }
+
+    public void setGia(double gia) {
+        Gia = gia;
+    }
 
     public Date getNgayTraPhong() {
         return NgayTraPhong;
@@ -53,4 +61,19 @@ public class ChiTietPhieuThuePhong {
         Maphong = maphong;
     }
 
+    public double getTien() {
+        return Tien;
+    }
+
+    public void setLoaiPhong(String loaiPhong) {
+        LoaiPhong = loaiPhong;
+    }
+
+    public String getLoaiPhong() {
+        return LoaiPhong;
+    }
+
+    public void setTien(double tien) {
+        Tien = tien;
+    }
 }
