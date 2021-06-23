@@ -1,6 +1,7 @@
 package com.company.View.NhanVien.QuanLyNhanVien;
 
 
+import com.company.Controller.NhanVienController;
 import com.company.Data.*;
 import com.company.Model.NhanVien;
 import com.company.View.NhanVien.DSPHONG.QuanLyPhong;
@@ -258,7 +259,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                     ex.printStackTrace();
                 }
                 ////ds nhan vien
-                ArrayList<NhanVien> list = getListNhanVien.listnhanvien();
+                ArrayList<NhanVien> list = NhanVienController.listNhanVien();
                 MyTableModel model = new MyTableModel();
                 int manv;
                 String[] row = new String[3];
@@ -268,7 +269,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                     row[1] = nv.getUserName();
                     row[2] = nv.getChucVu();
 
-                    model.add(new NhanVien(manv, row[0], row[1], row[2]));
+                    model.add(new NhanVien(manv, row[0], row[1], row[2],null,null));
                 }
 
                 table = new JTable(model);
@@ -302,7 +303,7 @@ public class QuanLyNhanVien extends QuanLiHomeView {
                     rowz[1] = nv.getUserName();
                     rowz[2] = nv.getChucVu();
 
-                    modelql.add(new NhanVien(maql, rowz[0], rowz[1], rowz[2]));
+                    modelql.add(new NhanVien(maql, rowz[0], rowz[1], rowz[2],null,null));
                 }
                 JTable table2 = new JTable(modelql);
                 AcceptRejectRendererQL renderer2 = new AcceptRejectRendererQL();

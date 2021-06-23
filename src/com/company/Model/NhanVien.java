@@ -17,41 +17,14 @@ public class NhanVien {
     private Date NgayVaoLam;
 
     NhanVien(){}
-    NhanVien(int manv, int nguoiQuanLy, String username, String tenvn, Date ngaysinh,
-             String gioitinh, String diachi, String sdt, String cmnd, String email, String chucvu, Date ngayvaolam){
-        MaNV = manv;
-        NguoiQuanLy = nguoiQuanLy;
-        UserName = username;
-        TenNV = tenvn;
-        NgaySinh = ngaysinh;
-        GioiTinh = gioitinh;
-        DiaChi = diachi;
-        SDT = sdt;
-        CMND = cmnd;
-        Email = email;
-        ChucVu  = chucvu;
-        NgayVaoLam = ngayvaolam;
-    }
 
-    NhanVien(int manv, String username, String tenvn, Date ngaysinh,
-             String gioitinh, String diachi, String sdt, String cmnd, String email, String chucvu, Date ngayvaolam){
-        MaNV = manv;
-        UserName = username;
-        TenNV = tenvn;
-        NgaySinh = ngaysinh;
-        GioiTinh = gioitinh;
-        DiaChi = diachi;
-        SDT = sdt;
-        CMND = cmnd;
-        Email = email;
-        ChucVu  = chucvu;
-        NgayVaoLam = ngayvaolam;
-    }
-   public NhanVien(int manv, String tennv, String username, String chucvu){
+   public NhanVien(int manv, String tennv, String username,String chucvu, String SDT, String CMND){
         MaNV = manv;
         TenNV = tennv;
         UserName = username;
         ChucVu = chucvu;
+        this.SDT =SDT;
+        this.CMND = CMND;
     }
 
     public void setUserName(String userName) {

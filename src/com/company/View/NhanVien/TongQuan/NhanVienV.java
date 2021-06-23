@@ -1,14 +1,22 @@
-package com.company.View.KhachHang;
+package com.company.View.NhanVien.TongQuan;
+
+
 
 import com.company.Controller.KhachHangController;
+import com.company.Controller.NhanVienController;
+import com.company.Controller.PhongController;
 import com.company.Model.KhachHang;
-
+import com.company.Model.NhanVien;
+import com.company.View.KhachHang.QuanLyKhachHang;
+import com.company.View.NhanVien.TongQuan.Phong.CaiDat;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,9 +24,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.*;
 
-public class QuanLyKhachHang extends JFrame {
+public class NhanVienV extends JFrame {
 
     private JPanel contentPane;
+    private JTextField textFieldTimKiem;
     TableRowSorter<TableModel> rowSorter;
     JTable table;
     /**
@@ -27,26 +36,30 @@ public class QuanLyKhachHang extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                new QuanLyKhachHang();
+                new NhanVienV();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
-    JFrame frame = new JFrame();
-    public QuanLyKhachHang()  {
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(100, 100, 1240, 700);
-        frame.setLocationRelativeTo(null);
-        frame.setTitle("Tong Quan");
+    /**
+     * Create the frame.
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public NhanVienV() {
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBounds(100, 100, 1240, 700);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Tong Quan");
 
         contentPane = new JPanel();
         contentPane.setBackground(new Color(248, 248, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        frame.add(contentPane);
+
 
         JPanel panel = new JPanel();
         panel.setBounds(10, 10, 1206, 47);
@@ -78,15 +91,15 @@ public class QuanLyKhachHang extends JFrame {
         btnTongQuan.setBounds(0, 10, 170, 44);
         panel_1.add(btnTongQuan);
 
-        JButton btnPhieuThuePhong = new JButton("Dịch vụ");
-        btnPhieuThuePhong.setBackground(new Color(192, 192, 192));
-        btnPhieuThuePhong.setFont(new Font("Times New Roman", Font.BOLD, 17));
-        btnPhieuThuePhong.setBounds(0, 54, 170, 44);
-        panel_1.add(btnPhieuThuePhong);
+        JButton btnNhanVien = new JButton("Nhân viên");
+        btnNhanVien.setBackground(new Color(192, 192, 192));
+        btnNhanVien.setFont(new Font("Times New Roman", Font.BOLD, 17));
+        btnNhanVien.setBounds(0, 54, 170, 44);
+        panel_1.add(btnNhanVien);
 
         JButton btnPhieuThuePhong_1 = new JButton("Khách hàng");
         btnPhieuThuePhong_1.setFont(new Font("Times New Roman", Font.BOLD, 17));
-        btnPhieuThuePhong_1.setBackground(new Color(255, 255, 255));
+        btnPhieuThuePhong_1.setBackground(new Color(192, 192, 192));
         btnPhieuThuePhong_1.setBounds(0, 141, 170, 44);
         panel_1.add(btnPhieuThuePhong_1);
 
@@ -114,14 +127,13 @@ public class QuanLyKhachHang extends JFrame {
         contentPane.add(panel_2);
         panel_2.setLayout(null);
 
-        JLabel lblNewLabel_2 = new JLabel("Khách Hàng");
+        JLabel lblNewLabel_2 = new JLabel("NhanVien");
         lblNewLabel_2.setForeground(new Color(255, 255, 255));
         lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 16));
         lblNewLabel_2.setBounds(39, 0, 134, 36);
         panel_2.add(lblNewLabel_2);
 
-
-        JLabel lblNewLabel_3 = new JLabel("Danh sách khách hàng");
+        JLabel lblNewLabel_3 = new JLabel("Danh sách nhân viên");
         lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 17));
         lblNewLabel_3.setBounds(190, 113, 179, 36);
         contentPane.add(lblNewLabel_3);
@@ -161,20 +173,19 @@ public class QuanLyKhachHang extends JFrame {
             }
         });
 
-        JButton btnNewButton_7_1 = new JButton("Thêm +");
-        btnNewButton_7_1.setForeground(Color.WHITE);
-        btnNewButton_7_1.setFont(new Font("Times New Roman", Font.BOLD, 15));
-        btnNewButton_7_1.setBackground(new Color(0, 139, 139));
-        btnNewButton_7_1.setBounds(651, 159, 99, 27);
-        contentPane.add(btnNewButton_7_1);
-
-
-        new TableKhachHang();
+        JButton btnThem = new JButton("Thêm +");
+        btnThem.setForeground(Color.WHITE);
+        btnThem.setFont(new Font("Times New Roman", Font.BOLD, 15));
+        btnThem.setBackground(new Color(0, 139, 139));
+        btnThem.setBounds(659, 159, 99, 27);
+        contentPane.add(btnThem);
+        this.setVisible(true);
+        new TalbeNhanVien();
     }
 
-    public class TableKhachHang {
+    public class TalbeNhanVien {
 
-        public TableKhachHang() {
+        public TalbeNhanVien() {
             EventQueue.invokeLater(() -> {
                 try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -182,19 +193,18 @@ public class QuanLyKhachHang extends JFrame {
                     ex.printStackTrace();
                 }
 
-                ArrayList<KhachHang> list =  KhachHangController.listKhachHang();
-                MyTableModel model = new MyTableModel();
+                ArrayList<NhanVien> list = NhanVienController.listNhanVien();
+               TableModelNhanVien model = new TableModelNhanVien();
                 int makh;
                 String[] str = new String[5];
-                for (KhachHang kh : list) {
-                   // row[0] = kh.getMaPhong();
-                    makh = kh.getMaKH();
-                    str[0] = kh.getUserName();
-                    str[1] = kh.getTenKH();
-                    str[2]= kh.getMaLKH();
-                    str[3] = kh.getSDT();
-                    str[4] = kh.getCMND();
-                    model.add(new KhachHang(makh,str[0],str[1],str[2],str[3],str[4]));
+                for (NhanVien nv : list) {
+                    makh = nv.getMaNV();
+                    str[0] = nv.getUserName();
+                    str[1] = nv.getTenNV();
+                    str[2]= nv.getChucVu();
+                    str[3] = nv.getSDT();
+                    str[4] = nv.getCMND();
+                    model.add(new NhanVien(makh,str[0],str[1],str[2],str[3],str[4]));
                 }
                 table = new JTable(model);
                 AcceptRejectRenderer renderer = new AcceptRejectRenderer();
@@ -226,21 +236,21 @@ public class QuanLyKhachHang extends JFrame {
         }
 
 
-        public class MyTableModel extends AbstractTableModel {
+        public class TableModelNhanVien extends AbstractTableModel {
 
-            private final List<KhachHang> data;
+            private final List<NhanVien> data;
 
-            public MyTableModel() {
+            public TableModelNhanVien() {
                 data = new ArrayList<>();
             }
 
             @Override
             public String getColumnName(int column) {
                 return switch (column) {
-                    case 0 -> "MaKH";
+                    case 0 -> "MaNV";
                     case 1 -> "UserName";
-                    case 2 -> "Tên Khách Hàng";
-                    case 3 -> "Loại Khách Hàng";
+                    case 2 -> "Tên Nhân Viên";
+                    case 3 -> "Chức vụ";
                     case 4 -> "SDT";
                     case 5 -> "CMND/CCCD";
                     case 6 -> "";
@@ -269,20 +279,20 @@ public class QuanLyKhachHang extends JFrame {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                KhachHang obj = data.get(rowIndex);
+                NhanVien obj = data.get(rowIndex);
                 Object value = null;
                 switch (columnIndex) {
                     case 0:
-                        value = obj.getMaKH();
+                        value = obj.getMaNV();
                         break;
                     case 1:
                         value = obj.getUserName();
                         break;
                     case 2:
-                        value = obj.getTenKH();
+                        value = obj.getTenNV();
                         break;
                     case 3:
-                        value = obj.getMaLKH();
+                        value = obj.getChucVu();
                         break;
                     case 4:
                         value = obj.getSDT();
@@ -301,19 +311,12 @@ public class QuanLyKhachHang extends JFrame {
                 if (columnIndex == 6) {
 
                     System.out.println(aValue);
-
-                    KhachHang value = data.get(rowIndex);
-                    if ("accept".equals(aValue)) {
-                        System.out.println("Accepted");
-                    } else {
-                        System.out.println("Rejected");
-                    }
                     fireTableCellUpdated(rowIndex, columnIndex);
 
                 }
             }
 
-            public void add(KhachHang value) {
+            public void add(NhanVien value) {
                 int startIndex = getRowCount();
                 data.add(value);
                 fireTableRowsInserted(startIndex, getRowCount() - 1);
@@ -337,7 +340,7 @@ public class QuanLyKhachHang extends JFrame {
                 setLayout(new GridBagLayout());
                 accept = new JButton("Update");
                 accept.setActionCommand("accept");
-                reject = new JButton("Detail");
+                reject = new JButton("Đuổi");
                 reject.setActionCommand("reject");
                 add(accept);
                 add(reject);
@@ -401,15 +404,21 @@ public class QuanLyKhachHang extends JFrame {
                     public void run() {
                         int reply;
                         int r = acceptRejectPane.getRow();
-                        r = KhachHangController.getMaKHrow(++r);
-                            if (acceptRejectPane.getState().equals("reject")) {
-                               frame.dispose();
-
+                        r = NhanVienController.getMANVrow(++r);
+                        if (acceptRejectPane.getState().equals("reject")) {
+                            reply = JOptionPane.showConfirmDialog(null, "are u sure?", "comfirn", JOptionPane.YES_NO_OPTION);
+                            if (reply == JOptionPane.YES_OPTION) {
+                                NhanVienController.XoaNhanVien(r);
+                                new NhanVienV();
+                                NhanVienV.this.dispose();
                             } else {
-
-                                frame.dispose();
-
+                                JOptionPane.showMessageDialog(null, "Canecled Delete ");
                             }
+                        } else {
+                            new NhanVienV_ChinhSua(r);
+                            NhanVienV.this.dispose();
+
+                        }
                     }
                 }));
             }

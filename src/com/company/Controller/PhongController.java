@@ -140,10 +140,10 @@ public class PhongController {
         return false;
     }
 
-    public static void XoaPhong(int r) {
+    public static void XoaPhong(int maphong) {
         try {
             Connection con = ConnectionOracle.getConnection();
-            String query = "DELETE FROM PHONG WHERE MAPHONG = (SELECT MAPHONG FROM PHONG WHERE ROWNUM <=" + r + " MINUS SELECT MAPHONG FROM PHONG WHERE ROWNUM <" + r + " )";
+            String query = "DELETE FROM PHONG WHERE MAPHONG = "+maphong;
             PreparedStatement pt = con.prepareStatement(query);
             pt.execute();
             con.close();

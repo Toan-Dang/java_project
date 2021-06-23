@@ -23,7 +23,7 @@ public class getListQuanLyData {
                 String username = rs.getString(3);
                 String chucvu = rs.getString(4);
 
-                listquanly.add(new NhanVien(manv, hotennv, username, chucvu));
+                listquanly.add(new NhanVien(manv, hotennv, username, chucvu,null,null));
             }
             connection.close();
         } catch (SQLException throwables) {
